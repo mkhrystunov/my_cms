@@ -1,0 +1,5 @@
+devy_ukr_book:
+    resource: "@DevyUkrBookBundle/Resources/config/routing.yml"
+    prefix:   /
+
+

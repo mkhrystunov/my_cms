@@ -1,0 +1,4 @@
+services:
+#    devy_ukr_book.example:
+#        class: Devy\UkrBookBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
