@@ -1,0 +1,20 @@
+{% set active = 'categories' %}
+{% extends 'DevyUkrBookBundle::administrator.layout.html.twig' %}
+
+{% block title %}
+  Category creation
+{% endblock %}
+
+{% block body -%}
+    <h1>Category creation</h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('category') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

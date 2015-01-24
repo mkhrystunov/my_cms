@@ -1,0 +1,21 @@
+admin_default:
+    path: /
+    defaults: { _controller: DevyUkrBookBundle:Category:index }
+
+devy_ukr_book_category:
+    resource: "@DevyUkrBookBundle/Resources/config/routing/administration/category.yml"
+    prefix:   /category
+
+devy_ukr_book_post:
+    resource: "@DevyUkrBookBundle/Resources/config/routing/administration/post.yml"
+    prefix:   /post
+
+devy_ukr_book_brand:
+    resource: "@DevyUkrBookBundle/Resources/config/routing/administration/brand.yml"
+    prefix:   /brand
+
+devy_ukr_book_attribute:
+    resource: "@DevyUkrBookBundle/Resources/config/routing/administration/attribute.yml"
+    prefix:   /attribute
+
+

@@ -1,4 +1,9 @@
 services:
+    devy_ukr_book.entity_hidden:
+        class: Devy\UkrBookBundle\Form\EntityHiddenType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+          - { name: form.type, alias: entity_hidden }
 #    devy_ukr_book.example:
 #        class: Devy\UkrBookBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]

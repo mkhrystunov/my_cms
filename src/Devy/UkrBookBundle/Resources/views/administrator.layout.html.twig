@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>
+    {%- if block('title') -%}
+      {{ block('title') }} | BackOffice
+    {% else %}
+      Events from Galaxy, far far away
+    {% endif %}
+  </title>
+  {% block stylesheets %}
+    {% stylesheets
+    'bundles/devyukrbook/css/*'
+    filter='cssrewrite'
+    filter='?uglifycss'
+    output='css/built/layout.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet"/>
+    {% endstylesheets %}
+
+    <link rel="stylesheet" href="{{ asset('bundles/devyukrbook/css/bootstrap.css') }}"
+    <link rel="stylesheet" href="{{ asset('bundles/devyukrbook/css/bootstrap-theme.css') }}"
+  {% endblock %}
+
+  {% block javascripts %}
+    <script src="{{ asset('bundles/devyukrbook/js/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/devyukrbook/js/bootstrap.js') }}"></script>
+  {% endblock %}
+
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+{% if app.session.flashBag.has('success') %}
+  <div class="alert alert-success">
+    {% for msg in app.session.flashBag.get('success') %}
+      {{ msg }}
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% block menu %}
+  {% include 'DevyUkrBookBundle::admin.navbar.html.twig' %}
+{% endblock %}
+<div class="container">
+  {% block body %}{% endblock %}
+</div>
+</body>
+</html>

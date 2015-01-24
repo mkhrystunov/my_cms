@@ -1,0 +1,30 @@
+Devy\UkrBookBundle\Entity\User:
+  type: entity
+  fields:
+    id:
+      id: true
+      type: integer
+      generator:
+        strategy: AUTO
+    sf_guard_user:
+      type: string
+      length: 45
+      nullable: true
+    username:
+      type: string
+      length: 45
+    password:
+      type: string
+      length: 255
+  oneToOne:
+    Profile:
+      targetEntity: Devy\UkrBookBundle\Entity\Profile
+      inversedBy: User
+      joinColumns:
+        profile_id:
+          referencedColumnName: id
+          unique: true
+  oneToMany:
+    Orders:
+      targetEntity: Devy\UkrBookBundle\Entity\Order
+      mappedBy: User

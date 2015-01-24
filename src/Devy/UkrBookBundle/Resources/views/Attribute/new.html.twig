@@ -1,0 +1,20 @@
+{% set active = 'attributes' %}
+{% extends 'DevyUkrBookBundle::administrator.layout.html.twig' %}
+
+{% block title %}
+  Attribute creation
+{% endblock %}
+
+{% block body -%}
+  <h1>Attribute creation</h1>
+
+  {{ form(form) }}
+
+  <ul class="record_actions">
+    <li>
+      <a class="btn btn-info" href="{{ path('attribute') }}">
+        Back to the list
+      </a>
+    </li>
+  </ul>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% set active = 'categories' %}
+{% extends 'DevyUkrBookBundle::administrator.layout.html.twig' %}
+
+{% block title %}
+  {{ entity.title }}
+{% endblock %}
+
+{% block body -%}
+  <table class="records_list table">
+    <caption><h3>Categories in {{ entity.title }}</h3></caption>
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Is_active</th>
+      <th>Created_at</th>
+      <th>Updated_at</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for child in entity.children %}
+      <tr>
+        <td><a href="{{ path('category_show', { 'id': child.id }) }}">{{ child.id }}</a></td>
+        <td>{{ child.title }}</td>
+        <td>{{ child.description }}</td>
+        <td>{{ child.isactive }}</td>
+        <td>{% if child.createdat %}{{ entity.createdat|date('Y-m-d H:i:s') }}{% endif %}</td>
+        <td>{% if child.updatedat %}{{ entity.updatedat|date('Y-m-d H:i:s') }}{% endif %}</td>
+        <td>
+          <div class="btn-group">
+            <a class="btn btn-default" href="{{ path('category_show', { 'id': child.id }) }}">show</a>
+            <a class="btn btn-default" href="{{ path('category_edit', { 'id': child.id }) }}">edit</a>
+          </div>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <table class="records_list table">
+    <caption><h3>Products in {{ entity.title }}</h3></caption>
+    <thead>
+    </thead>
+    <tbody>
+    {% for product in entity.products %}
+      <tr>
+        <td><a href="{{ path('category_show', { 'id': child.id }) }}">{{ child.id }}</a></td>
+        <td>{{ child.title }}</td>
+        <td>{{ child.description }}</td>
+        <td>{{ child.isactive }}</td>
+        <td>{% if child.createdat %}{{ entity.createdat|date('Y-m-d H:i:s') }}{% endif %}</td>
+        <td>{% if child.updatedat %}{{ entity.updatedat|date('Y-m-d H:i:s') }}{% endif %}</td>
+        <td>
+          <div class="btn-group">
+            <a class="btn btn-default" href="{{ path('category_show', { 'id': child.id }) }}">show</a>
+            <a class="btn btn-default" href="{{ path('category_edit', { 'id': child.id }) }}">edit</a>
+          </div>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <table>
+
+  </table>
+
+  <ul class="record_actions">
+    <li>
+      {% if entity.parent %}
+        <a class="btn btn-default" href="{{ path('category_show', { id: entity.parent.id }) }}">
+          Back
+        </a>
+      {% else %}
+        <a class="btn btn-default" href="{{ path('category') }}">
+          Back
+        </a>
+      {% endif %}
+    </li>
+    <li>
+      <a class="btn btn-default" href="{{ path('category_new_child', { parent_id: entity.id }) }}">
+        Create a new entry
+      </a>
+    </li>
+    <li>
+      <a class="btn btn-default" href="{{ path('category_edit', { 'id': entity.id }) }}">
+        Edit
+      </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+  </ul>
+{% endblock %}

@@ -1,0 +1,71 @@
+Devy\UkrBookBundle\Entity\Product:
+  type: entity
+  fields:
+    id:
+      id: true
+      type: integer
+      generator:
+        strategy: AUTO
+    title:
+      type: string
+      unique: true
+      length: 50
+      nullable: false
+    description:
+      type: string
+      length: 140
+      nullable: true
+    description_full:
+      type: text
+      nullable: true
+    code:
+      type: string
+      length: 45
+      nullable: true
+    is_active:
+      type: boolean
+      nullable: true
+    created_at:
+      type: datetime
+      nullable: true
+    updated_at:
+      type: datetime
+      nullable: true
+    price:
+      type: float
+      nullable: false
+  oneToOne:
+    Brand:
+      targetEntity: Devy\UkrBookBundle\Entity\Brand
+      inversedBy: Product
+      joinColumns:
+        brand_id:
+          referencedColumnName: id
+          unique: true
+    Image:
+      targetEntity: Devy\UkrBookBundle\Entity\Image
+      mappedBy: Product
+  oneToMany:
+    Reviews:
+      targetEntity: Devy\UkrBookBundle\Entity\Review
+      mappedBy: Product
+  manyToMany:
+    Categories:
+      targetEntity: Devy\UkrBookBundle\Entity\Category
+      inversedBy: Products
+      joinTable:
+        name: ProductCategory
+        joinColumns:
+          product_id:
+            referencedColumnName: id
+            nullable: false
+        inverseJoinColumns:
+          category_id:
+            referencedColumnName: id
+            nullable: false
+    Orders:
+      targetEntity: Devy\UkrBookBundle\Entity\Order
+      mappedBy: Products
+    Attributes:
+      targetEntity: Devy\UkrBookBundle\Entity\Attribute
+      mappedBy: Products

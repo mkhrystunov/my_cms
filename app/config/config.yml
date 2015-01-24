@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: "@DevyUkrBookBundle/Resources/config/services.yml" }
 
 framework:
     #esi:             ~
@@ -29,13 +30,15 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form:
+      resources: ['bootstrap_3_layout.html.twig']
 
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ ]
-    #java: /usr/bin/java
+    bundles:        [ DevyUkrBookBundle ]
+    java: /usr/bin/java
     filters:
         cssrewrite: ~
         #closure:

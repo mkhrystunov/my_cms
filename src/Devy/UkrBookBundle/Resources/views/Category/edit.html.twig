@@ -1,0 +1,21 @@
+{% set active = 'categories' %}
+{% extends 'DevyUkrBookBundle::administrator.layout.html.twig' %}
+
+{% block title %}
+  {{ entity.title }}
+{% endblock %}
+
+{% block body -%}
+    <h1>Category edit</h1>
+
+    {{ form(edit_form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a class="btn btn-default" href="{{ path('category') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

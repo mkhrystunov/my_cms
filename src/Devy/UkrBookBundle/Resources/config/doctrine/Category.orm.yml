@@ -1,0 +1,50 @@
+Devy\UkrBookBundle\Entity\Category:
+  type: entity
+  repositoryClass: Devy\UkrBookBundle\Repository\CategoryRepository
+  fields:
+    id:
+      id: true
+      type: integer
+      generator:
+        strategy: AUTO
+    title:
+      type: string
+      unique: true
+      length: 50
+      nullable: false
+    description:
+      type: string
+      length: 140
+      nullable: true
+    is_active:
+      type: boolean
+      options:
+        default: false
+    created_at:
+      type: datetime
+      nullable: true
+    updated_at:
+      type: datetime
+      nullable: true
+    image:
+      type: string
+      length: 140
+      nullable: true
+  oneToMany:
+    Children:
+      targetEntity: Devy\UkrBookBundle\Entity\Category
+      mappedBy: Parent
+  manyToOne:
+    Parent:
+      targetEntity: Devy\UkrBookBundle\Entity\Category
+      inversedBy: Children
+      joinColumns:
+        category_id:
+          referencedColumnName: id
+  manyToMany:
+    Products:
+      targetEntity: Devy\UkrBookBundle\Entity\Product
+      mappedBy: Categories
+  lifecycleCallbacks:
+    prePersist: [ setCreatedAtValue ]
+    preUpdate: [ setUpdatedAtValue ]

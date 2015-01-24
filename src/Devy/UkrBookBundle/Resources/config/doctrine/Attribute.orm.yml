@@ -1,0 +1,48 @@
+Devy\UkrBookBundle\Entity\Attribute:
+  type: entity
+  fields:
+    id:
+      id: true
+      type: integer
+      generator:
+        strategy: AUTO
+    name:
+      type: string
+      unique: true
+      length: 45
+      nullable: false
+    code:
+      type: string
+      length: 45
+      nullable: true
+    mode:
+      type: integer
+      nullable: true
+    defaults:
+      type: string
+      length: 250
+      nullable: true
+    is_active:
+      type: boolean
+      nullable: true
+  manyToOne:
+    AttributeSet:
+      targetEntity: Devy\UkrBookBundle\Entity\AttributeSet
+      inversedBy: Attributes
+      joinColumns:
+        attribute_set_id:
+          referencedColumnName: id
+  manyToMany:
+    Products:
+      targetEntity: Devy\UkrBookBundle\Entity\Product
+      inversedBy: Attributes
+      joinTable:
+        name: ProductAttribute
+        joinColumns:
+          attribute_id:
+            referencedColumnName: id
+            nullable: false
+        inverseJoinColumns:
+          product_id:
+            referencedColumnName: id
+            nullable: false

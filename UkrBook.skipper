@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<skipper version="3.0.1.1129" name="Ukr-book" mvc="Symfony2" orm="Doctrine2" uuid="2308bc33-1f4f-447f-a64b-565e3e77c0c2">
+  <module name="Devy\UkrBookBundle\Entity" import-format="Doctrine2Yml" import-path="src/Devy/UkrBookBundle/Resources/config/doctrine" uuid="72dbabaa-2b76-4f55-895d-9f78814ab282">
+    <entity name="Category" uuid="b663b15d-9f38-4298-bd60-c86df0677d93">
+      <field name="id" type="integer" required="true" unique="true" primary="true" auto-increment="true" uuid="b4a0fa09-72f3-490c-87f5-cbef0af02c0e"/>
+      <field name="title" type="string" size="50" required="true" unique="true" uuid="70020ef2-dc1b-4b49-95b9-d2a6847a9fbe"/>
+      <field name="description" type="string" size="140" uuid="dbbf3e5c-6275-4b11-b797-ad80ce76b7f7"/>
+      <field name="is_active" type="boolean" default="false" uuid="93e84dbb-6349-4225-9afa-d427bd06924c"/>
+      <field name="created_at" type="datetime" uuid="4130ecd0-5bbe-4e85-85f1-e9abb2727fa5"/>
+      <field name="updated_at" type="datetime" uuid="76eb909b-2d38-4f9f-957c-04154ee204d8"/>
+      <field name="image" type="string" size="140" uuid="d76278a9-28e8-437b-884a-ce0132467836"/>
+      <field name="category_id" type="integer" uuid="a9000448-0d1a-481a-a857-993abadeeca6"/>
+    </entity>
+    <association from="Category" to="Category" caption="Category Category" owner-alias="Children" inverse-alias="Parent" uuid="9ad79701-1af1-417f-8635-088cdc17d893">
+      <association-field from="category_id" to="id"/>
+    </association>
+    <entity name="Product" uuid="7f19c01b-a565-4fa8-8549-308ed0b7ab0c">
+      <field name="id" type="integer" required="true" unique="true" primary="true" auto-increment="true" uuid="b2ab5169-3535-4e16-a92c-df5c99d87b26"/>
+      <field name="title" type="string" size="50" required="true" unique="true" uuid="3429f864-37a3-4435-9edd-9128b3bb62f2"/>
+      <field name="description" type="string" size="140" uuid="020e989a-f5b0-4545-a919-ee62b0dd08ec"/>
+      <field name="description_full" type="text" uuid="a2e35420-04d7-454b-b220-b59ddfebb522"/>
+      <field name="code" type="string" size="45" uuid="a93dbaae-6901-47d0-a959-56a5c2180a40"/>
+      <field name="is_active" type="boolean" default="false" uuid="d82643ee-3c6c-4edd-98e5-d28914dcc0ba"/>
+      <field name="created_at" type="datetime" uuid="aa37a074-8bb0-442d-8d20-794d58a26a12"/>
+      <field name="updated_at" type="datetime" uuid="5afde26b-aa75-4fe6-b37f-7e5ba19a1a83"/>
+      <field name="brand_id" type="integer" unique="true" uuid="9071d6c9-90b6-4edd-b43e-2931137d6351"/>
+      <field name="price" type="float" required="true" uuid="2ed05cfa-f495-4fea-8351-c6abbd5c9df6"/>
+    </entity>
+    <association from="Product" to="Brand" caption="Brand Product" owner-alias="Product" inverse-alias="Brand" uuid="81ccb3b4-55ad-4eba-a865-66d7ea3306fd">
+      <association-field from="brand_id" to="id"/>
+    </association>
+    <entity name="Review" uuid="4f0a25c5-e2ba-403e-93a6-6056e2dd3823">
+      <field name="id" type="integer" required="true" unique="true" primary="true" auto-increment="true" uuid="0d639d80-f343-4d0d-8978-dc2afbcb0c86"/>
+      <field name="review" type="string" size="255" required="true" uuid="e4170b81-76a7-47e6-a634-4ed3c8667e69"/>
+      <field name="product_id" type="integer" uuid="ec72fae8-03fe-44c1-a2e2-1c08e5cdea3c"/>
+    </entity>
+    <association from="Review" to="Product" caption="Product Review" owner-alias="Reviews" inverse-alias="Product" uuid="d83743fc-b5cc-42a4-8d2e-cdc6708dc43f">
+      <association-field from="product_id" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <entity name="Brand" uuid="2e5ab338-8f2b-49c9-8023-bd45bb96915f">
+      <field name="id" type="integer" required="true" unique="true" primary="true" auto-increment="true" uuid="ce67be5f-1d6f-4d6b-8664-c453e0146031"/>
+      <field name="name" type="string" size="45" required="true" unique="true" uuid="066d4695-cdc7-4411-b3c8-6fa45d246cf3"/>
+      <field name="is_active" type="boolean" default="false" uuid="a229511d-1cd1-4704-bdd0-bd66111fd9a3"/>
+    </entity>
+    <entity name="Image" uuid="bd4f076e-c139-419b-83de-663e12c35d49">
+      <field name="id" type="integer" required="true" unique="true" primary="true" auto-increment="true" uuid="886798e3-ff73-4edb-b874-691c1c7a02d8"/>
+      <field name="image" type="string" size="250" uuid="04f13887-985c-4b81-ad38-2a830dfe2028"/>
+      <field name="product_id" type="integer" unique="true" uuid="a8a11e53-1bea-4400-8fae-a58dfdf514f4"/>
+    </entity>
+    <association from="Image" to="Product" caption="Product Image" owner-alias="Image" inverse-alias="Product" uuid="f65971b8-40e2-4439-8c85-7f19f1e4418f">
+      <association-field from="product_id" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <entity name="Attribute" uuid="e60f5a36-023f-457f-9e3e-32938471e926">
+      <field name="id" type="integer" required="true" unique="true" primary="true" auto-increment="true" uuid="80659b71-e0eb-4ef1-a188-5052fbc80908"/>
+      <field name="name" type="string" size="45" required="true" unique="true" uuid="b3aa7580-db1c-43fa-acff-1097d00f9cd4"/>
+      <field name="code" type="string" size="45" uuid="61435269-c97f-4d70-a07f-0cc5e3d46538"/>
+      <field name="mode" type="integer" uuid="bbfc479e-8b09-4e1c-876c-60a34cc1f4a7"/>
+      <field name="defaults" type="string" size="250" uuid="0f1bdcd6-da32-466a-a309-aa470b951be6"/>
+      <field name="is_active" type="boolean" default="false" uuid="31e0a41a-3f96-450b-87a7-3d68d495ca16"/>
+      <field name="attribute_set_id" type="integer" uuid="07fd6d77-0016-4f78-ac77-5c6e351aa4bb"/>
+    </entity>
+    <association from="Attribute" to="AttributeSet" caption="AttributeSet Attribute" owner-alias="Attributes" inverse-alias="AttributeSet" uuid="37b1bdc9-31fe-448a-914d-69ef01f21b05">
+      <association-field from="attribute_set_id" to="id"/>
+    </association>
+    <entity name="AttributeSet" uuid="f3cff1d6-d193-4a81-b191-662b015b23d0">
+      <field name="id" type="integer" required="true" unique="true" primary="true" auto-increment="true" uuid="987e9a2c-dc9f-44b5-bde7-a5ad7da73c0a"/>
+      <field name="name" type="string" size="45" required="true" unique="true" uuid="0875f9ed-d27c-4b07-ab73-f455196d14fb"/>
+      <field name="is_active" type="boolean" default="false" uuid="df539722-a14c-4edc-b92a-44728183166b"/>
+    </entity>
+    <entity name="Order" uuid="2f37c3d3-656c-4157-8ff2-ef697c10ce87">
+      <field name="id" type="integer" required="true" unique="true" primary="true" auto-increment="true" uuid="c2d9d1ef-5733-4773-9744-da5f851027d2"/>
+      <field name="shipping_address" type="string" size="250" uuid="64e63bb1-0d24-4595-97ae-9768dfdb2913"/>
+      <field name="status" type="integer" uuid="7701385e-d60a-41b7-be31-cf5900285313"/>
+      <field name="created_at" type="datetime" uuid="8f5c3267-0dcf-4316-b013-51a7b7c58c70"/>
+      <field name="amount" type="integer" uuid="c163a9ba-500a-4480-95d2-d5243eeb1dc5"/>
+      <field name="user_id" type="integer" uuid="7f77165f-61bd-4ef8-977a-48b82ce3f74a"/>
+    </entity>
+    <association from="Order" to="User" caption="User Order" owner-alias="Orders" inverse-alias="User" uuid="bcb1f000-68c7-4fff-9388-160cd410242c">
+      <association-field from="user_id" to="id"/>
+    </association>
+    <entity name="Profile" uuid="15808e64-6b6d-47df-9ffe-3513a9515744">
+      <field name="id" type="integer" required="true" unique="true" primary="true" auto-increment="true" uuid="fa5fbeae-7957-4050-afdc-2748b9c62e09"/>
+      <field name="sf_guard_profile" type="string" size="45" required="true" uuid="67d87bee-125c-4055-8b7b-5a986d3fb240"/>
+    </entity>
+    <entity name="User" uuid="63133fc3-d43c-44c7-92a0-91a8fcad2359">
+      <field name="id" type="integer" required="true" unique="true" primary="true" auto-increment="true" uuid="48e61c73-b16f-4475-bdfd-31c749b8cbdd"/>
+      <field name="sf_guard_user" type="string" size="45" uuid="6cab1948-7691-4a79-aa5d-9dae23dc4bff"/>
+      <field name="profile_id" type="integer" unique="true" uuid="b83c8a0e-6ec0-4f31-82e5-5911cceaaeca"/>
+    </entity>
+    <association from="User" to="Profile" caption="Profile User" owner-alias="User" inverse-alias="Profile" uuid="950b47cf-7110-4f76-9d9b-01d24057a164">
+      <association-field from="profile_id" to="id"/>
+    </association>
+    <entity name="OrderProduct" uuid="be8faa35-443b-4b64-8b7a-57c1462f34ec">
+      <field name="product_id" type="integer" required="true" primary="true" uuid="5f0a46d0-75b5-4d0a-a599-b759e0bc582b"/>
+      <field name="order_id" type="integer" required="true" primary="true" uuid="61e3dbdb-20e9-40bc-8587-d4b6171bfc1a"/>
+    </entity>
+    <many-to-many mn-entity="OrderProduct" caption="Product to Order" uuid="03969df0-eb78-4b54-959b-8cbfe577dbcd">
+      <many-to-many-entity name="Order" owning-side="true" alias="Orders" uuid="bb345bb8-cf72-4a36-9181-866a613cb0bb">
+        <many-to-many-field from="order_id" to="id"/>
+      </many-to-many-entity>
+      <many-to-many-entity name="Product" owning-side="false" alias="Products" uuid="170115f8-a8e4-45f7-9a9b-6f94ca7df784">
+        <many-to-many-field from="product_id" to="id"/>
+      </many-to-many-entity>
+    </many-to-many>
+    <entity name="ProductCategory" uuid="edeaa79d-e764-4979-9db3-28f50f1fd8d9">
+      <field name="category_id" type="integer" required="true" primary="true" uuid="f8ac518d-6f01-4681-bbc4-4ebfd8895b40"/>
+      <field name="product_id" type="integer" required="true" primary="true" uuid="23d2c242-bf8f-4fc4-a298-25b434a2021e"/>
+    </entity>
+    <many-to-many mn-entity="ProductCategory" caption="Category to Product" uuid="d5e0dca9-fa28-402a-9f79-9c971cfe37ba">
+      <many-to-many-entity name="Product" owning-side="true" alias="Products" uuid="0eb37b06-e981-4b9a-b6c9-eb91041367ed">
+        <many-to-many-field from="product_id" to="id"/>
+      </many-to-many-entity>
+      <many-to-many-entity name="Category" owning-side="false" alias="Categories" uuid="cd6dd29f-ab6d-4bca-bcfc-fcbdd155fdd9">
+        <many-to-many-field from="category_id" to="id"/>
+      </many-to-many-entity>
+    </many-to-many>
+    <entity name="ProductAttribute" uuid="55e7593f-578c-47a1-97d5-671d60994bbc">
+      <field name="product_id" type="integer" required="true" primary="true" uuid="8e97be77-f607-4b24-9cd6-61b62edc8197"/>
+      <field name="attribute_id" type="integer" required="true" primary="true" uuid="e0533515-7565-41d6-85a5-61dffe3a3e47"/>
+    </entity>
+    <many-to-many mn-entity="ProductAttribute" caption="Product to Attribute" uuid="8f1b2bc2-21f8-4d48-b1e3-333aec6d42d8">
+      <many-to-many-entity name="Attribute" owning-side="true" alias="Attributes" uuid="deed44d9-1e17-4012-b939-4c98250e9e21">
+        <many-to-many-field from="attribute_id" to="id"/>
+      </many-to-many-entity>
+      <many-to-many-entity name="Product" owning-side="false" alias="Products" uuid="66bfdc6f-7c7a-4032-84c8-3fec11000c49">
+        <many-to-many-field from="product_id" to="id"/>
+      </many-to-many-entity>
+    </many-to-many>
+    <orm-attributes>
+      <attribute name="namespace">Devy\UkrBookBundle\Entity</attribute>
+    </orm-attributes>
+  </module>
+  <visual-data>
+    <many-to-many-association uuid="03969df0-eb78-4b54-959b-8cbfe577dbcd" color="4288059030"/>
+    <entity uuid="15808e64-6b6d-47df-9ffe-3513a9515744" bg-color="4294967295" hdr-color="4292006610" position-x="636" position-y="390" size-x="0" size-x2="135" size-y="0" size-y2="45"/>
+    <project uuid="2308bc33-1f4f-447f-a64b-565e3e77c0c2" size-x="0" size-x2="1230" size-y="0" size-y2="610"/>
+    <entity uuid="2e5ab338-8f2b-49c9-8023-bd45bb96915f" bg-color="4294967295" hdr-color="4292006610" position-x="472" position-y="171" size-x="0" size-x2="99" size-y="0" size-y2="59"/>
+    <entity uuid="2f37c3d3-656c-4157-8ff2-ef697c10ce87" bg-color="4294967295" hdr-color="4292006610" position-x="225" position-y="367" size-x="0" size-x2="146" size-y="0" size-y2="87"/>
+    <association uuid="37b1bdc9-31fe-448a-914d-69ef01f21b05" color="4288059030"/>
+    <entity uuid="4f0a25c5-e2ba-403e-93a6-6056e2dd3823" bg-color="4294967295" hdr-color="4292006610" position-x="474" position-y="99" size-x="0" size-x2="102" size-y="0" size-y2="59"/>
+    <entity uuid="55e7593f-578c-47a1-97d5-671d60994bbc" bg-color="4294967295" hdr-color="4292006610" position-x="380" position-y="24" size-x="0" size-x2="111" size-y="0" size-y2="60"/>
+    <entity uuid="63133fc3-d43c-44c7-92a0-91a8fcad2359" bg-color="4294967295" hdr-color="4292006610" position-x="437" position-y="388" size-x="0" size-x2="128" size-y="0" size-y2="59"/>
+    <module uuid="72dbabaa-2b76-4f55-895d-9f78814ab282" bg-color="4294900968" position-x="50" position-y="50" size-x="0" size-x2="1130" size-y="0" size-y2="510"/>
+    <entity uuid="7f19c01b-a565-4fa8-8549-308ed0b7ab0c" bg-color="4294967295" hdr-color="4292006610" position-x="259" position-y="170" size-x="0" size-x2="119" size-y="0" size-y2="143"/>
+    <association uuid="81ccb3b4-55ad-4eba-a865-66d7ea3306fd" color="4288059030"/>
+    <many-to-many-association uuid="8f1b2bc2-21f8-4d48-b1e3-333aec6d42d8" color="4288059030"/>
+    <association uuid="950b47cf-7110-4f76-9d9b-01d24057a164" color="4288059030"/>
+    <association uuid="9ad79701-1af1-417f-8635-088cdc17d893" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="-20" color="4288059030"/>
+    <entity uuid="b663b15d-9f38-4298-bd60-c86df0677d93" bg-color="4294967295" hdr-color="4292006610" position-x="20" position-y="40" size-x="0" size-x2="119" size-y="0" size-y2="129"/>
+    <association uuid="bcb1f000-68c7-4fff-9388-160cd410242c" color="4288059030"/>
+    <entity uuid="bd4f076e-c139-419b-83de-663e12c35d49" bg-color="4294967295" hdr-color="4292006610" position-x="538" position-y="305" size-x="0" size-x2="102" size-y="0" size-y2="59"/>
+    <entity uuid="be8faa35-443b-4b64-8b7a-57c1462f34ec" bg-color="4294967295" hdr-color="4292006610" position-x="42" position-y="251" size-x="0" size-x2="102" size-y="0" size-y2="60"/>
+    <many-to-many-association uuid="d5e0dca9-fa28-402a-9f79-9c971cfe37ba" color="4288059030"/>
+    <association uuid="d83743fc-b5cc-42a4-8d2e-cdc6708dc43f" color="4288059030"/>
+    <entity uuid="e60f5a36-023f-457f-9e3e-32938471e926" bg-color="4294967295" hdr-color="4292006610" position-x="623" position-y="14" size-x="0" size-x2="121" size-y="0" size-y2="115"/>
+    <entity uuid="edeaa79d-e764-4979-9db3-28f50f1fd8d9" bg-color="4294967295" hdr-color="4292006610" position-x="170" position-y="73" size-x="0" size-x2="114" size-y="0" size-y2="60"/>
+    <entity uuid="f3cff1d6-d193-4a81-b191-662b015b23d0" bg-color="4294967295" hdr-color="4292006610" position-x="821" position-y="27" size-x="0" size-x2="99" size-y="0" size-y2="59"/>
+    <association uuid="f65971b8-40e2-4439-8c85-7f19f1e4418f" color="4288059030"/>
+  </visual-data>
+</skipper>

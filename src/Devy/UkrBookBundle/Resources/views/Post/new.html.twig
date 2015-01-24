@@ -1,0 +1,20 @@
+{% set active = 'posts' %}
+{% extends 'DevyUkrBookBundle::administrator.layout.html.twig' %}
+
+{% block title %}
+  Post creation
+{% endblock %}
+
+{% block body -%}
+  <h1>Post creation</h1>
+
+  {{ form(form) }}
+
+  <ul class="record_actions">
+    <li>
+      <a href="{{ path('post') }}">
+        Back to the list
+      </a>
+    </li>
+  </ul>
+{% endblock %}
