@@ -237,4 +237,42 @@ class Attribute
     {
         return $this->Products;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $ProductAttributes;
+
+
+    /**
+     * Add ProductAttributes
+     *
+     * @param \Devy\UkrBookBundle\Entity\ProductAttribute $productAttributes
+     * @return Attribute
+     */
+    public function addProductAttribute(\Devy\UkrBookBundle\Entity\ProductAttribute $productAttributes)
+    {
+        $this->ProductAttributes[] = $productAttributes;
+
+        return $this;
+    }
+
+    /**
+     * Remove ProductAttributes
+     *
+     * @param \Devy\UkrBookBundle\Entity\ProductAttribute $productAttributes
+     */
+    public function removeProductAttribute(\Devy\UkrBookBundle\Entity\ProductAttribute $productAttributes)
+    {
+        $this->ProductAttributes->removeElement($productAttributes);
+    }
+
+    /**
+     * Get ProductAttributes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProductAttributes()
+    {
+        return $this->ProductAttributes;
+    }
 }

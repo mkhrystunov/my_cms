@@ -18,4 +18,9 @@ devy_ukr_book_attribute:
     resource: "@DevyUkrBookBundle/Resources/config/routing/administration/attribute.yml"
     prefix:   /attribute
 
+devy_ukr_book_product:
+    resource: "@DevyUkrBookBundle/Resources/config/routing/administration/product.yml"
+    prefix:   /product
+
+
 

@@ -328,6 +328,6 @@ class Category
      */
     public function __toString()
     {
-        return strval($this->getId());
+        return strval($this->getTitle());
     }
 }

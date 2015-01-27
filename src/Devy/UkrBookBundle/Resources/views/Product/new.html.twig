@@ -1,0 +1,31 @@
+{% set active = 'products' %}
+{% extends 'DevyUkrBookBundle::administrator.layout.html.twig' %}
+
+{% block title %}
+  Product creation
+{% endblock %}
+
+{% form_theme form _self %}
+
+{% block _devy_ukrbookbundle_product_ProductAttributes_label %}
+  {{ form_label(form) }}
+  <a class="pull-right" href="#">Add attribute</a>
+{% endblock %}
+
+{% block body -%}
+  <h1>Product creation</h1>
+
+  {{ form(form) }}
+
+  <ul class="record_actions">
+    <li>
+      <a class="btn btn-success" href="{{ path('product') }}">
+        Back to the list
+      </a>
+    </li>
+  </ul>
+
+  <script>
+    
+  </script>
+{% endblock %}

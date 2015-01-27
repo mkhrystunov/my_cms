@@ -41,10 +41,10 @@ Devy\UkrBookBundle\Entity\Category:
       joinColumns:
         category_id:
           referencedColumnName: id
-  manyToMany:
+  oneToMany:
     Products:
       targetEntity: Devy\UkrBookBundle\Entity\Product
-      mappedBy: Categories
+      mappedBy: Category
   lifecycleCallbacks:
     prePersist: [ setCreatedAtValue ]
     preUpdate: [ setUpdatedAtValue ]

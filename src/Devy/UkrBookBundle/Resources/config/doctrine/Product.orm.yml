@@ -49,23 +49,17 @@ Devy\UkrBookBundle\Entity\Product:
     Reviews:
       targetEntity: Devy\UkrBookBundle\Entity\Review
       mappedBy: Product
-  manyToMany:
-    Categories:
+    ProductAttributes:
+      targetEntity: Devy\UkrBookBundle\Entity\ProductAttribute
+      mappedBy: Product
+  manyToOne:
+    Category:
       targetEntity: Devy\UkrBookBundle\Entity\Category
       inversedBy: Products
-      joinTable:
-        name: ProductCategory
-        joinColumns:
-          product_id:
-            referencedColumnName: id
-            nullable: false
-        inverseJoinColumns:
-          category_id:
-            referencedColumnName: id
-            nullable: false
+      joinColumns:
+        product_id:
+          referencedColumnName: id
+          onDelete: CASCADE
     Orders:
       targetEntity: Devy\UkrBookBundle\Entity\Order
-      mappedBy: Products
-    Attributes:
-      targetEntity: Devy\UkrBookBundle\Entity\Attribute
       mappedBy: Products

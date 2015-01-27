@@ -72,17 +72,12 @@ class Product
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $Categories;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
     private $Orders;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Devy\UkrBookBundle\Entity\Category
      */
-    private $Attributes;
+    private $Category;
 
     /**
      * Constructor
@@ -98,7 +93,7 @@ class Product
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -121,7 +116,7 @@ class Product
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -144,7 +139,7 @@ class Product
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -167,7 +162,7 @@ class Product
     /**
      * Get description_full
      *
-     * @return string 
+     * @return string
      */
     public function getDescriptionFull()
     {
@@ -190,7 +185,7 @@ class Product
     /**
      * Get code
      *
-     * @return string 
+     * @return string
      */
     public function getCode()
     {
@@ -213,7 +208,7 @@ class Product
     /**
      * Get is_active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsActive()
     {
@@ -236,7 +231,7 @@ class Product
     /**
      * Get created_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -259,7 +254,7 @@ class Product
     /**
      * Get updated_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -282,7 +277,7 @@ class Product
     /**
      * Get price
      *
-     * @return float 
+     * @return float
      */
     public function getPrice()
     {
@@ -305,7 +300,7 @@ class Product
     /**
      * Get Brand
      *
-     * @return \Devy\UkrBookBundle\Entity\Brand 
+     * @return \Devy\UkrBookBundle\Entity\Brand
      */
     public function getBrand()
     {
@@ -328,7 +323,7 @@ class Product
     /**
      * Get Image
      *
-     * @return \Devy\UkrBookBundle\Entity\Image 
+     * @return \Devy\UkrBookBundle\Entity\Image
      */
     public function getImage()
     {
@@ -361,44 +356,11 @@ class Product
     /**
      * Get Reviews
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getReviews()
     {
         return $this->Reviews;
-    }
-
-    /**
-     * Add Categories
-     *
-     * @param \Devy\UkrBookBundle\Entity\Category $categories
-     * @return Product
-     */
-    public function addCategory(\Devy\UkrBookBundle\Entity\Category $categories)
-    {
-        $this->Categories[] = $categories;
-
-        return $this;
-    }
-
-    /**
-     * Remove Categories
-     *
-     * @param \Devy\UkrBookBundle\Entity\Category $categories
-     */
-    public function removeCategory(\Devy\UkrBookBundle\Entity\Category $categories)
-    {
-        $this->Categories->removeElement($categories);
-    }
-
-    /**
-     * Get Categories
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCategories()
-    {
-        return $this->Categories;
     }
 
     /**
@@ -427,7 +389,7 @@ class Product
     /**
      * Get Orders
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOrders()
     {
@@ -435,35 +397,77 @@ class Product
     }
 
     /**
-     * Add Attributes
+     * Set Category
      *
-     * @param \Devy\UkrBookBundle\Entity\Attribute $attributes
+     * @param \Devy\UkrBookBundle\Entity\Category $category
      * @return Product
      */
-    public function addAttribute(\Devy\UkrBookBundle\Entity\Attribute $attributes)
+    public function setCategory(\Devy\UkrBookBundle\Entity\Category $category = null)
     {
-        $this->Attributes[] = $attributes;
+        $this->Category = $category;
 
         return $this;
     }
 
     /**
-     * Remove Attributes
+     * Get Category
      *
-     * @param \Devy\UkrBookBundle\Entity\Attribute $attributes
+     * @return \Devy\UkrBookBundle\Entity\Category
      */
-    public function removeAttribute(\Devy\UkrBookBundle\Entity\Attribute $attributes)
+    public function getCategory()
     {
-        $this->Attributes->removeElement($attributes);
+        return $this->Category;
     }
 
     /**
-     * Get Attributes
+     * Set Orders
+     *
+     * @param \Devy\UkrBookBundle\Entity\Order $orders
+     * @return Product
+     */
+    public function setOrders(\Devy\UkrBookBundle\Entity\Order $orders = null)
+    {
+        $this->Orders = $orders;
+
+        return $this;
+    }
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $ProductAttributes;
+
+
+    /**
+     * Add ProductAttributes
+     *
+     * @param \Devy\UkrBookBundle\Entity\ProductAttribute $productAttributes
+     * @return Product
+     */
+    public function addProductAttribute(\Devy\UkrBookBundle\Entity\ProductAttribute $productAttributes)
+    {
+        $this->ProductAttributes[] = $productAttributes;
+
+        return $this;
+    }
+
+    /**
+     * Remove ProductAttributes
+     *
+     * @param \Devy\UkrBookBundle\Entity\ProductAttribute $productAttributes
+     */
+    public function removeProductAttribute(\Devy\UkrBookBundle\Entity\ProductAttribute $productAttributes)
+    {
+        $this->ProductAttributes->removeElement($productAttributes);
+    }
+
+    /**
+     * Get ProductAttributes
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getAttributes()
+    public function getProductAttributes()
     {
-        return $this->Attributes;
+        return $this->ProductAttributes;
     }
 }

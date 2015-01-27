@@ -108,4 +108,12 @@ class Brand
     {
         return $this->Product;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

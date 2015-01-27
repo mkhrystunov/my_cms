@@ -16,8 +16,8 @@
         <li class="{{ active == 'categories' ? 'active' : '' }}" >
           <a href="{{ url('category') }}">Categories</a>
         </li>
-        <li>
-          <a href="#">Products</a>
+        <li class="{{ active == 'products' ? 'active' : '' }}">
+          <a href="{{ url('product') }}">Products</a>
         </li>
         <li class="{{ active == 'brands' ? 'active' : '' }}">
           <a href="{{ url('brand') }}">Brands</a>

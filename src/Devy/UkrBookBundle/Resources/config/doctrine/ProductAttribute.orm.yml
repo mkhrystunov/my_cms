@@ -1,0 +1,27 @@
+Devy\UkrBookBundle\Entity\ProductAttribute:
+  type: entity
+  fields:
+    product_id:
+      id: true
+      type: integer
+      associationKey: true
+    attribute_id:
+      id: true
+      type: integer
+      associationKey: true
+    value:
+      type: string
+      nullable: false
+  manyToOne:
+    Product:
+      targetEntity: Devy\UkrBookBundle\Entity\Product
+      inversedBy: ProductAttributes
+      joinColumns:
+        product_id:
+          referencedColumnName: id
+    Attribute:
+      targetEntity: Devy\UkrBookBundle\Entity\Attribute
+      inversedBy: ProductAttributes
+      joinColumns:
+        attribute_id:
+          referencedColumnName: id
