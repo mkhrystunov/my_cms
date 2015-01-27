@@ -6,7 +6,7 @@
     {%- if block('title') -%}
       {{ block('title') }} | BackOffice
     {% else %}
-      Events from Galaxy, far far away
+      BackOffice
     {% endif %}
   </title>
   {% block stylesheets %}
@@ -19,8 +19,8 @@
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet"/>
     {% endstylesheets %}
 
-    <link rel="stylesheet" href="{{ asset('bundles/devyukrbook/css/bootstrap.css') }}"
-    <link rel="stylesheet" href="{{ asset('bundles/devyukrbook/css/bootstrap-theme.css') }}"
+    <link rel="stylesheet" href="{{ asset('bundles/devyukrbook/css/bootstrap.css') }}">
+    {#<link rel="stylesheet" href="{{ asset('bundles/devyukrbook/css/bootstrap-theme.css') }}"#}
   {% endblock %}
 
   {% block javascripts %}

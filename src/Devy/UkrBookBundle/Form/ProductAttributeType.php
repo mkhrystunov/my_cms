@@ -2,11 +2,12 @@
 
 namespace Devy\UkrBookBundle\Form;
 
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductType extends AbstractType
+class ProductAttributeType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,36 +16,27 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('description')
-            ->add('description_full')
-            ->add('code')
-            ->add('is_active')
-            ->add('price')
-            ->add('Brand')
-            ->add('Category')
-            ->add('ProductAttributes', 'collection', array(
-                'type' => new ProductAttributeType(),
-                'allow_add' => true,
-            ))
-        ;
+            ->add('Attribute')
+            ->add('value');
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Devy\UkrBookBundle\Entity\Product'
+            'data_class' => 'Devy\UkrBookBundle\Entity\ProductAttribute'
         ));
     }
 
     /**
-     * @return string
+     * Returns the name of this type.
+     *
+     * @return string The name of this type
      */
     public function getName()
     {
-        return 'devy_ukrbookbundle_product';
+        return 'devy_ukrbookbundle_productattribute';
     }
 }

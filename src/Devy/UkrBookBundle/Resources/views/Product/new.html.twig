@@ -9,7 +9,21 @@
 
 {% block _devy_ukrbookbundle_product_ProductAttributes_label %}
   {{ form_label(form) }}
-  <a class="pull-right" href="#">Add attribute</a>
+  <a class="pull-right btn btn-success" href="#" id="add-attribute">Add attribute</a>
+{% endblock %}
+
+{% block _devy_ukrbookbundle_product_ProductAttributes_entry_row %}
+  <div class="row">
+    <div class="col-md-4">
+      {{ form_row(form.Attribute) }}
+    </div>
+    <div class="col-md-4">
+      {{ form_row(form.value) }}
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-danger remove-attribute">Remove</button>
+    </div>
+  </div>
 {% endblock %}
 
 {% block body -%}
@@ -26,6 +40,34 @@
   </ul>
 
   <script>
-    
+
+    jQuery(document).ready(function () {
+      var $addLink = $('#add-attribute');
+      var $collectionHolder = $addLink.siblings('div');
+
+      $collectionHolder.data('index', $collectionHolder.children('.form-group').length);
+
+      function addForm($collectionHolder) {
+        var prototype = $collectionHolder.data('prototype');
+        var index = $collectionHolder.data('index');
+        var newForm = prototype.replace(/__name__/g, index);
+
+        $collectionHolder.data('index', index + 1);
+
+        $collectionHolder.append(newForm);
+      }
+
+      $addLink.on('click', function (e) {
+        e.preventDefault();
+
+        addForm($collectionHolder);
+      });
+
+      $(document.body).on('click', '.remove-attribute', function (e) {
+        e.preventDefault();
+        console.log('remove');
+        $(this).closest('.row').remove();
+      });
+    });
   </script>
 {% endblock %}
