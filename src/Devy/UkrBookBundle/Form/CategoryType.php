@@ -18,7 +18,9 @@ class CategoryType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('is_active')
+            ->add('is_active', 'checkbox', array(
+                'required' => false
+            ))
             ->add('Parent', 'entity_hidden', array(
                 'class' => 'Devy\UkrBookBundle\Entity\Category',
             ))

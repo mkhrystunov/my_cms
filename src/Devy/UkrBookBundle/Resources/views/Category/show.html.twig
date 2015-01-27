@@ -42,29 +42,40 @@
   <table class="records_list table">
     <caption><h3>Products in {{ entity.title }}</h3></caption>
     <thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Description_full</th>
+      <th>Code</th>
+      <th>Is_active</th>
+      <th>Created_at</th>
+      <th>Updated_at</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
     </thead>
     <tbody>
     {% for product in entity.products %}
       <tr>
-        <td><a href="{{ path('category_show', { 'id': child.id }) }}">{{ child.id }}</a></td>
-        <td>{{ child.title }}</td>
-        <td>{{ child.description }}</td>
-        <td>{{ child.isactive }}</td>
-        <td>{% if child.createdat %}{{ entity.createdat|date('Y-m-d H:i:s') }}{% endif %}</td>
-        <td>{% if child.updatedat %}{{ entity.updatedat|date('Y-m-d H:i:s') }}{% endif %}</td>
+        <td><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
+        <td>{{ product.title }}</td>
+        <td>{{ product.description }}</td>
+        <td>{{ product.descriptionfull }}</td>
+        <td>{{ product.code }}</td>
+        <td>{{ product.isactive }}</td>
+        <td>{% if product.createdat %}{{ product.createdat|date('Y-m-d H:i:s') }}{% endif %}</td>
+        <td>{% if product.updatedat %}{{ product.updatedat|date('Y-m-d H:i:s') }}{% endif %}</td>
+        <td>{{ product.price }}</td>
         <td>
           <div class="btn-group">
-            <a class="btn btn-default" href="{{ path('category_show', { 'id': child.id }) }}">show</a>
-            <a class="btn btn-default" href="{{ path('category_edit', { 'id': child.id }) }}">edit</a>
+            <a class="btn btn-default" href="{{ path('product_show', { 'id': product.id }) }}">show</a>
+            <a class="btn btn-default" href="{{ path('product_edit', { 'id': product.id }) }}">edit</a>
           </div>
         </td>
       </tr>
     {% endfor %}
     </tbody>
-  </table>
-
-  <table>
-
   </table>
 
   <ul class="record_actions">

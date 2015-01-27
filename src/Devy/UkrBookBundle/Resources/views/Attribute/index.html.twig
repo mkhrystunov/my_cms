@@ -38,12 +38,8 @@
     {% endfor %}
     </tbody>
   </table>
-
-  <ul>
-    <li>
-      <a class="btn btn-success" href="{{ path('attribute_new') }}">
-        Create a new entry
-      </a>
-    </li>
-  </ul>
+  <a class="btn btn-success pull-right" href="{{ path('attribute_new') }}">
+    <i class="glyphicon glyphicon-plus"></i>
+    Create attribute
+  </a>
 {% endblock %}

@@ -15,13 +15,16 @@ use Doctrine\ORM\NoResultException;
 class CategoryRepository extends EntityRepository
 {
     /**
+     * @param boolean $onlyActive
      * @return Category[]
      */
-    public function getTopLevel()
+    public function getTopLevel($onlyActive = true)
     {
         $qb = $this->createQueryBuilder('c')
-            ->where('c.is_active = 1')
-            ->andWhere('c.Parent IS NULL');
+            ->Where('c.Parent IS NULL');
+        if ($onlyActive) {
+            $qb->andWhere('c.is_active = true');
+        }
         try {
             $categories = $qb->getQuery()->getResult();
         } catch (NoResultException $e) {

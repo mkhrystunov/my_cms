@@ -266,9 +266,8 @@ th {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-
-  src: url('../../../../../../app/Resources/public/fonts/glyphicons-halflings-regular.eot');
-  src: url('../../../../../../app/Resources/public/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../../../../../app/Resources/public/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../../../../../app/Resources/public/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../../../../../app/Resources/public/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('/bundles/devyukrbook/fonts/glyphicons-halflings-regular.eot');
+  src: url('/bundles/devyukrbook/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/bundles/devyukrbook/fonts/glyphicons-halflings-regular.woff') format('woff'), url('/bundles/devyukrbook/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('/bundles/devyukrbook/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;

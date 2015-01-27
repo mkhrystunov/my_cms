@@ -25,7 +25,7 @@ class CategoryController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('DevyUkrBookBundle:Category')->getTopLevel();
+        $entities = $em->getRepository('DevyUkrBookBundle:Category')->getTopLevel(false);
 
         return $this->render('DevyUkrBookBundle:Category:index.html.twig', array(
             'entities' => $entities,

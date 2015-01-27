@@ -6,8 +6,10 @@
 {% endblock %}
 
 {% block body -%}
-  <table class="records_list table">
-    <caption><h3>Top level categories</h3></caption>
+  <table class="records_list table table-striped">
+    <caption>
+      <h3>Top level categories</h3>
+    </caption>
     <thead>
     <tr>
       <th>Id</th>
@@ -30,20 +32,18 @@
         <td>{% if entity.updatedat %}{{ entity.updatedat|date('Y-m-d H:i:s') }}{% endif %}</td>
         <td>
           <div class="btn-group">
-            <a class="btn btn-default" href="{{ path('category_show', { 'id': entity.id }) }}">show</a>
-            <a class="btn btn-default" href="{{ path('category_edit', { 'id': entity.id }) }}">edit</a>
+            <a class="btn btn-sm btn-default" href="{{ path('category_show', { 'id': entity.id }) }}">show</a>
+            <a class="btn btn-sm btn-default" href="{{ path('category_edit', { 'id': entity.id }) }}">
+              <i class="glyphicon glyphicon-pencil"></i>
+            </a>
           </div>
         </td>
       </tr>
     {% endfor %}
     </tbody>
   </table>
-
-  <ul>
-    <li>
-      <a class="btn btn-default" href="{{ path('category_new') }}">
-        Create a new entry
-      </a>
-    </li>
-  </ul>
+  <a class="btn btn-primary pull-right" href="{{ path('category_new') }}">
+    <i class="glyphicon glyphicon-plus"></i>
+    Create new category
+  </a>
 {% endblock %}

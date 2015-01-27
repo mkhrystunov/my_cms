@@ -10,17 +10,15 @@
     {% endif %}
   </title>
   {% block stylesheets %}
-    {% stylesheets
-    'bundles/devyukrbook/css/*'
-    filter='cssrewrite'
-    filter='?uglifycss'
-    output='css/built/layout.css' %}
-    <link rel="stylesheet" href="{{ asset_url }}"/>
-    <link href="{{ asset_url }}" type="text/css" rel="stylesheet"/>
-    {% endstylesheets %}
+    {#{% stylesheets#}
+    {#'bundles/devyukrbook/css/*'#}
+    {#filter='cssrewrite'#}
+    {#filter='?uglifycss'#}
+    {#output='css/built/layout.css' %}#}
+    {#<link rel="stylesheet" href="{{ asset_url }}"/>#}
+    {#{% endstylesheets %}#}
 
     <link rel="stylesheet" href="{{ asset('bundles/devyukrbook/css/bootstrap.css') }}">
-    {#<link rel="stylesheet" href="{{ asset('bundles/devyukrbook/css/bootstrap-theme.css') }}"#}
   {% endblock %}
 
   {% block javascripts %}

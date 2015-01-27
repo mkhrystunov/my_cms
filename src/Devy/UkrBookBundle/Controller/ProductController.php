@@ -2,6 +2,7 @@
 
 namespace Devy\UkrBookBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -41,6 +42,9 @@ class ProductController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            foreach($entity->getProductAttributes() as $productAttribute) {
+                $em->persist($productAttribute);
+            }
             $em->persist($entity);
             $em->flush();
 
@@ -159,10 +163,16 @@ class ProductController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        /** @var Product $entity */
         $entity = $em->getRepository('DevyUkrBookBundle:Product')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Product entity.');
+        }
+
+        $originalProductAttributes = new ArrayCollection();
+        foreach($entity->getProductAttributes() as $productAttribute) {
+            $originalProductAttributes->add($productAttribute);
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -170,6 +180,15 @@ class ProductController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            foreach ($originalProductAttributes as $productAttribute) {
+                if (!$entity->getProductAttributes()->contains($productAttribute)) {
+                    $entity->removeProductAttribute($productAttribute);
+                    $em->remove($productAttribute);
+                }
+            }
+            foreach($entity->getProductAttributes() as $productAttribute) {
+                $em->persist($productAttribute);
+            }
             $em->flush();
 
             return $this->redirect($this->generateUrl('product_edit', array('id' => $id)));

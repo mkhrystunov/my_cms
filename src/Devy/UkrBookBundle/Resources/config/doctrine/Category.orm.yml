@@ -34,6 +34,9 @@ Devy\UkrBookBundle\Entity\Category:
     Children:
       targetEntity: Devy\UkrBookBundle\Entity\Category
       mappedBy: Parent
+    Products:
+      targetEntity: Devy\UkrBookBundle\Entity\Product
+      mappedBy: Category
   manyToOne:
     Parent:
       targetEntity: Devy\UkrBookBundle\Entity\Category
@@ -41,10 +44,6 @@ Devy\UkrBookBundle\Entity\Category:
       joinColumns:
         category_id:
           referencedColumnName: id
-  oneToMany:
-    Products:
-      targetEntity: Devy\UkrBookBundle\Entity\Product
-      mappedBy: Category
   lifecycleCallbacks:
     prePersist: [ setCreatedAtValue ]
     preUpdate: [ setUpdatedAtValue ]

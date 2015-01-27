@@ -2,6 +2,7 @@
 
 namespace Devy\UkrBookBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -24,16 +25,21 @@ class ProductType extends AbstractType
                     'checked' => true,
                 ),
             ))
-            ->add('price', 'integer')
+            ->add('price', 'money')
             ->add('Brand')
             ->add('Category', 'entity', array(
                 'class' => 'DevyUkrBookBundle:Category',
                 'required' => true,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->where('c.is_active = true');
+                },
             ))
             ->add('ProductAttributes', 'collection', array(
                 'type' => new ProductAttributeType(),
                 'by_reference' => false,
                 'allow_add' => true,
+                'allow_delete' => true,
             ));
     }
 

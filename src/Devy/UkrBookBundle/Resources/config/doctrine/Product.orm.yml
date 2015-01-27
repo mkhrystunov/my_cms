@@ -49,13 +49,16 @@ Devy\UkrBookBundle\Entity\Product:
     Reviews:
       targetEntity: Devy\UkrBookBundle\Entity\Review
       mappedBy: Product
+      cascade: [persist, remove]
     ProductAttributes:
       targetEntity: Devy\UkrBookBundle\Entity\ProductAttribute
       mappedBy: Product
+      cascade: [persist, remove]
   manyToOne:
     Category:
       targetEntity: Devy\UkrBookBundle\Entity\Category
       inversedBy: Products
+      cascade: [persist]
       joinColumns:
         product_id:
           referencedColumnName: id
@@ -64,3 +67,6 @@ Devy\UkrBookBundle\Entity\Product:
     Orders:
       targetEntity: Devy\UkrBookBundle\Entity\Order
       mappedBy: Products
+  lifecycleCallbacks:
+    prePersist: [setCreatedAtValue]
+    preUpdate: [setUpdatedAtValue]
