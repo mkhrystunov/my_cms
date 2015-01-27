@@ -16,7 +16,10 @@ class ProductAttributeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Attribute')
+            ->add('Attribute', 'entity', array(
+                'class' => 'DevyUkrBookBundle:Attribute',
+                'required' => true,
+            ))
             ->add('value');
     }
 

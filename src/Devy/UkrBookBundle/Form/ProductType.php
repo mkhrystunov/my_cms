@@ -19,17 +19,24 @@ class ProductType extends AbstractType
             ->add('description')
             ->add('description_full')
             ->add('code')
-            ->add('is_active')
-            ->add('price')
+            ->add('is_active', 'checkbox', array(
+                'attr' => array(
+                    'checked' => true,
+                ),
+            ))
+            ->add('price', 'integer')
             ->add('Brand')
-            ->add('Category')
+            ->add('Category', 'entity', array(
+                'class' => 'DevyUkrBookBundle:Category',
+                'required' => true,
+            ))
             ->add('ProductAttributes', 'collection', array(
                 'type' => new ProductAttributeType(),
+                'by_reference' => false,
                 'allow_add' => true,
-            ))
-        ;
+            ));
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

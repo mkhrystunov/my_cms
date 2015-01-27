@@ -10,14 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
 class ProductAttribute
 {
     /**
-     * @var integer
+     * @var integer;
      */
-    private $product_id;
-
-    /**
-     * @var integer
-     */
-    private $attribute_id;
+    private $id;
 
     /**
      * @var string
@@ -36,49 +31,13 @@ class ProductAttribute
 
 
     /**
-     * Set product_id
+     * Get id
      *
-     * @param integer $productId
-     * @return ProductAttribute
+     * @return \integer; 
      */
-    public function setProductId($productId)
+    public function getId()
     {
-        $this->product_id = $productId;
-
-        return $this;
-    }
-
-    /**
-     * Get product_id
-     *
-     * @return integer 
-     */
-    public function getProductId()
-    {
-        return $this->product_id;
-    }
-
-    /**
-     * Set attribute_id
-     *
-     * @param integer $attributeId
-     * @return ProductAttribute
-     */
-    public function setAttributeId($attributeId)
-    {
-        $this->attribute_id = $attributeId;
-
-        return $this;
-    }
-
-    /**
-     * Get attribute_id
-     *
-     * @return integer 
-     */
-    public function getAttributeId()
-    {
-        return $this->attribute_id;
+        return $this->id;
     }
 
     /**

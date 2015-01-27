@@ -251,6 +251,7 @@ class Attribute
      */
     public function addProductAttribute(\Devy\UkrBookBundle\Entity\ProductAttribute $productAttributes)
     {
+        $productAttributes->setAttribute($this);
         $this->ProductAttributes[] = $productAttributes;
 
         return $this;
@@ -274,5 +275,13 @@ class Attribute
     public function getProductAttributes()
     {
         return $this->ProductAttributes;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

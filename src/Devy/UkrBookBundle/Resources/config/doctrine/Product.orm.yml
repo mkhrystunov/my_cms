@@ -60,6 +60,7 @@ Devy\UkrBookBundle\Entity\Product:
         product_id:
           referencedColumnName: id
           onDelete: CASCADE
+  manyToMany:
     Orders:
       targetEntity: Devy\UkrBookBundle\Entity\Order
       mappedBy: Products

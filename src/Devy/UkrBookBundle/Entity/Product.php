@@ -446,6 +446,7 @@ class Product
      */
     public function addProductAttribute(\Devy\UkrBookBundle\Entity\ProductAttribute $productAttributes)
     {
+        $productAttributes->setProduct($this);
         $this->ProductAttributes[] = $productAttributes;
 
         return $this;
@@ -464,10 +465,18 @@ class Product
     /**
      * Get ProductAttributes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getProductAttributes()
     {
         return $this->ProductAttributes;
+    }
+
+    /**
+     * @param ProductAttribute[] $productAttributes
+     */
+    public function setProductAttributes(array $productAttributes)
+    {
+        $this->ProductAttributes = $productAttributes;
     }
 }

@@ -36,3 +36,4 @@ Devy\UkrBookBundle\Entity\Attribute:
     ProductAttributes:
       targetEntity: Devy\UkrBookBundle\Entity\ProductAttribute
       mappedBy: Attribute
+      onPersist: CASCADE

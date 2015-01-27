@@ -1,14 +1,12 @@
 Devy\UkrBookBundle\Entity\ProductAttribute:
   type: entity
+  id:
+    id:
+      id: true
+      type: integer
+      generator:
+        strategy: AUTO
   fields:
-    product_id:
-      id: true
-      type: integer
-      associationKey: true
-    attribute_id:
-      id: true
-      type: integer
-      associationKey: true
     value:
       type: string
       nullable: false
@@ -16,12 +14,14 @@ Devy\UkrBookBundle\Entity\ProductAttribute:
     Product:
       targetEntity: Devy\UkrBookBundle\Entity\Product
       inversedBy: ProductAttributes
+      cascade: [persist]
       joinColumns:
         product_id:
           referencedColumnName: id
     Attribute:
       targetEntity: Devy\UkrBookBundle\Entity\Attribute
       inversedBy: ProductAttributes
+      cascade: [persist]
       joinColumns:
         attribute_id:
           referencedColumnName: id
