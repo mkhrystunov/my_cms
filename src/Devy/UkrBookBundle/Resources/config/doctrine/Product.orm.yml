@@ -60,7 +60,7 @@ Devy\UkrBookBundle\Entity\Product:
       inversedBy: Products
       cascade: [persist]
       joinColumns:
-        product_id:
+        category_id:
           referencedColumnName: id
           onDelete: CASCADE
   manyToMany:

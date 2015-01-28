@@ -6,8 +6,19 @@
 {% endblock %}
 
 {% block body -%}
+  <style>
+    h3 {
+      margin: 0;
+    }
+  </style>
+
   <table class="records_list table">
-    <caption><h3>Categories in {{ entity.title }}</h3></caption>
+    <caption>
+      <h3 class="pull-left">Categories in {{ entity.title }}</h3>
+      <a class="btn btn-primary pull-right" href="{{ path('category_new_child', { parent_id: entity.id }) }}">
+        <i class="glyphicon glyphicon-plus"></i>
+      </a>
+    </caption>
     <thead>
     <tr>
       <th>Id</th>
@@ -30,8 +41,19 @@
         <td>{% if child.updatedat %}{{ entity.updatedat|date('Y-m-d H:i:s') }}{% endif %}</td>
         <td>
           <div class="btn-group">
-            <a class="btn btn-default" href="{{ path('category_show', { 'id': child.id }) }}">show</a>
-            <a class="btn btn-default" href="{{ path('category_edit', { 'id': child.id }) }}">edit</a>
+            <a class="btn btn-default btn-sm" href="{{ path('category_show', { 'id': child.id }) }}">show</a>
+            <a class="btn btn-default btn-sm" href="{{ path('category_edit', { 'id': child.id }) }}">edit</a>
+          </div>
+        </td>
+      </tr>
+    {% else %}
+      <tr>
+        <td colspan="7">
+          <div class=" alert alert-info ">
+            This category has no sub-categories.
+            <a href="{{ path('category_new_child', { parent_id: entity.id }) }}" class="alert-link">
+              Create a new one
+            </a>.
           </div>
         </td>
       </tr>
@@ -40,14 +62,18 @@
   </table>
 
   <table class="records_list table">
-    <caption><h3>Products in {{ entity.title }}</h3></caption>
+    <caption>
+      <h3>Products in {{ entity.title }}</h3>
+      {#TODO#}
+      <a class="btn btn-primary pull-right" href="#">
+        <i class="glyphicon glyphicon-plus"></i>
+      </a>
+    </caption>
     <thead>
     <tr>
       <th>Id</th>
       <th>Title</th>
       <th>Description</th>
-      <th>Description_full</th>
-      <th>Code</th>
       <th>Is_active</th>
       <th>Created_at</th>
       <th>Updated_at</th>
@@ -61,16 +87,22 @@
         <td><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
         <td>{{ product.title }}</td>
         <td>{{ product.description }}</td>
-        <td>{{ product.descriptionfull }}</td>
-        <td>{{ product.code }}</td>
         <td>{{ product.isactive }}</td>
         <td>{% if product.createdat %}{{ product.createdat|date('Y-m-d H:i:s') }}{% endif %}</td>
         <td>{% if product.updatedat %}{{ product.updatedat|date('Y-m-d H:i:s') }}{% endif %}</td>
         <td>{{ product.price }}</td>
         <td>
           <div class="btn-group">
-            <a class="btn btn-default" href="{{ path('product_show', { 'id': product.id }) }}">show</a>
-            <a class="btn btn-default" href="{{ path('product_edit', { 'id': product.id }) }}">edit</a>
+            <a class="btn btn-default btn-sm" href="{{ path('product_show', { 'id': product.id }) }}">show</a>
+            <a class="btn btn-default btn-sm" href="{{ path('product_edit', { 'id': product.id }) }}">edit</a>
+          </div>
+        </td>
+      </tr>
+    {% else %}
+      <tr>
+        <td colspan="8">
+          <div class=" alert alert-info ">
+            This category has no products. <a href="#" class="alert-link">Create a new one</a>
           </div>
         </td>
       </tr>
@@ -78,28 +110,13 @@
     </tbody>
   </table>
 
-  <ul class="record_actions">
-    <li>
-      {% if entity.parent %}
-        <a class="btn btn-default" href="{{ path('category_show', { id: entity.parent.id }) }}">
-          Back
-        </a>
-      {% else %}
-        <a class="btn btn-default" href="{{ path('category') }}">
-          Back
-        </a>
-      {% endif %}
-    </li>
-    <li>
-      <a class="btn btn-default" href="{{ path('category_new_child', { parent_id: entity.id }) }}">
-        Create a new entry
-      </a>
-    </li>
-    <li>
-      <a class="btn btn-default" href="{{ path('category_edit', { 'id': entity.id }) }}">
-        Edit
-      </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-  </ul>
+  <div class="btn-group">
+    <a class="btn btn-default btn-lg"
+       href="{{ entity.parent ? path('category_show', { id: entity.parent.id }) : path('category') }}">
+      Back
+    </a>
+    <a class="btn btn-default btn-lg" href="{{ path('category_edit', { 'id': entity.id }) }}">
+      Edit
+    </a>
+  </div>
 {% endblock %}

@@ -29,6 +29,7 @@ class CategoryController extends Controller
 
         return $this->render('DevyUkrBookBundle:Category:index.html.twig', array(
             'entities' => $entities,
+            'breadcrumbs' => [],
         ));
     }
 
@@ -53,7 +54,7 @@ class CategoryController extends Controller
 
         return $this->render('DevyUkrBookBundle:Category:new.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ));
     }
 
@@ -84,6 +85,7 @@ class CategoryController extends Controller
     public function newAction($parent_id = null)
     {
         $entity = new Category();
+        $breadcrumbs = [];
         if ($parent_id) {
             $repo = $this->getDoctrine()->getManager()->getRepository('DevyUkrBookBundle:Category');
             $parent = $repo->find($parent_id);
@@ -91,13 +93,16 @@ class CategoryController extends Controller
                 return $this->createNotFoundException('Unable to find Category entity');
             }
             $entity->setParent($parent);
+            $breadcrumbs = $parent->createCategoryBreadcrumbs();
         }
 
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return $this->render('DevyUkrBookBundle:Category:new.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
+            'breadcrumbs' => $breadcrumbs,
+            'last_active' => true,
         ));
     }
 
@@ -119,8 +124,9 @@ class CategoryController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('DevyUkrBookBundle:Category:show.html.twig', array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
+            'breadcrumbs' => $entity->createCategoryBreadcrumbs(),
         ));
     }
 
@@ -142,19 +148,19 @@ class CategoryController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('DevyUkrBookBundle:Category:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-    * Creates a form to edit a Category entity.
-    *
-    * @param Category $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Category entity.
+     *
+     * @param Category $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(Category $entity)
     {
         $form = $this->createForm(new CategoryType(), $entity, array(
@@ -166,6 +172,7 @@ class CategoryController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Category entity.
      *
@@ -191,11 +198,12 @@ class CategoryController extends Controller
         }
 
         return $this->render('DevyUkrBookBundle:Category:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
+
     /**
      * Deletes a Category entity.
      *
@@ -233,7 +241,6 @@ class CategoryController extends Controller
             ->setAction($this->generateUrl('category_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

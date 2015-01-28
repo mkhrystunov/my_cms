@@ -6,9 +6,18 @@
 {% endblock %}
 
 {% block body -%}
+  <style>
+    h3 {
+      margin: 0;
+    }
+  </style>
+
   <table class="records_list table table-striped">
     <caption>
-      <h3>Top level categories</h3>
+      <h3 class="pull-left">Top level categories</h3>
+      <a class="btn btn-primary pull-right" href="{{ path('category_new') }}">
+        <i class="glyphicon glyphicon-plus"></i>
+      </a>
     </caption>
     <thead>
     <tr>
@@ -39,11 +48,18 @@
           </div>
         </td>
       </tr>
+    {% else %}
+      <tr>
+        <td colspan="7">
+          <div class=" alert alert-info ">
+            There are no categories.
+            <a class="alert-link" href="{{ path('category_new') }}">
+              Create a new one
+            </a>.
+          </div>
+        </td>
+      </tr>
     {% endfor %}
     </tbody>
   </table>
-  <a class="btn btn-primary pull-right" href="{{ path('category_new') }}">
-    <i class="glyphicon glyphicon-plus"></i>
-    Create new category
-  </a>
 {% endblock %}

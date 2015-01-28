@@ -330,4 +330,19 @@ class Category
     {
         return strval($this->getTitle());
     }
+
+    /**
+     * @return array
+     */
+    public function createCategoryBreadcrumbs()
+    {
+        $breadcrumbs = [];
+        $category = $this;
+        $breadcrumbs[$category->getTitle()] = $category->getId();
+        while ($category->getParent()) {
+            $category = $category->getParent();
+            $breadcrumbs[$category->getTitle()] = $category->getId();
+        }
+        return array_reverse($breadcrumbs);
+    }
 }

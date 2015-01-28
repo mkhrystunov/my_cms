@@ -1,0 +1,16 @@
+{% if breadcumbs is defined %}
+  <ol class="breadcrumb">
+    {% if breadcrumbs is empty %}
+      <li class="active">Catalog</li>
+    {% else %}
+      <li><a href="{{ url('category') }}">Catalog</a></li>
+    {% endif %}
+    {% for title, id in breadcrumbs %}
+      {% if loop.last and last_active is not defined %}
+        <li class="active">{{ title }}</li>
+      {% else %}
+        <li><a href="{{ url('category_show', { id: id }) }}">{{ title }}</a></li>
+      {% endif %}
+    {% endfor %}
+  </ol>
+{% endif %}
