@@ -41,9 +41,13 @@
         <td>{% if entity.updatedat %}{{ entity.updatedat|date('Y-m-d H:i:s') }}{% endif %}</td>
         <td>
           <div class="btn-group">
-            <a class="btn btn-sm btn-default" href="{{ path('category_show', { 'id': entity.id }) }}">show</a>
+            <a class="btn btn-sm btn-default" href="{{ path('category_show', { 'id': entity.id }) }}">
+              <i class="glyphicon glyphicon-folder-open"></i>
+              show
+            </a>
             <a class="btn btn-sm btn-default" href="{{ path('category_edit', { 'id': entity.id }) }}">
               <i class="glyphicon glyphicon-pencil"></i>
+              edit
             </a>
           </div>
         </td>
