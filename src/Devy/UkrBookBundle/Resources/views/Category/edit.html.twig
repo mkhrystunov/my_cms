@@ -6,16 +6,10 @@
 {% endblock %}
 
 {% block body -%}
-    <h1>Category edit</h1>
+  <h1>Category edit</h1>
 
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a class="btn btn-default" href="{{ path('category') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  <input type="submit" value="Update" class="btn btn-success pull-right">
+  {{ form_end(form) }}
 {% endblock %}

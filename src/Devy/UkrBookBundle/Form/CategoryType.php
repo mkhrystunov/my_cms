@@ -18,12 +18,30 @@ class CategoryType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('is_active', 'checkbox', array(
-                'required' => false
-            ))
-            ->add('Parent', 'entity_hidden', array(
+            ->add('is_active', 'checkbox', [
+                'required' => false,
+            ])
+            ->add('Parent', 'entity_hidden', [
                 'class' => 'Devy\UkrBookBundle\Entity\Category',
-            ))
+            ])
+            ->add('page_title', 'text', [
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Make sure that your title is clear, and contains many of the keywords within the page itself.',
+                ]
+            ])
+            ->add('meta_description', 'textarea', [
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Make sure it uses keywords found within the page itself.',
+                ]
+            ])
+            ->add('meta_keywords', 'textarea', [
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Don\'t repeat keywords over and over in a row. Rather, put in keyword phrases.',
+                ]
+            ])
         ;
     }
     

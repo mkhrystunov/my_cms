@@ -16,11 +16,6 @@ category_new_child:
     requirements:
       parent_id: \d+
 
-category_create:
-    path:     /create
-    defaults: { _controller: "DevyUkrBookBundle:Category:create" }
-    requirements: { _method: post }
-
 category_edit:
     path:     /{id}/edit
     defaults: { _controller: "DevyUkrBookBundle:Category:edit" }

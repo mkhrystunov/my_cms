@@ -36,7 +36,7 @@
         <td><a href="{{ path('category_show', { 'id': child.id }) }}">{{ child.id }}</a></td>
         <td>{{ child.title }}</td>
         <td>{{ child.description }}</td>
-        <td>{{ child.isactive }}</td>
+        <td><i class="glyphicon {{ child.isActive ? 'glyphicon-check' : 'glyphicon-unchecked' }}"></i></td>
         <td>{% if child.createdat %}{{ entity.createdat|date('Y-m-d H:i:s') }}{% endif %}</td>
         <td>{% if child.updatedat %}{{ entity.updatedat|date('Y-m-d H:i:s') }}{% endif %}</td>
         <td>
@@ -93,7 +93,7 @@
         <td><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
         <td>{{ product.title }}</td>
         <td>{{ product.description }}</td>
-        <td>{{ product.isactive }}</td>
+        <td><i class="glyphicon {{ product.isActive ? 'glyphicon-check' : 'glyphicon-unchecked' }}"></i></td>
         <td>{% if product.createdat %}{{ product.createdat|date('Y-m-d H:i:s') }}{% endif %}</td>
         <td>{% if product.updatedat %}{{ product.updatedat|date('Y-m-d H:i:s') }}{% endif %}</td>
         <td>{{ product.price }}</td>

@@ -1,3 +1,0 @@
-Devy\UkrBookBundle\Entity\Category:
-  constraints:
-    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: title

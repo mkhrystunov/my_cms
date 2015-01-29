@@ -309,7 +309,9 @@ class Category
      */
     public function setCreatedAtValue()
     {
-        // Add your code here
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
+        return $this;
     }
 
     /**
@@ -317,6 +319,30 @@ class Category
      */
     public function setUpdatedAtValue()
     {
-        // Add your code here
+        $this->setUpdatedAt(new \DateTime());
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return strval($this->getTitle());
+    }
+
+    /**
+     * @return array
+     */
+    public function createCategoryBreadcrumbs()
+    {
+        $breadcrumbs = [];
+        $category = $this;
+        $breadcrumbs[$category->getTitle()] = $category->getId();
+        while ($category->getParent()) {
+            $category = $category->getParent();
+            $breadcrumbs[$category->getTitle()] = $category->getId();
+        }
+        return array_reverse($breadcrumbs);
     }
 }
