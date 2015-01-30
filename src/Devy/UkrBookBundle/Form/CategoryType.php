@@ -7,6 +7,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * Class CategoryType
+ * @package Devy\UkrBookBundle\Form
+ */
 class CategoryType extends AbstractType
 {
     /**
@@ -42,17 +46,22 @@ class CategoryType extends AbstractType
                     'placeholder' => 'Don\'t repeat keywords over and over in a row. Rather, put in keyword phrases.',
                 ]
             ])
+            ->add('image', new FileType(), [
+                'data_class' => 'Devy\UkrBookBundle\Entity\File'
+            ])
         ;
     }
-    
+
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param array $options
+     * @return array
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function getDefaultOptions(array $options)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Devy\UkrBookBundle\Entity\Category'
-        ));
+        return [
+            'data_class' => 'Devy\UkrBookBundle\Entity\Category',
+            'cascade_validation' => true,
+        ];
     }
 
     /**

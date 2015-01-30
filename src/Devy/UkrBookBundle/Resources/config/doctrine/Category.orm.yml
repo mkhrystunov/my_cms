@@ -26,10 +26,6 @@ Devy\UkrBookBundle\Entity\Category:
     updated_at:
       type: datetime
       nullable: true
-    image:
-      type: string
-      length: 140
-      nullable: true
     page_title:
       type: string
       length: 50
@@ -40,6 +36,15 @@ Devy\UkrBookBundle\Entity\Category:
     meta_keywords:
       type: text
       nullable: true
+  oneToOne:
+    Image:
+      targetEntity: Devy\UkrBookBundle\Entity\File
+      cascade: [persist]
+      joinColumns:
+        file_id:
+          referencedColumnName: id
+          unique: true
+          onDelete: CASCADE
   oneToMany:
     Children:
       targetEntity: Devy\UkrBookBundle\Entity\Category

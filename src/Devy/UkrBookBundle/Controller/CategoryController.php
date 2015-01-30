@@ -29,10 +29,10 @@ class CategoryController extends Controller
 
         $entities = $em->getRepository('DevyUkrBookBundle:Category')->getTopLevel(false);
 
-        return $this->render('DevyUkrBookBundle:Category:index.html.twig', array(
+        return $this->render('DevyUkrBookBundle:Category:index.html.twig', [
             'entities' => $entities,
             'breadcrumbs' => [],
-        ));
+        ]);
     }
 
     /**
@@ -66,15 +66,15 @@ class CategoryController extends Controller
 
             $request->getSession()->getFlashBag()->add('success', 'Category was created!');
 
-            return $this->redirect($this->generateUrl('category_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('category_show', ['id' => $entity->getId()]));
         }
 
-        return $this->render('DevyUkrBookBundle:Category:new.html.twig', array(
+        return $this->render('DevyUkrBookBundle:Category:new.html.twig', [
             'entity' => $entity,
             'form' => $form->createView(),
             'breadcrumbs' => $breadcrumbs,
             'last_active' => true,
-        ));
+        ]);
     }
 
     /**
@@ -92,10 +92,10 @@ class CategoryController extends Controller
             throw $this->createNotFoundException('Unable to find Category entity.');
         }
 
-        return $this->render('DevyUkrBookBundle:Category:show.html.twig', array(
+        return $this->render('DevyUkrBookBundle:Category:show.html.twig', [
             'entity' => $entity,
             'breadcrumbs' => $entity->createCategoryBreadcrumbs(),
-        ));
+        ]);
     }
 
     /**
@@ -119,16 +119,18 @@ class CategoryController extends Controller
         ]);
 
         $form->handleRequest($request);
+
         if ($form->isValid()) {
             $em->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Your changes were saved!');
-            return $this->redirect($this->generateUrl('category_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('category_edit', ['id' => $id]));
         }
 
-        return $this->render('DevyUkrBookBundle:Category:edit.html.twig', array(
+        return $this->render('DevyUkrBookBundle:Category:edit.html.twig', [
             'entity' => $entity,
             'form' => $form->createView(),
-        ));
+            'breadcrumbs' => $entity->createCategoryBreadcrumbs(),
+        ]);
     }
 }

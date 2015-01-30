@@ -1,0 +1,19 @@
+Devy\UkrBookBundle\Entity\File:
+  type: entity
+  repositoryClass: Devy\UkrBookBundle\Repository\FileRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    path:
+      type: string
+      length: 255
+      nullable: true
+  lifecycleCallbacks:
+    prePersist: [preUpload]
+    preUpdate: [preUpload]
+    postPersist: [upload]
+    postUpdate: [upload]
+    postRemove: [remove]

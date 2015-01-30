@@ -6,10 +6,19 @@
 {% endblock %}
 
 {% block body -%}
-  <h1>Category edit</h1>
+  <style>
+    img {
+      max-height: 150px;
+      max-width: 150px;
+    }
+  </style>
+  <h1>Edit '{{ entity.title }}'</h1>
 
   {{ form_start(form) }}
   {{ form_widget(form) }}
-  <input type="submit" value="Update" class="btn btn-success pull-right">
+  <div class="btn-group pull-right">
+    <a class="btn btn-info btn-lg" href="{{ url('category_show', {id: entity.id }) }}">Back</a>
+    <input type="submit" value="Update" class="btn btn-success btn-lg">
+  </div>
   {{ form_end(form) }}
 {% endblock %}

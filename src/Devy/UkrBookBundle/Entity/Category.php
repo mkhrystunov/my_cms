@@ -23,8 +23,8 @@ class Category
     private $description;
     /** @var boolean */
     private $is_active;
-    /** @var string */
-    private $image;
+    /** @var File */
+    private $Image;
     /** @var Collection */
     private $Children;
     /** @var Category */
@@ -133,12 +133,12 @@ class Category
     /**
      * Set image
      *
-     * @param string $image
+     * @param File $image
      * @return Category
      */
-    public function setImage($image)
+    public function setImage(File $image)
     {
-        $this->image = $image;
+        $this->Image = $image;
 
         return $this;
     }
@@ -146,11 +146,11 @@ class Category
     /**
      * Get image
      *
-     * @return string
+     * @return File
      */
     public function getImage()
     {
-        return $this->image;
+        return $this->Image;
     }
 
     /**
@@ -412,9 +412,9 @@ class Category
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('title', new NotBlank());
-        $metadata->addConstraint(new UniqueEntity(array(
-            'fields'  => 'title',
+        $metadata->addConstraint(new UniqueEntity([
+            'fields' => 'title',
             'message' => 'Use different titles for categories.',
-        )));
+        ]));
     }
 }
