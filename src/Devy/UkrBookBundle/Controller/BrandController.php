@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Devy\UkrBookBundle\Entity\Brand;
 use Devy\UkrBookBundle\Form\BrandType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Brand controller.
@@ -25,18 +26,23 @@ class BrandController extends Controller
 
         $entities = $em->getRepository('DevyUkrBookBundle:Brand')->findAll();
 
-        return $this->render('DevyUkrBookBundle:Brand:index.html.twig', array(
+        return $this->render('DevyUkrBookBundle:Brand:index.html.twig', [
             'entities' => $entities,
-        ));
+        ]);
     }
+
     /**
-     * Creates a new Brand entity.
-     *
+     * Displays a form to create a new Brand entity.
+     * @param Request $request
+     * @return Response
      */
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
         $entity = new Brand();
-        $form = $this->createCreateForm($entity);
+        $form = $this->createForm(new BrandType(), $entity, [
+            'action' => $this->generateUrl('brand_new'),
+            'method' => 'POST',
+        ]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -44,76 +50,24 @@ class BrandController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('brand_show', array('id' => $entity->getId())));
+            $this->get('session')->getFlashBag()->add('success', 'Brand was created!');
+
+            return $this->redirect($this->generateUrl('brand'));
         }
 
-        return $this->render('DevyUkrBookBundle:Brand:new.html.twig', array(
+        return $this->render('DevyUkrBookBundle:Brand:new.html.twig', [
             'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-
-    /**
-     * Creates a form to create a Brand entity.
-     *
-     * @param Brand $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Brand $entity)
-    {
-        $form = $this->createForm(new BrandType(), $entity, array(
-            'action' => $this->generateUrl('brand_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Brand entity.
-     *
-     */
-    public function newAction()
-    {
-        $entity = new Brand();
-        $form   = $this->createCreateForm($entity);
-
-        return $this->render('DevyUkrBookBundle:Brand:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-
-    /**
-     * Finds and displays a Brand entity.
-     *
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('DevyUkrBookBundle:Brand')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Brand entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('DevyUkrBookBundle:Brand:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        ));
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
      * Displays a form to edit an existing Brand entity.
-     *
+     * @param Request $request
+     * @param int $id
+     * @return Response
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -123,102 +77,23 @@ class BrandController extends Controller
             throw $this->createNotFoundException('Unable to find Brand entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('DevyUkrBookBundle:Brand:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-    * Creates a form to edit a Brand entity.
-    *
-    * @param Brand $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Brand $entity)
-    {
-        $form = $this->createForm(new BrandType(), $entity, array(
-            'action' => $this->generateUrl('brand_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new BrandType(), $entity, [
+            'action' => $this->generateUrl('brand_edit', ['id' => $id]),
             'method' => 'PUT',
-        ));
+        ]);
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
-    /**
-     * Edits an existing Brand entity.
-     *
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('DevyUkrBookBundle:Brand')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Brand entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('brand_edit', array('id' => $id)));
-        }
-
-        return $this->render('DevyUkrBookBundle:Brand:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-    /**
-     * Deletes a Brand entity.
-     *
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('DevyUkrBookBundle:Brand')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Brand entity.');
-            }
-
-            $em->remove($entity);
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success', 'Your changes were saved!');
+            return $this->redirect($this->generateUrl('brand_edit', ['id' => $id]));
         }
 
-        return $this->redirect($this->generateUrl('brand'));
-    }
-
-    /**
-     * Creates a form to delete a Brand entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('brand_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+        return $this->render('DevyUkrBookBundle:Brand:edit.html.twig', array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ));
     }
 }

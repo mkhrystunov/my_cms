@@ -41,7 +41,11 @@
       <tr>
         <td><a href="{{ path('category_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
         <td>{{ entity.title }}</td>
-        <td><img src="{{ asset(entity.image.webPath) }}"></td>
+        <td>
+          {% if entity.image.webPath %}
+            <img src="{{ asset(entity.image.webPath) }}">
+          {% endif %}
+        </td>
         <td>{{ entity.description }}</td>
         <td><i class="glyphicon {{ entity.isActive ? 'glyphicon-check' : 'glyphicon-unchecked' }}"></i></td>
         <td>{% if entity.createdat %}{{ entity.createdat|date('Y-m-d H:i:s') }}{% endif %}</td>

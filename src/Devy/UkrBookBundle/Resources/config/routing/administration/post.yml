@@ -2,27 +2,13 @@ post:
     path:     /
     defaults: { _controller: "DevyUkrBookBundle:Post:index" }
 
-post_show:
-    path:     /{id}/show
-    defaults: { _controller: "DevyUkrBookBundle:Post:show" }
-
 post_new:
     path:     /new
     defaults: { _controller: "DevyUkrBookBundle:Post:new" }
 
-post_create:
-    path:     /create
-    defaults: { _controller: "DevyUkrBookBundle:Post:create" }
-    requirements: { _method: post }
-
 post_edit:
     path:     /{id}/edit
     defaults: { _controller: "DevyUkrBookBundle:Post:edit" }
-
-post_update:
-    path:     /{id}/update
-    defaults: { _controller: "DevyUkrBookBundle:Post:update" }
-    requirements: { _method: post|put }
 
 post_delete:
     path:     /{id}/delete

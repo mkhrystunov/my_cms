@@ -1,16 +1,15 @@
-{% extends '::base.html.twig' %}
+{% set active = 'attributes' %}
+{% extends 'DevyUkrBookBundle::administrator.layout.html.twig' %}
 
 {% block body -%}
-    <h1>Attribute edit</h1>
+  <h1>Attribute edit</h1>
 
-    {{ form(edit_form) }}
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  <div class="btn-group pull-right">
+    <a class="btn btn-info btn-lg" href="{{ url('attribute') }}">Back</a>
+    <input type="submit" value="Update" class="btn btn-success btn-lg">
+  </div>
+  {{ form_end(form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('attribute') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
 {% endblock %}

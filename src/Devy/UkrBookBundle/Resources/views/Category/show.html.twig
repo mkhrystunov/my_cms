@@ -17,7 +17,7 @@
   </style>
 
   <h2>{{ entity.title }}</h2>
-  {% if entity.image %}
+  {% if entity.image.webPath %}
     <img src="{{ asset(entity.image.webPath) }}">
   {% endif %}
 

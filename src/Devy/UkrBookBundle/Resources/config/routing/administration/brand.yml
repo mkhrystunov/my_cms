@@ -2,29 +2,10 @@ brand:
     path:     /
     defaults: { _controller: "DevyUkrBookBundle:Brand:index" }
 
-brand_show:
-    path:     /{id}/show
-    defaults: { _controller: "DevyUkrBookBundle:Brand:show" }
-
 brand_new:
     path:     /new
     defaults: { _controller: "DevyUkrBookBundle:Brand:new" }
 
-brand_create:
-    path:     /create
-    defaults: { _controller: "DevyUkrBookBundle:Brand:create" }
-    requirements: { _method: post }
-
 brand_edit:
     path:     /{id}/edit
     defaults: { _controller: "DevyUkrBookBundle:Brand:edit" }
-
-brand_update:
-    path:     /{id}/update
-    defaults: { _controller: "DevyUkrBookBundle:Brand:update" }
-    requirements: { _method: post|put }
-
-brand_delete:
-    path:     /{id}/delete
-    defaults: { _controller: "DevyUkrBookBundle:Brand:delete" }
-    requirements: { _method: post|delete }

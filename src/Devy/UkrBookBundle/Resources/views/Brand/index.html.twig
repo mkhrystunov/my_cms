@@ -7,7 +7,12 @@
 
 {% block body -%}
   <table class="records_list table">
-    <caption><h3>Brands</h3></caption>
+    <caption>
+      <h3>Brands</h3>
+      <a class="btn btn-primary pull-right" href="{{ path('brand_new') }}">
+        <i class="glyphicon glyphicon-plus"></i>
+      </a>
+    </caption>
     <thead>
     <tr>
       <th>Id</th>
@@ -19,25 +24,30 @@
     <tbody>
     {% for entity in entities %}
       <tr>
-        <td><a href="{{ path('brand_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+        <td>{{ entity.id }}</td>
         <td>{{ entity.name }}</td>
         <td>{{ entity.isactive }}</td>
         <td>
           <div class="btn-group">
-            <a class="btn btn-default" href="{{ path('brand_show', { 'id': entity.id }) }}">show</a>
-            <a class="btn btn-default" href="{{ path('brand_edit', { 'id': entity.id }) }}">edit</a>
+            <a class="btn btn-info btn-sm" href="{{ path('brand_edit', { 'id': entity.id }) }}">
+              <i class="glyphicon glyphicon-pencil"></i>
+              edit
+            </a>
+          </div>
+        </td>
+      </tr>
+    {% else %}
+      <tr>
+        <td colspan="4">
+          <div class=" alert alert-info ">
+            There are no brands.
+            <a class="alert-link" href="{{ path('brand_new') }}">
+              Create a new one
+            </a>.
           </div>
         </td>
       </tr>
     {% endfor %}
     </tbody>
   </table>
-
-  <ul>
-    <li>
-      <a class="btn btn-default" href="{{ path('brand_new') }}">
-        Create a new entry
-      </a>
-    </li>
-  </ul>
 {% endblock %}
