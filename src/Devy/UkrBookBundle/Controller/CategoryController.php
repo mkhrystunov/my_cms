@@ -64,7 +64,7 @@ class CategoryController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            $request->getSession()->getFlashBag()->add('success', 'Category was created!');
+            $this->get('session')->getFlashBag()->add('success', 'Category was created!');
 
             return $this->redirect($this->generateUrl('category_show', ['id' => $entity->getId()]));
         }
@@ -123,7 +123,7 @@ class CategoryController extends Controller
         if ($form->isValid()) {
             $em->flush();
 
-            $request->getSession()->getFlashBag()->add('success', 'Your changes were saved!');
+            $this->get('session')->getFlashBag()->add('success', 'Your changes were saved!');
             return $this->redirect($this->generateUrl('category_edit', ['id' => $id]));
         }
 
