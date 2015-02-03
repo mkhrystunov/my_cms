@@ -412,9 +412,9 @@ class Category
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('title', new NotBlank());
-        $metadata->addConstraint(new UniqueEntity(array(
-            'fields'  => 'title',
+        $metadata->addConstraint(new UniqueEntity([
+            'fields' => 'title',
             'message' => 'Use different titles for categories.',
-        )));
+        ]));
     }
 }

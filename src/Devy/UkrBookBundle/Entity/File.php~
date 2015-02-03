@@ -66,6 +66,9 @@ class File
         if (is_file($this->getAbsolutePath())) {
             // store the old image to delete after update
             $this->temp = $this->getAbsolutePath();
+            if ($file) {
+                $this->path = $this->file->getPath();
+            }
         } else {
             $this->path = 'initial';
         }
@@ -148,8 +151,8 @@ class File
         }
 
         if (isset($this->temp)) {
+            var_dump($this->temp);
             // delete old
-            die('123');
             unlink($this->temp);
             $this->temp = null;
         }

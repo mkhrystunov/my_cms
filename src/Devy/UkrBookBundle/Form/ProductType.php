@@ -35,12 +35,31 @@ class ProductType extends AbstractType
                         ->where('c.is_active = true');
                 },
             ))
+            ->add('page_title', 'text', [
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Make sure that your title is clear, and contains many of the keywords within the page itself.',
+                ]
+            ])
+            ->add('meta_description', 'textarea', [
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Make sure it uses keywords found within the page itself.',
+                ]
+            ])
+            ->add('meta_keywords', 'textarea', [
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Don\'t repeat keywords over and over in a row. Rather, put in keyword phrases.',
+                ]
+            ])
             ->add('ProductAttributes', 'collection', array(
                 'type' => new ProductAttributeType(),
                 'by_reference' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
-            ));
+            ))
+        ;
     }
 
     /**

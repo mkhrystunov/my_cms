@@ -3,6 +3,11 @@
 namespace Devy\UkrBookBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * Product
@@ -496,5 +501,43 @@ class Product
     public function setUpdatedAtValue()
     {
         $this->setUpdatedAt(new \DateTime());
+    }
+
+    /**
+     * Entity validation function
+     *
+     * @param ClassMetadata $metadata
+     */
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('title', new NotBlank());
+        $metadata->addConstraint(new UniqueEntity([
+            'fields' => 'title',
+            'message' => 'Use different titles for products.',
+        ]));
+
+        $metadata->addConstraint(new Callback('validate'));
+    }
+
+    /**
+     * @param Product $object
+     * @param ExecutionContextInterface $context
+     */
+    public static function validate(Product $object, ExecutionContextInterface $context)
+    {
+        /** @var string[] $attributes */
+        $attributes = [];
+        foreach ($object->getProductAttributes() as $attribute) {
+            $attributes[] = $attribute->getAttribute()->getName();
+        }
+
+        foreach ($attributes as $attribute) {
+            if (in_array($attribute, array_diff_key($attributes, [$attribute]))) {
+                $context->buildViolation('This attribute "%string%" is already in use!')
+                    ->setParameter('%string%', $attribute)
+                    ->addViolation();
+                break;
+            }
+        }
     }
 }

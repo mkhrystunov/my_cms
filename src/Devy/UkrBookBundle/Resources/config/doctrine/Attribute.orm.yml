@@ -25,13 +25,6 @@ Devy\UkrBookBundle\Entity\Attribute:
     is_active:
       type: boolean
       nullable: true
-  manyToOne:
-    AttributeSet:
-      targetEntity: Devy\UkrBookBundle\Entity\AttributeSet
-      inversedBy: Attributes
-      joinColumns:
-        attribute_set_id:
-          referencedColumnName: id
   oneToMany:
     ProductAttributes:
       targetEntity: Devy\UkrBookBundle\Entity\ProductAttribute

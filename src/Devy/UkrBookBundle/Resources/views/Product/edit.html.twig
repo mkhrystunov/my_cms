@@ -9,7 +9,10 @@
 
 {% block _devy_ukrbookbundle_product_ProductAttributes_label %}
   {{ form_label(form) }}
-  <a class="pull-right btn btn-success" href="#" id="add-attribute">Add attribute</a>
+  <a class="btn btn-info btn-sm" href="#" id="add-attribute">
+    <i class="glyphicon glyphicon-plus-sign"></i>
+    add
+  </a>
 {% endblock %}
 
 {% block _devy_ukrbookbundle_product_ProductAttributes_entry_row %}
@@ -21,7 +24,10 @@
       {{ form_row(form.value) }}
     </div>
     <div class="col-md-4">
-      <button class="btn btn-danger remove-attribute">Remove</button>
+      <div class="form-group">
+        <label class="control-label required">Actions</label>
+        <button class="btn btn-danger remove-attribute form-control">Remove</button>
+      </div>
     </div>
   </div>
 {% endblock %}

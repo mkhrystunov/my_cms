@@ -2,6 +2,7 @@
 
 namespace Devy\UkrBookBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -89,10 +90,11 @@ class Product
      */
     public function __construct()
     {
-        $this->Reviews = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Categories = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Orders = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Attributes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->Reviews = new ArrayCollection();
+        $this->Categories = new ArrayCollection();
+        $this->Orders = new ArrayCollection();
+        $this->Attributes = new ArrayCollection();
+        $this->ProductAttributes = new ArrayCollection();
     }
 
     /**
@@ -535,9 +537,94 @@ class Product
             if (in_array($attribute, array_diff_key($attributes, [$attribute]))) {
                 $context->buildViolation('This attribute "%string%" is already in use!')
                     ->setParameter('%string%', $attribute)
+                    ->atPath('ProductAttributes')
                     ->addViolation();
                 break;
             }
         }
+    }
+    /**
+     * @var string
+     */
+    private $page_title;
+
+    /**
+     * @var string
+     */
+    private $meta_description;
+
+    /**
+     * @var string
+     */
+    private $meta_keywords;
+
+
+    /**
+     * Set page_title
+     *
+     * @param string $pageTitle
+     * @return Product
+     */
+    public function setPageTitle($pageTitle)
+    {
+        $this->page_title = $pageTitle;
+
+        return $this;
+    }
+
+    /**
+     * Get page_title
+     *
+     * @return string 
+     */
+    public function getPageTitle()
+    {
+        return $this->page_title;
+    }
+
+    /**
+     * Set meta_description
+     *
+     * @param string $metaDescription
+     * @return Product
+     */
+    public function setMetaDescription($metaDescription)
+    {
+        $this->meta_description = $metaDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get meta_description
+     *
+     * @return string 
+     */
+    public function getMetaDescription()
+    {
+        return $this->meta_description;
+    }
+
+    /**
+     * Set meta_keywords
+     *
+     * @param string $metaKeywords
+     * @return Product
+     */
+    public function setMetaKeywords($metaKeywords)
+    {
+        $this->meta_keywords = $metaKeywords;
+
+        return $this;
+    }
+
+    /**
+     * Get meta_keywords
+     *
+     * @return string 
+     */
+    public function getMetaKeywords()
+    {
+        return $this->meta_keywords;
     }
 }
