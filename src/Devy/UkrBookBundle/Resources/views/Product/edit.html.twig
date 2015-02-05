@@ -5,7 +5,7 @@
   {{ entity.title }}
 {% endblock %}
 
-{% form_theme edit_form _self %}
+{% form_theme form _self %}
 
 {% block _devy_ukrbookbundle_product_ProductAttributes_label %}
   {{ form_label(form) }}
@@ -35,16 +35,10 @@
 {% block body -%}
   <h1>Product edit</h1>
 
-  {{ form(edit_form) }}
-
-  <ul class="record_actions">
-    <li>
-      <a href="{{ path('product') }}">
-        Back to the list
-      </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-  </ul>
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  <input type="submit" value="Update" class="btn btn-success btn-lg pull-right">
+  {{ form_end(form) }}
 
   <script>
 

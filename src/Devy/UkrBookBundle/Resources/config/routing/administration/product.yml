@@ -10,21 +10,12 @@ product_new:
     path:     /new
     defaults: { _controller: "DevyUkrBookBundle:Product:new" }
 
-product_create:
-    path:     /create
-    defaults: { _controller: "DevyUkrBookBundle:Product:create" }
-    requirements: { _method: post }
+product_new_category:
+    path:     /new/{category_id}
+    defaults: { _controller: "DevyUkrBookBundle:Product:new" }
+    requirements:
+      category_id: \d+
 
 product_edit:
     path:     /{id}/edit
     defaults: { _controller: "DevyUkrBookBundle:Product:edit" }
-
-product_update:
-    path:     /{id}/update
-    defaults: { _controller: "DevyUkrBookBundle:Product:update" }
-    requirements: { _method: post|put }
-
-product_delete:
-    path:     /{id}/delete
-    defaults: { _controller: "DevyUkrBookBundle:Product:delete" }
-    requirements: { _method: post|delete }
