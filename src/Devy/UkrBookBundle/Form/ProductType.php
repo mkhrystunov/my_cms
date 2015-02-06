@@ -53,12 +53,15 @@ class ProductType extends AbstractType
                     'placeholder' => 'Don\'t repeat keywords over and over in a row. Rather, put in keyword phrases.',
                 ]
             ])
-            ->add('ProductAttributes', 'collection', array(
+            ->add('image', new FileType(), [
+                'data_class' => 'Devy\UkrBookBundle\Entity\File'
+            ])
+            ->add('ProductAttributes', 'collection', [
                 'type' => new ProductAttributeType(),
                 'by_reference' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
-            ))
+            ])
         ;
     }
 

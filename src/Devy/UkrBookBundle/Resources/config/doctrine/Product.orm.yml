@@ -53,8 +53,12 @@ Devy\UkrBookBundle\Entity\Product:
           referencedColumnName: id
           unique: true
     Image:
-      targetEntity: Devy\UkrBookBundle\Entity\Image
-      mappedBy: Product
+      targetEntity: Devy\UkrBookBundle\Entity\File
+      cascade: [persist]
+      joinColumns:
+        file_id:
+          referencedColumnName: id
+          unique: true
   oneToMany:
     Reviews:
       targetEntity: Devy\UkrBookBundle\Entity\Review

@@ -32,7 +32,20 @@
   </div>
 {% endblock %}
 
+{% block _devy_ukrbookbundle_product_image_label %}
+  {{ form_label(form) }}
+  {% if form.parent.vars.value.image.webPath %}
+    <img src="{{ asset(form.parent.vars.value.image.webPath) }}">
+  {% endif %}
+{% endblock %}
+
 {% block body -%}
+  <style>
+    img {
+      max-width: 50px;
+      max-height: 50px;
+    }
+  </style>
   <h1>Product edit</h1>
 
   {{ form_start(form) }}

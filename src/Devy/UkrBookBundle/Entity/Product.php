@@ -66,7 +66,7 @@ class Product
     private $Brand;
 
     /**
-     * @var \Devy\UkrBookBundle\Entity\Image
+     * @var \Devy\UkrBookBundle\Entity\File
      */
     private $Image;
 
@@ -317,10 +317,10 @@ class Product
     /**
      * Set Image
      *
-     * @param \Devy\UkrBookBundle\Entity\Image $image
+     * @param \Devy\UkrBookBundle\Entity\File $image
      * @return Product
      */
-    public function setImage(\Devy\UkrBookBundle\Entity\Image $image = null)
+    public function setImage(\Devy\UkrBookBundle\Entity\File $image = null)
     {
         $this->Image = $image;
 
@@ -330,7 +330,7 @@ class Product
     /**
      * Get Image
      *
-     * @return \Devy\UkrBookBundle\Entity\Image
+     * @return \Devy\UkrBookBundle\Entity\File
      */
     public function getImage()
     {
