@@ -18,6 +18,7 @@
     {#<link rel="stylesheet" href="{{ asset_url }}"/>#}
     {#{% endstylesheets %}#}
 
+    <link rel="stylesheet" href="{{ asset('bundles/devyukrbook/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/devyukrbook/css/bootstrap.css') }}">
   {% endblock %}
 
@@ -48,5 +49,10 @@
   {% include 'DevyUkrBookBundle::partial_catalog_breadcrumb.html.twig' %}
   {% block body %}{% endblock %}
 </div>
+<footer class="footer">
+  <div class="container">
+    <p class="muted">Created by <a href="http://khrystunov.com">Maksym Khrystunov</a></p>
+  </div>
+</footer>
 </body>
 </html>
