@@ -343,6 +343,20 @@ class Product
     }
 
     /**
+     * @return float
+     */
+    public function getRating()
+    {
+        $rating = 0;
+        $reviews = $this->getReviews();
+        /** @var Review $review */
+        foreach($reviews as $review) {
+            $rating += $review->getScore();
+        }
+        return $rating / $this->getReviews()->count();
+    }
+
+    /**
      * Add Orders
      *
      * @param \Devy\UkrBookBundle\Entity\Order $orders

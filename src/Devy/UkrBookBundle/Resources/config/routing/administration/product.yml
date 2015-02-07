@@ -19,3 +19,15 @@ product_new_category:
 product_edit:
     path:     /{id}/edit
     defaults: { _controller: "DevyUkrBookBundle:Product:edit" }
+
+product_reviews:
+    path:     /{id}/reviews
+    defaults: { _controller: "DevyUkrBookBundle:Product:reviews" }
+
+product_review_activate:
+    path:     /review/activate/{id}
+    defaults: { _controller: "DevyUkrBookBundle:Product:activateReview" }
+
+product_review_deactivate:
+    path:     /review/deactivate/{id}
+    defaults: { _controller: "DevyUkrBookBundle:Product:deactivateReview" }

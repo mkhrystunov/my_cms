@@ -10,6 +10,13 @@ Devy\UkrBookBundle\Entity\Review:
       type: string
       length: 255
       nullable: false
+    score:
+      type: integer
+      nullable: false
+    is_active:
+      type: boolean
+      options:
+        default: false
   manyToOne:
     Product:
       targetEntity: Devy\UkrBookBundle\Entity\Product

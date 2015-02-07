@@ -3,6 +3,7 @@
 namespace Devy\UkrBookBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -65,6 +66,7 @@ class ProductController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('success', 'Product was created!');
             return $this->redirect($this->generateUrl('product_show', ['id' => $entity->getId()]));
         }
 
@@ -138,6 +140,7 @@ class ProductController extends Controller
             }
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('success', 'Product saved!');
             return $this->redirect($this->generateUrl('product_edit', ['id' => $id]));
         }
 
@@ -147,5 +150,67 @@ class ProductController extends Controller
             'breadcrumbs' => $entity->getCategory()->createCategoryBreadcrumbs(),
             'last_active' => true,
         ]);
+    }
+
+    /**
+     * @param int $id
+     * @return Response
+     */
+    public function reviewsAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Product $product */
+        $product = $em->getRepository('DevyUkrBookBundle:Product')->find($id);
+
+        if (!$product) {
+            throw $this->createNotFoundException('Unable to find Product entity.');
+        }
+
+        return $this->render('DevyUkrBookBundle:Product:review.html.twig', [
+            'reviews' => $product->getReviews(),
+            'breadcrumbs' => $product->getCategory()->createCategoryBreadcrumbs(),
+            'last_active' => true,
+        ]);
+    }
+
+    /**
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function activateReviewAction($id)
+    {
+        return $this->toggleReview($id, true);
+    }
+
+    /**
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function deactivateReviewAction($id)
+    {
+        return $this->toggleReview($id, false);
+    }
+
+    /**
+     * @param int $id
+     * @param boolean $status
+     * @return RedirectResponse
+     */
+    protected function toggleReview($id, $status)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $review = $em->getRepository('DevyUkrBookBundle:Review')->find($id);
+
+        if (!$review) {
+            throw $this->createNotFoundException('Unable to find Review entity.');
+        }
+
+        $review->setIsActive($status);
+        $em->persist($review);
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('success', 'Review status updated!');
+        return $this->redirect($this->generateUrl('product_reviews', ['id' => $review->getProduct()->getId()]));
     }
 }
