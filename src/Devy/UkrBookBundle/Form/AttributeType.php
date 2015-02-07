@@ -16,11 +16,6 @@ class AttributeType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('code')
-//            ->add('mode', 'choice', array(
-//                'choices' => array(1 => 'Text', 2 => 'Choice'),
-//            ))
-//            ->add('defaults')
             ->add('is_active');
     }
 

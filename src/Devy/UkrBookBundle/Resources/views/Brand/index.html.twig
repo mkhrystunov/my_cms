@@ -26,7 +26,7 @@
       <tr>
         <td>{{ entity.id }}</td>
         <td>{{ entity.name }}</td>
-        <td>{{ entity.isactive }}</td>
+        <td><i class="glyphicon {{ entity.isActive ? 'glyphicon-check' : 'glyphicon-unchecked' }}"></i></td>
         <td>
           <div class="btn-group">
             <a class="btn btn-info btn-sm" href="{{ path('brand_edit', { 'id': entity.id }) }}">

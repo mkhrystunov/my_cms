@@ -1,4 +1,4 @@
-{% set active = 'products' %}
+{% set active = 'catalog' %}
 {% extends 'DevyUkrBookBundle::administrator.layout.html.twig' %}
 
 {% block body -%}
@@ -70,16 +70,14 @@
     </tbody>
   </table>
 
-  <ul class="record_actions">
-    <li>
-      <a href="{{ path('product') }}">
-        Back to the list
-      </a>
-    </li>
-    <li>
-      <a href="{{ path('product_edit', { 'id': entity.id }) }}">
-        Edit
-      </a>
-    </li>
-  </ul>
+  <div class="btn-group pull-right">
+    <a class="btn btn-default btn-lg" href="{{ path('category_show', { 'id': entity.category.id }) }}">
+      <i class="glyphicon glyphicon-arrow-left"></i>
+      Back
+    </a>
+    <a class="btn btn-info btn-lg" href="{{ path('product_edit', { 'id': entity.id }) }}">
+      <i class="glyphicon glyphicon-pencil"></i>
+      Edit
+    </a>
+  </div>
 {% endblock %}

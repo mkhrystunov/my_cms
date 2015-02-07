@@ -17,9 +17,6 @@
     <tr>
       <th>Id</th>
       <th>Name</th>
-      <th>Code</th>
-      <th>Mode</th>
-      <th>Defaults</th>
       <th>Is_active</th>
       <th>Actions</th>
     </tr>
@@ -29,10 +26,7 @@
       <tr>
         <td>{{ entity.id }}</td>
         <td>{{ entity.name }}</td>
-        <td>{{ entity.code }}</td>
-        <td>{{ entity.mode }}</td>
-        <td>{{ entity.defaults }}</td>
-        <td>{{ entity.isactive }}</td>
+        <td><i class="glyphicon {{ entity.isActive ? 'glyphicon-check' : 'glyphicon-unchecked' }}"></i></td>
         <td>
           <div class="btn-group">
             <a class="btn btn-sm btn-info" href="{{ path('attribute_edit', { 'id': entity.id }) }}">
@@ -44,7 +38,7 @@
       </tr>
     {% else %}
       <tr>
-        <td colspan="7">
+        <td colspan="4">
           <div class=" alert alert-info ">
             There are no attributes.
             <a class="alert-link" href="{{ path('attribute_new') }}">

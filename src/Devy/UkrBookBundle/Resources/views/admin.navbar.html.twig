@@ -13,11 +13,8 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         {#TODO urls#}
-        <li class="{{ active == 'categories' ? 'active' : '' }}" >
-          <a href="{{ url('category') }}">Categories</a>
-        </li>
-        <li class="{{ active == 'products' ? 'active' : '' }}">
-          <a href="{{ url('product') }}">Products</a>
+        <li class="{{ active == 'catalog' ? 'active' : '' }}" >
+          <a href="{{ url('category') }}">Catalog</a>
         </li>
         <li class="{{ active == 'brands' ? 'active' : '' }}">
           <a href="{{ url('brand') }}">Brands</a>
