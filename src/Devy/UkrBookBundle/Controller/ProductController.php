@@ -91,11 +91,8 @@ class ProductController extends Controller
             throw $this->createNotFoundException('Unable to find Product entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('DevyUkrBookBundle:Product:show.html.twig', [
             'entity' => $entity,
-            'delete_form' => $deleteForm->createView(),
             'breadcrumbs' => $entity->getCategory()->createCategoryBreadcrumbs(),
             'last_active' => true,
         ]);

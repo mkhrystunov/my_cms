@@ -14,7 +14,6 @@
       <th>Title</th>
       <th>Description</th>
       <th>Description_full</th>
-      <th>Code</th>
       <th>Is_active</th>
       <th>Created_at</th>
       <th>Updated_at</th>
@@ -29,7 +28,6 @@
         <td>{{ entity.title }}</td>
         <td>{{ entity.description }}</td>
         <td>{{ entity.descriptionfull }}</td>
-        <td>{{ entity.code }}</td>
         <td>{{ entity.isactive }}</td>
         <td>{% if entity.createdat %}{{ entity.createdat|date('Y-m-d H:i:s') }}{% endif %}</td>
         <td>{% if entity.updatedat %}{{ entity.updatedat|date('Y-m-d H:i:s') }}{% endif %}</td>

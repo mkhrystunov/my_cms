@@ -17,6 +17,10 @@ Devy\UkrBookBundle\Entity\Post:
     updated_at:
       type: datetime
       nullable: true
+    is_active:
+      type: boolean
+      options:
+        default: false
   lifecycleCallbacks:
     prePersist: ["setCreatedAtValue"]
     preUpdate: ["setUpdatedAtValue"]

@@ -36,11 +36,6 @@ class Product
     private $description_full;
 
     /**
-     * @var string
-     */
-    private $code;
-
-    /**
      * @var boolean
      */
     private $is_active;
@@ -174,29 +169,6 @@ class Product
     public function getDescriptionFull()
     {
         return $this->description_full;
-    }
-
-    /**
-     * Set code
-     *
-     * @param string $code
-     * @return Product
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
-
-        return $this;
-    }
-
-    /**
-     * Get code
-     *
-     * @return string
-     */
-    public function getCode()
-    {
-        return $this->code;
     }
 
     /**

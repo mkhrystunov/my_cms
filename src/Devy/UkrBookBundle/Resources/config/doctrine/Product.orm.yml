@@ -18,10 +18,6 @@ Devy\UkrBookBundle\Entity\Product:
     description_full:
       type: text
       nullable: true
-    code:
-      type: string
-      length: 45
-      nullable: true
     is_active:
       type: boolean
       nullable: true

@@ -17,6 +17,7 @@
     <tr>
       <th>Id</th>
       <th>Title</th>
+      <th>Is active</th>
       <th>Text</th>
       <th>Created_at</th>
       <th>Updated_at</th>
@@ -28,6 +29,7 @@
       <tr>
         <td>{{ entity.id }}</td>
         <td>{{ entity.title }}</td>
+        <td><i class="glyphicon {{ entity.isActive ? 'glyphicon-check' : 'glyphicon-unchecked' }}"></i></td>
         <td>{{ entity.text }}</td>
         <td>{% if entity.createdat %}{{ entity.createdat|date('Y-m-d H:i:s') }}{% endif %}</td>
         <td>{% if entity.updatedat %}{{ entity.updatedat|date('Y-m-d H:i:s') }}{% endif %}</td>
@@ -42,7 +44,7 @@
       </tr>
     {% else %}
       <tr>
-        <td colspan="6">
+        <td colspan="7">
           <div class=" alert alert-info ">
             There are no posts.
             <a class="alert-link" href="{{ path('post_new') }}">

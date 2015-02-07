@@ -154,4 +154,32 @@ class Post
         $this->setUpdatedAt(new \DateTime());
         return $this;
     }
+    /**
+     * @var boolean
+     */
+    private $is_active;
+
+
+    /**
+     * Set is_active
+     *
+     * @param boolean $isActive
+     * @return Post
+     */
+    public function setIsActive($isActive)
+    {
+        $this->is_active = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get is_active
+     *
+     * @return boolean 
+     */
+    public function getIsActive()
+    {
+        return $this->is_active;
+    }
 }

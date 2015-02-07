@@ -40,11 +40,6 @@ class Attribute
     private $is_active;
 
     /**
-     * @var \Devy\UkrBookBundle\Entity\AttributeSet
-     */
-    private $AttributeSet;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $Products;
@@ -180,29 +175,6 @@ class Attribute
     public function getIsActive()
     {
         return $this->is_active;
-    }
-
-    /**
-     * Set AttributeSet
-     *
-     * @param \Devy\UkrBookBundle\Entity\AttributeSet $attributeSet
-     * @return Attribute
-     */
-    public function setAttributeSet(\Devy\UkrBookBundle\Entity\AttributeSet $attributeSet = null)
-    {
-        $this->AttributeSet = $attributeSet;
-
-        return $this;
-    }
-
-    /**
-     * Get AttributeSet
-     *
-     * @return \Devy\UkrBookBundle\Entity\AttributeSet 
-     */
-    public function getAttributeSet()
-    {
-        return $this->AttributeSet;
     }
 
     /**

@@ -19,7 +19,6 @@ class ProductType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('description_full')
-            ->add('code')
             ->add('is_active', 'checkbox', array(
                 'attr' => array(
                     'checked' => true,

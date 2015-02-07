@@ -2,6 +2,12 @@
 {% extends 'DevyUkrBookBundle::administrator.layout.html.twig' %}
 
 {% block body -%}
+  <style>
+    img {
+      max-height: 150px;
+      max-width: 150px;
+    }
+  </style>
   <h1>Product</h1>
 
   <table class="record_properties table">
@@ -15,16 +21,20 @@
       <td>{{ entity.title }}</td>
     </tr>
     <tr>
+      <th>Image</th>
+      <td>
+        {% if entity.image.webPath %}
+          <img src="{{ asset(entity.image.webPath) }}">
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
       <th>Description</th>
       <td>{{ entity.description }}</td>
     </tr>
     <tr>
       <th>Description_full</th>
       <td>{{ entity.descriptionfull }}</td>
-    </tr>
-    <tr>
-      <th>Code</th>
-      <td>{{ entity.code }}</td>
     </tr>
     <tr>
       <th>Is_active</th>
@@ -71,6 +81,5 @@
         Edit
       </a>
     </li>
-    <li>{{ form(delete_form) }}</li>
   </ul>
 {% endblock %}
