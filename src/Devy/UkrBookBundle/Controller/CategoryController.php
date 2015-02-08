@@ -2,6 +2,7 @@
 
 namespace Devy\UkrBookBundle\Controller;
 
+use Devy\UkrBookBundle\Entity\Product;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -131,6 +132,7 @@ class CategoryController extends Controller
             'entity' => $entity,
             'form' => $form->createView(),
             'breadcrumbs' => $entity->createCategoryBreadcrumbs(),
+            'last_active' => true,
         ]);
     }
 }

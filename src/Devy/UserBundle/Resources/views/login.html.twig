@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="{{ asset('bundles/devyukrbook/css/bootstrap.css') }}">
+  <link rel="stylesheet" href="{{ asset('bundles/devyukrbook/css/bootstrap-theme.css') }}">
+  <style>
+    .form-signin {
+      padding: 15px;
+      max-width: 330px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <form class="form-signin" action="{{ path('login_check') }}" method="post">
+    <h2 class="form-signin-heading">Please sign in</h2>
+    {% if error %}
+      <div class="alert alert-danger" role="alert">
+        {{ error.message }}
+      </div>
+    {% endif %}
+    <label for="username" class="sr-only">Username:</label>
+    <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}"
+            autofocus placeholder="Username"/>
+
+    <label class="sr-only" for="password">Password:</label>
+    <input class="form-control" type="password" id="password" name="_password"
+            placeholder="Password"/>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  </form>
+
+</div>
+</body>
+</html>
