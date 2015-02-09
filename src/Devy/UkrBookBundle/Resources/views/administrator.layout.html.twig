@@ -33,7 +33,7 @@
 {% block menu %}
   {% include 'DevyUkrBookBundle::admin.navbar.html.twig' %}
 {% endblock %}
-<div class="container">
+<div id="main" class="container">
   <div id="messages">
     {% set message_levels =  ['success', 'info', 'warning', 'danger'] %}
     {% for level in message_levels %}
@@ -51,12 +51,11 @@
   {% include 'DevyUkrBookBundle::partial_catalog_breadcrumb.html.twig' %}
   {% block body %}{% endblock %}
 </div>
-<footer id="footer">
-  <nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="navbar-inner navbar-content-center">
-      <p class="muted">Created by <a href="http://khrystunov.com">Maksym Khrystunov</a></p>
-    </div>
-  </nav>
+
+<footer class="footer">
+  <div class="container">
+    <p class="text-muted">Created by <a href="http://khrystunov.com">Maksym Khrystunov</a></p>
+  </div>
 </footer>
 
 <script>
