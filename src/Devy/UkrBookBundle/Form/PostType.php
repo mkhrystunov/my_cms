@@ -17,7 +17,9 @@ class PostType extends AbstractType
         $builder
             ->add('title')
             ->add('text')
-            ->add('is_active')
+            ->add('is_active', 'checkbox', [
+                'required' => false,
+            ])
         ;
     }
     

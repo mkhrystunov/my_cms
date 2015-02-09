@@ -80,4 +80,60 @@ class Review
     {
         return $this->Product;
     }
+    /**
+     * @var boolean
+     */
+    private $is_active;
+
+
+    /**
+     * Set is_active
+     *
+     * @param boolean $isActive
+     * @return Review
+     */
+    public function setIsActive($isActive)
+    {
+        $this->is_active = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get is_active
+     *
+     * @return boolean 
+     */
+    public function getIsActive()
+    {
+        return $this->is_active;
+    }
+    /**
+     * @var integer
+     */
+    private $score;
+
+
+    /**
+     * Set score
+     *
+     * @param integer $score
+     * @return Review
+     */
+    public function setScore($score)
+    {
+        $this->score = $score;
+
+        return $this;
+    }
+
+    /**
+     * Get score
+     *
+     * @return integer 
+     */
+    public function getScore()
+    {
+        return $this->score;
+    }
 }

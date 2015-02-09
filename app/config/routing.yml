@@ -6,4 +6,7 @@ user_routes:
     resource: "@UserBundle/Controller"
     type: annotation
 
+frontend:
+    resource: "@DevyFrontendBundle/Resources/config/routing.yml"
+
 

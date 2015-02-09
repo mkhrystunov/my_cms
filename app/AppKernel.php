@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Devy\UkrBookBundle\DevyUkrBookBundle(),
+            new Devy\FrontendBundle\DevyFrontendBundle(),
             new Devy\UserBundle\UserBundle(),
         );
 
