@@ -13,17 +13,20 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         {#TODO urls#}
-        <li class="{{ active == 'catalog' ? 'active' : '' }}">
+        <li class="{{ active == 'catalog' ? 'active' }}">
           <a href="{{ url('category') }}">Catalog</a>
         </li>
-        <li class="{{ active == 'brands' ? 'active' : '' }}">
+        <li class="{{ active == 'brands' ? 'active' }}">
           <a href="{{ url('brand') }}">Brands</a>
         </li>
-        <li class="{{ active == 'attributes' ? 'active' : '' }}">
+        <li class="{{ active == 'attributes' ? 'active' }}">
           <a href="{{ url('attribute') }}">Attributes</a>
         </li>
-        <li class="{{ active == 'posts' ? 'active' : '' }}">
+        <li class="{{ active == 'posts' ? 'active' }}">
           <a href="{{ url('post') }}">Posts</a>
+        </li>
+        <li class="{{ active == 'about' ? 'active' }}">
+          <a href="{{ url('about_edit') }}">About page</a>
         </li>
         {% if nav_items is defined %}
           {% for nav_item in nav_items %}

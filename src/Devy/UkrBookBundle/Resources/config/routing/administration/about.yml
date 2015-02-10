@@ -1,0 +1,3 @@
+about_edit:
+    path:     /
+    defaults: { _controller: "DevyUkrBookBundle:About:edit" }

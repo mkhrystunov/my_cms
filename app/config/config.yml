@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: "@DevyUkrBookBundle/Resources/config/services.yml" }
+    - { resource: "@DevyUkrBookBundle/Resources/config/parameters.yml" }
 
 framework:
     #esi:             ~
