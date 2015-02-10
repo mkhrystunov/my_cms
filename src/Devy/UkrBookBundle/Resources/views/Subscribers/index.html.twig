@@ -1,0 +1,64 @@
+{% set active = 'subscribers' %}
+{% extends 'DevyUkrBookBundle::administrator.layout.html.twig' %}
+
+{% block title %}
+  Subscribers
+{% endblock %}
+
+{% block body -%}
+  <table class="records_list table">
+    <caption><h3>Subscribers</h3></caption>
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Email</th>
+      <th>Is_active</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+      <tr>
+        <td><a href="{{ path('product_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+        <td>{{ entity.email }}</td>
+        <td><i class="glyphicon {{ entity.isActive ? 'glyphicon-check' : 'glyphicon-unchecked' }}"></i></td>
+        <td>
+          <div class="btn-group">
+            {% if entity.isActive %}
+              <a class="btn btn-warning deactivate"
+                 href="{{ url('subscriber_deactivate', { 'id': entity.id }) }}">
+                <i class="glyphicon glyphicon-ban-circle"></i>
+                disable
+              </a>
+            {% else %}
+              <a class="btn btn-success activate"
+                 href="{{ url('subscriber_activate', { 'id': entity.id }) }}">
+                <i class="glyphicon glyphicon-ok-circle"></i>
+                enable
+              </a>
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+      {% else %}
+        <tr>
+          <td colspan="4">
+            <div class=" alert alert-info ">
+              There are no csubscribers.
+              <a class="alert-link" href="{{ path('category_new') }}">
+                Create a new one
+              </a>.
+            </div>
+          </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="btn-group pull-right">
+    <a class="btn btn-success btn-lg" href="{{ path('product_new') }}">
+      <i class="glyphicon glyphicon-plus"></i>
+      Create new subscriber
+    </a>
+  </div>
+{% endblock %}

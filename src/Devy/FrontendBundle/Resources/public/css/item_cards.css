@@ -4,7 +4,7 @@
 }
 
 .item {
-    background: #f4f4f4;
+    /*background: #f4f4f4;*/
     box-sizing: border-box;
     padding: 20px;
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.23), 0 3px 12px rgba(0, 0, 0, 0.16);

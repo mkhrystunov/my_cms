@@ -1,0 +1,11 @@
+subscribers:
+    path: /
+    defaults: { _controller: DevyUkrBookBundle:Subscriber:index }
+
+subscriber_activate:
+    path:     /activate/{id}
+    defaults: { _controller: "DevyUkrBookBundle:Subscriber:activateSubscriber" }
+
+subscriber_deactivate:
+    path:     /deactivate/{id}
+    defaults: { _controller: "DevyUkrBookBundle:Subscriber:deactivateSubscriber" }

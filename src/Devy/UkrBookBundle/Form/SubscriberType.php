@@ -5,11 +5,7 @@ namespace Devy\UkrBookBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * Class AboutPageType
- * @package Devy\UkrBookBundle\Form
- */
-class ShopInfoType extends AbstractType
+class SubscriberType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -18,11 +14,12 @@ class ShopInfoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('address')
-            ->add('email')
-            ->add('phone')
-        ;
+            ->add('email', 'email', [
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Email address',
+                ]
+            ]);
     }
 
     /**
@@ -32,7 +29,7 @@ class ShopInfoType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return [
-            'data_class' => 'Devy\UkrBookBundle\Entity\ShopInfo'
+            'data_class' => 'Devy\UkrBookBundle\Entity\Subscriber'
         ];
     }
 
@@ -43,6 +40,6 @@ class ShopInfoType extends AbstractType
      */
     public function getName()
     {
-        return 'devy_ukrbookbundle_shopinfo';
+        return 'devy_ukrbookbundle_subscribe';
     }
 }

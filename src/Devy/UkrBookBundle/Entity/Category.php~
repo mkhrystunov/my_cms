@@ -258,6 +258,19 @@ class Category
     }
 
     /**
+     * @return Product[]
+     */
+    public function getProductsSortedByIsActive()
+    {
+        /** @var Product[] $products */
+        $products = $this->Products->getValues();
+        usort($products, function (Product $prod1, Product $prod2) {
+            return !$prod1->getIsActive();
+        });
+        return $products;
+    }
+
+    /**
      * Set created_at
      *
      * @param DateTime $createdAt
