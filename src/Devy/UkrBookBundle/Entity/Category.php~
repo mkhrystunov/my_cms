@@ -187,6 +187,21 @@ class Category
     }
 
     /**
+     * @return Category[]
+     */
+    public function getActiveNotEmptyChildren()
+    {
+        $children = [];
+        /** @var Category $child */
+        foreach ($this->getChildren() as $child) {
+            if ($child->getIsActive() && $child->getProducts()->count() > 0) {
+                $children[] = $child;
+            }
+        }
+        return $children;
+    }
+
+    /**
      * Set Parent
      *
      * @param Category $parent

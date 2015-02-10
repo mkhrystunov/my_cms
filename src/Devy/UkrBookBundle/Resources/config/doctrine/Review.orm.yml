@@ -1,5 +1,6 @@
 Devy\UkrBookBundle\Entity\Review:
   type: entity
+  repositoryClass: Devy\UkrBookBundle\Repository\ReviewRepository
   fields:
     id:
       id: true

@@ -3,6 +3,7 @@
 namespace Devy\UkrBookBundle\Form;
 
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -16,10 +17,14 @@ class ProductAttributeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Attribute', 'entity', array(
+            ->add('Attribute', 'entity', [
                 'class' => 'DevyUkrBookBundle:Attribute',
                 'required' => true,
-            ))
+                'query_builder' => function (EntityRepository $repository) {
+                    return $repository->createQueryBuilder('a')
+                        ->where('a.is_active = true');
+                },
+            ])
             ->add('value');
     }
 
@@ -28,9 +33,9 @@ class ProductAttributeType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Devy\UkrBookBundle\Entity\ProductAttribute'
-        ));
+        ]);
     }
 
     /**

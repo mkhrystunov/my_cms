@@ -2,6 +2,7 @@
 
 namespace Devy\UkrBookBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,9 +24,10 @@ class AttributeController extends Controller
      */
     public function indexAction()
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('DevyUkrBookBundle:Attribute')->findAll();
+        $entities = $em->getRepository('DevyUkrBookBundle:Attribute')->getAllSortedByIsActive();
 
         return $this->render('DevyUkrBookBundle:Attribute:index.html.twig', [
             'entities' => $entities,

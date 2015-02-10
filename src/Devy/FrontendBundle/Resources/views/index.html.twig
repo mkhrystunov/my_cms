@@ -10,6 +10,7 @@
   {% endblock %}
 
 {% block body %}
+  {% if posts|length > 0 %}
   <div id="posts-carousel" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
       {% for post in posts %}
@@ -49,4 +50,5 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
+{% endif %}
 {% endblock %}

@@ -21,14 +21,15 @@ class CategoryRepository extends EntityRepository
     public function getTopLevel($onlyActive = true)
     {
         $qb = $this->createQueryBuilder('c')
-            ->Where('c.Parent IS NULL');
+            ->Where('c.Parent IS NULL')
+            ->orderBy('c.is_active', 'DESC');
         if ($onlyActive) {
             $qb->andWhere('c.is_active = true');
         }
         try {
             $categories = $qb->getQuery()->getResult();
         } catch (NoResultException $e) {
-            $categories = array();
+            $categories = [];
         }
         return $categories;
     }

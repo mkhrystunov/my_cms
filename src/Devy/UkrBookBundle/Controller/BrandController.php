@@ -2,6 +2,7 @@
 
 namespace Devy\UkrBookBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -22,9 +23,10 @@ class BrandController extends Controller
      */
     public function indexAction()
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('DevyUkrBookBundle:Brand')->findAll();
+        $entities = $em->getRepository('DevyUkrBookBundle:Brand')->getAllOrderedByIsActive();
 
         return $this->render('DevyUkrBookBundle:Brand:index.html.twig', [
             'entities' => $entities,

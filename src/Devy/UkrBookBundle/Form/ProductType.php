@@ -19,21 +19,22 @@ class ProductType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('description_full')
-            ->add('is_active', 'checkbox', array(
-                'attr' => array(
+            ->add('is_active', 'checkbox', [
+                'required' => false,
+                'attr' => [
                     'checked' => true,
-                ),
-            ))
+                ],
+            ])
             ->add('price', 'money')
             ->add('Brand')
-            ->add('Category', 'entity', array(
+            ->add('Category', 'entity', [
                 'class' => 'DevyUkrBookBundle:Category',
                 'required' => true,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')
                         ->where('c.is_active = true');
                 },
-            ))
+            ])
             ->add('page_title', 'text', [
                 'required' => false,
                 'attr' => [
@@ -69,9 +70,9 @@ class ProductType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Devy\UkrBookBundle\Entity\Product'
-        ));
+        ]);
     }
 
     /**

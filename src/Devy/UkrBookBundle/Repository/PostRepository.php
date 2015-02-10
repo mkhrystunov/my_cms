@@ -31,4 +31,19 @@ class PostRepository extends EntityRepository
 
         return $posts;
     }
+
+    /**
+     * @return Post[]
+     */
+    public function getAllSortedByIsActive()
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->orderBy('p.is_active', 'DESC');
+        try {
+            $posts = $qb->getQuery()->getResult();
+        } catch (NoResultException $e) {
+            $posts = [];
+        }
+        return $posts;
+    }
 }

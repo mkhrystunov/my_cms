@@ -2,6 +2,7 @@
 
 namespace Devy\UkrBookBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,9 +25,10 @@ class PostController extends Controller
      */
     public function indexAction()
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('DevyUkrBookBundle:Post')->findAll();
+        $entities = $em->getRepository('DevyUkrBookBundle:Post')->getAllSortedByIsActive();
 
         return $this->render('DevyUkrBookBundle:Post:index.html.twig', [
             'entities' => $entities,

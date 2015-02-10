@@ -1,5 +1,6 @@
 Devy\UkrBookBundle\Entity\Product:
   type: entity
+  repositoryClass: Devy\UkrBookBundle\Repository\ProductRepository
   fields:
     id:
       id: true
