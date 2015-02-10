@@ -25,8 +25,8 @@
         <li class="{{ active == 'posts' ? 'active' }}">
           <a href="{{ url('post') }}">Posts</a>
         </li>
-        <li class="{{ active == 'about' ? 'active' }}">
-          <a href="{{ url('about_edit') }}">About page</a>
+        <li class="{{ active == 'shopinfo' ? 'active' }}">
+          <a href="{{ url('shopinfo_edit') }}">Shop info</a>
         </li>
         {% if nav_items is defined %}
           {% for nav_item in nav_items %}

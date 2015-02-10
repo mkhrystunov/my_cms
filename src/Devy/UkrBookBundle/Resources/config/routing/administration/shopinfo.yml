@@ -1,0 +1,3 @@
+shopinfo_edit:
+    path:     /
+    defaults: { _controller: "DevyUkrBookBundle:ShopInfo:edit" }

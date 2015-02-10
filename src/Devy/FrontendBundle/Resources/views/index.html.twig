@@ -7,48 +7,86 @@
   {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/devyfrontend/css/carousel.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/devyfrontend/css/item_cards.css') }}">
   {% endblock %}
 
 {% block body %}
   {% if posts|length > 0 %}
-  <div id="posts-carousel" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
-      {% for post in posts %}
-        <li data-target="#posts-carousel" data-slide-to="{{ loop.index - 1 }}" class="{{ loop.index == 1 ? 'active' }}">
-        </li>
-      {% endfor %}
-    </ol>
-    <div class="carousel-inner" role="listbox">
-      {% for post in posts %}
-        <div class="item {{ loop.index == 1 ? 'active' }}">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAGZmZgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-               alt="Second slide">
+    <div id="posts-carousel" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        {% for post in posts %}
+          <li data-target="#posts-carousel" data-slide-to="{{ loop.index - 1 }}"
+              class="{{ loop.index == 1 ? 'active' }}">
+          </li>
+        {% endfor %}
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        {% for post in posts %}
+          <div class="item {{ loop.index == 1 ? 'active' }}">
+            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAGZmZgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+                 alt="Second slide">
 
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>{{ post.title }}</h1>
+            <div class="container">
+              <div class="carousel-caption">
+                <h1>{{ post.title }}</h1>
 
-              <p>
-                {{ post.text[:320] }}
-                {% if post.text|length > 320 %}
-                  ...
-                  {# TODO links for posts #}
-                  <a class="btn btn-primary btn-xs" href="#">Read more</a>
-                {% endif %}
-              </p>
+                <p>
+                  {{ post.text[:320] }}
+                  {% if post.text|length > 320 %}
+                    ...
+                    {# TODO links for posts #}
+                    <a class="btn btn-primary btn-xs" href="#">Read more</a>
+                  {% endif %}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      {% endfor %}
+        {% endfor %}
+      </div>
+      <a class="left carousel-control" href="#posts-carousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#posts-carousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
     </div>
-    <a class="left carousel-control" href="#posts-carousel" role="button" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#posts-carousel" role="button" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
+  {% endif %}
+
+  <div class="container marketing">
+    {% for product in products %}
+      {# TODO again links #}
+      {% if loop.first or loop.index0 % 3 == 0 %}
+        <div class="row">
+      {% endif %}
+
+      <div class="col-lg-3 {{ not loop.first ? 'col-lg-offset-1' }} item">
+        {% if product.image.webPath %}
+          <img class="img-circle" src="{{ asset(product.image.webPath) }}" alt="{{ product.title }}">
+        {% else %}
+          <img class="img-circle"
+               src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+               alt="Generic placeholder image">
+        {% endif %}
+        <h2>{{ product.title }}</h2>
+        <p><b>{{ product.price|number_format(2, '.', ',') }} грн.</b></p>
+        <p>{{ product.description }}</p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-info">
+            <i class="glyphicon glyphicon-eye-open"></i>
+            Show
+          </a>
+          <a href="#" class="btn btn-success">
+            <i class="glyphicon glyphicon-shopping-cart"></i>
+            Add to cart
+          </a>
+        </div>
+      </div>
+
+      {% if loop.last or loop.index0 % 3 == 2 %}
+        </div>
+      {% endif %}
+    {% endfor %}
   </div>
-{% endif %}
 {% endblock %}

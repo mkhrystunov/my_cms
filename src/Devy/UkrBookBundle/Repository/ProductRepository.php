@@ -28,4 +28,22 @@ class ProductRepository extends EntityRepository
         }
         return $products;
     }
+
+    /**
+     * @param int $limit
+     * @return Product[]
+     */
+    public function getLastAdded($limit = 12)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->where('p.is_active = true')
+            ->orderBy('p.created_at', 'DESC')
+            ->setMaxResults($limit);
+        try {
+            $products = $qb->getQuery()->getResult();
+        } catch (NoResultException $e) {
+            $products = [];
+        }
+        return $products;
+    }
 }

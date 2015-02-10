@@ -1,2 +1,2 @@
 parameters:
-  about: "%kernel.root_dir%/../src/Devy/UkrBookBundle/Resources/config/data/about.yml"
+  shopinfo: "%kernel.root_dir%/../src/Devy/UkrBookBundle/Resources/config/data/shopinfo.yml"

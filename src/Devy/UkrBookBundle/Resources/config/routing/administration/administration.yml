@@ -22,9 +22,9 @@ devy_ukr_book_product:
     resource: "@DevyUkrBookBundle/Resources/config/routing/administration/product.yml"
     prefix:   /product
 
-devy_ukr_book_about:
-    resource: "@DevyUkrBookBundle/Resources/config/routing/administration/about.yml"
-    prefix:   /about
+devy_ukr_book_shopinfo:
+    resource: "@DevyUkrBookBundle/Resources/config/routing/administration/shopinfo.yml"
+    prefix:   /shop-info
 
 
 

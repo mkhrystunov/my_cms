@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * Class AboutPageType
  * @package Devy\UkrBookBundle\Form
  */
-class AboutPageType extends AbstractType
+class ShopInfoType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -20,7 +20,9 @@ class AboutPageType extends AbstractType
         $builder
             ->add('title')
             ->add('address')
-            ->add('contacts');
+            ->add('email')
+            ->add('phone')
+        ;
     }
 
     /**
@@ -30,7 +32,7 @@ class AboutPageType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return [
-            'data_class' => 'Devy\UkrBookBundle\Entity\AboutPage'
+            'data_class' => 'Devy\UkrBookBundle\Entity\ShopInfo'
         ];
     }
     /**
@@ -40,6 +42,6 @@ class AboutPageType extends AbstractType
      */
     public function getName()
     {
-        return 'devy_ukrbookbundle_aboutpage';
+        return 'devy_ukrbookbundle_shopinfo';
     }
 }
