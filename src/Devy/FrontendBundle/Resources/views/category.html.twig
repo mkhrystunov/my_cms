@@ -1,52 +1,16 @@
 {% set active = 'categories' %}
-{% extends 'DevyFrontendBundle::base.html.twig' %}
+{% extends 'DevyFrontendBundle::products_page.html.twig' %}
 
 {% block title %}
   {{ category.pageTitle }}
 {% endblock %}
 
-  {% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('bundles/devyfrontend/css/carousel.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/devyfrontend/css/item_cards.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/devyfrontend/css/menu.css') }}">
-  {% endblock %}
-
-{% macro category_list_item(category) %}
-  <a href="{{ url('front_category', { 'categoryId': category.id }) }}">
-    <i class="glyphicon glyphicon-folder-open"></i>
-    {{ category.title }}
-  </a>
-  <ul class="list-group">
-    {% for child in category.activeNotEmptyChildren %}
-      <li class="list-group-item">
-        {{ _self.category_list_item(child) }}
-      </li>
-    {% endfor %}
-  </ul>
-{% endmacro %}
-
-{% block body %}
-  <div class="container content">
-    <div class="row row-offcanvas row-offcanvas-left">
-      <div class="col-xs-6 col-sm-3 sidebar-offcanvas">
-        <ul class="list-group">
-          {% for child in categories %}
-            <li class="list-group-item">
-              {{ _self.category_list_item(child) }}
-            </li>
-          {% endfor %}
-        </ul>
-      </div>
-      <div class="col-xs-12 col-sm-9 marketing">
-        {% if category.image.webPath %}
-          <img class="img-rounded category-logo" src="{{ asset(category.image.webPath) }}" alt="{{ category.title }}">
-        {% endif %}
-        <h1>{{ category.title }}</h1>
-        <p class="lead">{{ category.description }}</p>
-        <hr>
-        {% include 'DevyFrontendBundle::partial_products_block.html.twig' with { 'products': category.activeProducts } %}
-      </div>
-    </div>
-  </div>
+{% block marketing %}
+  {% if category.image.webPath %}
+    <img class="img-rounded category-logo" src="{{ asset(category.image.webPath) }}" alt="{{ category.title }}">
+  {% endif %}
+  <h1>{{ category.title }}</h1>
+  <p class="lead">{{ category.description }}</p>
+  <hr>
+  {% include 'DevyFrontendBundle::partial_products_block.html.twig' with { 'products': category.activeProducts } %}
 {% endblock %}
