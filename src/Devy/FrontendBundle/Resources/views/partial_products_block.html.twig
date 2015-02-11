@@ -1,0 +1,38 @@
+{% for product in products %}
+  {# TODO again links #}
+  {% if loop.first or loop.index0 % 3 == 0 %}
+    <div class="row">
+  {% endif %}
+
+  <div class="col-lg-4">
+    <div class="thumbnail item">
+      {% if product.image.webPath %}
+        <img class="img-circle" src="{{ asset(product.image.webPath) }}" alt="{{ product.title }}">
+      {% else %}
+        <img class="img-circle"
+             src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+             alt="Generic placeholder image">
+      {% endif %}
+      <h2>{{ product.title }}</h2>
+
+      <p><b>{{ product.price|number_format(2, '.', ',') }} грн.</b></p>
+
+      <p>{{ product.description }}</p>
+
+      <div class="btn-group-sm">
+        <a href="#" class="btn btn-info">
+          <i class="glyphicon glyphicon-eye-open"></i>
+          Show
+        </a>
+        <a href="#" class="btn btn-success">
+          <i class="glyphicon glyphicon-shopping-cart"></i>
+          Add to cart
+        </a>
+      </div>
+    </div>
+  </div>
+
+  {% if loop.last or loop.index0 % 3 == 2 %}
+    </div>
+  {% endif %}
+{% endfor %}

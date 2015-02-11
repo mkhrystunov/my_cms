@@ -1,3 +1,4 @@
+{% set active = 'home' %}
 {% extends 'DevyFrontendBundle::base.html.twig' %}
 
 {% block title %}
@@ -10,7 +11,7 @@
     <link rel="stylesheet" href="{{ asset('bundles/devyfrontend/css/item_cards.css') }}">
   {% endblock %}
 
-{% block body %}
+{% block upper %}
   {% if posts|length > 0 %}
     <div id="posts-carousel" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
@@ -53,40 +54,10 @@
       </a>
     </div>
   {% endif %}
+{% endblock %}
 
-  <div class="container marketing">
-    {% for product in products %}
-      {# TODO again links #}
-      {% if loop.first or loop.index0 % 3 == 0 %}
-        <div class="row">
-      {% endif %}
-
-      <div class="col-lg-3 {{ not loop.first ? 'col-lg-offset-1' }} item">
-        {% if product.image.webPath %}
-          <img class="img-circle" src="{{ asset(product.image.webPath) }}" alt="{{ product.title }}">
-        {% else %}
-          <img class="img-circle"
-               src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-               alt="Generic placeholder image">
-        {% endif %}
-        <h2>{{ product.title }}</h2>
-        <p><b>{{ product.price|number_format(2, '.', ',') }} грн.</b></p>
-        <p>{{ product.description }}</p>
-        <div class="btn-group">
-          <a href="#" class="btn btn-info">
-            <i class="glyphicon glyphicon-eye-open"></i>
-            Show
-          </a>
-          <a href="#" class="btn btn-success">
-            <i class="glyphicon glyphicon-shopping-cart"></i>
-            Add to cart
-          </a>
-        </div>
-      </div>
-
-      {% if loop.last or loop.index0 % 3 == 2 %}
-        </div>
-      {% endif %}
-    {% endfor %}
+{% block body %}
+  <div class="container marketing content">
+    {% include 'DevyFrontendBundle::partial_products_block.html.twig' with { 'products': products } %}
   </div>
 {% endblock %}

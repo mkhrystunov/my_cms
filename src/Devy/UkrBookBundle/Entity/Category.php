@@ -260,6 +260,21 @@ class Category
     /**
      * @return Product[]
      */
+    public function getActiveProducts()
+    {
+        $products = [];
+        /** @var Product $product */
+        foreach ($this->getProducts() as $product) {
+            if ($product->getIsActive()) {
+                $products[] = $product;
+            }
+        }
+        return $products;
+    }
+
+    /**
+     * @return Product[]
+     */
     public function getProductsSortedByIsActive()
     {
         /** @var Product[] $products */

@@ -1,6 +1,6 @@
 .img-circle {
-    width: 140px;
-    height: 140px;
+    width: 140px !important;
+    height: 140px !important;
 }
 
 .item {
@@ -26,4 +26,9 @@
     -ms-transition: all 0.5s linear;
     -kthtml-transition: all 0.5s linear;
     transition: all 0.5s linear;
+}
+
+.category-logo {
+    max-width: 300px;
+    max-height: 300px;
 }

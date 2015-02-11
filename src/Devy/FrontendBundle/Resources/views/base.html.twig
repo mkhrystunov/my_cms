@@ -55,15 +55,15 @@
             {#{% endfor %}#}
             {#</ul>#}
             <ul class="nav navbar-nav">
-              <li class="active"><a href="{{ url('home') }}">Home</a></li>
+              <li class="{{ active == 'home' ? 'active' }}"><a href="{{ url('home') }}">Home</a></li>
               {% if categories|length > 0 %}
-                <li class="dropdown">
+                <li class="dropdown {{ active == 'categories' ? 'active' }}">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                     Categories
                     <i class="caret"></i>
                     <ul class="dropdown-menu" role="menu">
                       {% for category in categories %}
-                        <li><a href="#">{{ category.title }}</a></li>
+                        <li><a href="{{ path('front_category', { 'categoryId': category.id }) }}">{{ category.title }}</a></li>
                       {% endfor %}
                     </ul>
                   </a>
@@ -93,6 +93,7 @@
   </div>
 {% endblock %}
 
+{% block upper %}{% endblock %}
 {% block body %}{% endblock %}
 <footer class="footer container">
   <hr>
