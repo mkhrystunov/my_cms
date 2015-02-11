@@ -169,11 +169,11 @@
           data: $(this).serialize(),
           dataType: "html",
           success: function (msg) {
-            addAlertToForm($form, 'alert-success', msg);
+            msg = $.parseJSON(msg);
+            addAlertToForm($form, msg.success ? 'alert-success' : 'alert-warning', msg.message);
             $form.children('input[type=email]').text('');
           },
           error: function (msg) {
-            console.log(msg);
             addAlertToForm($form, 'alert-danger', msg.responseText);
           }
         });

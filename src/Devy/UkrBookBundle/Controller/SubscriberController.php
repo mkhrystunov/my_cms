@@ -24,23 +24,29 @@ class SubscriberController extends Controller
      */
     public function newAction(Request $request)
     {
-        $subscriber = new Subscriber();
-        $form = $this->createForm(new SubscriberType(), $subscriber);
-        $form->handleRequest($request);
+        try {
+            $subscriber = new Subscriber();
+            $form = $this->createForm(new SubscriberType(), $subscriber);
+            $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            try {
+            if ($form->isValid()) {
                 $subscriber->setIsActive(true);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($subscriber);
                 $em->flush();
-            } catch (\Exception $ex) {
-                return new JsonResponse('Error occured. Please Try again later', 500);
-            }
 
-            return new JsonResponse('You successfully subscribed!', 200);
-        } else {
-            return new JsonResponse('Please check your email(probably it is already subscribed.', 500);
+                return new JsonResponse([
+                    'success' => true,
+                    'message' => 'You successfully subscribed!',
+                ]);
+            } else {
+                return new JsonResponse([
+                    'success' => false,
+                    'message' => 'Please check your email(probably it is already subscribed.',
+                ]);
+            }
+        } catch (\Exception $ex) {
+            return new JsonResponse('Error occured. Please Try again later', 500);
         }
     }
 
