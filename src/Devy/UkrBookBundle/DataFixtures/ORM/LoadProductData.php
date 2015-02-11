@@ -69,7 +69,7 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
 
             $manager->persist($product);
         }
-        for ($i = 20; $i < 30; $i++) {
+        for ($i = 20; $i < 60; $i++) {
             $product = new Product();
             $product
                 ->setTitle('Book #' . $i)
@@ -85,7 +85,7 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
         }
         $product1 = new Product();
         $product1
-            ->setTitle('Book #' . 31)
+            ->setTitle('Book #' . 61)
             ->setBrand($brand1)
             ->setCategory($category2)
             ->setDescription('Just some dummy description.')
