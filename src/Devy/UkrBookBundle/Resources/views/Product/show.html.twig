@@ -23,7 +23,7 @@
     <tr>
       <th>Image</th>
       <td>
-        {% if entity.image.webPath %}
+        {% if entity.image and entity.image.webPath %}
           <img src="{{ asset(entity.image.webPath) }}">
         {% endif %}
       </td>

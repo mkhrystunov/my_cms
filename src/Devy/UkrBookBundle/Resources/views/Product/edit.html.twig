@@ -34,7 +34,7 @@
 
 {% block _devy_ukrbookbundle_product_image_label %}
   {{ form_label(form) }}
-  {% if form.parent.vars.value.image.webPath %}
+  {% if form.parent.vars.value.image and form.parent.vars.value.image.webPath %}
     <img src="{{ asset(form.parent.vars.value.image.webPath) }}">
   {% endif %}
 {% endblock %}

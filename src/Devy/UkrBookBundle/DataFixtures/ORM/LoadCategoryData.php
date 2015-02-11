@@ -5,26 +5,40 @@ namespace Devy\UkrBookBundle\DataFixtures\ORM;
 use Devy\UkrBookBundle\Entity\Category;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * Class LoadCategoryData
+ * @package Devy\UkrBookBundle\DataFixtures\ORM
+ */
 class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     * @param ObjectManager $em
+     * @param ObjectManager $manager
      */
-    public function load(ObjectManager $em)
+    public function load(ObjectManager $manager)
     {
-        $books = new Category();
-        $books->setName('Books');
+        $books1 = new Category();
+        $books1->setTitle('Books #1')
+            ->setIsActive(true);
 
-        $clothes = new Category();
-        $clothes->setName('Clothes');
+        $books2 = new Category();
+        $books2->setTitle('Books #2')
+            ->setIsActive(true);
 
-        $em->persist($books);
-        $em->persist($clothes);
-        $em->flush();
+        $subBooks1 = new Category();
+        $subBooks1->setTitle('SubBooks #1')
+            ->setParent($books1)
+            ->setIsActive(true);
 
-        $this->addReference('category-books', $books);
-        $this->addReference('category-clothes', $clothes);
+        $manager->persist($books1);
+        $manager->persist($books2);
+        $manager->persist($subBooks1);
+        $manager->flush();
+
+        $this->addReference('category1', $books1);
+        $this->addReference('category2', $books2);
+        $this->addReference('subCategory1', $subBooks1);
     }
 
     /**

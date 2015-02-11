@@ -17,7 +17,7 @@
   </style>
 
   <h2>{{ entity.title }}</h2>
-  {% if entity.image.webPath %}
+  {% if entity.image and entity.image.webPath %}
     <img src="{{ asset(entity.image.webPath) }}">
   {% endif %}
 
@@ -46,7 +46,7 @@
         <td><a href="{{ path('category_show', { 'id': child.id }) }}">{{ child.id }}</a></td>
         <td>{{ child.title }}</td>
         <td>
-          {% if entity.image.webPath %}
+          {% if entity.image and entity.image.webPath %}
             <img src="{{ asset(entity.image.webPath) }}">
           {% endif %}
         </td>
@@ -108,7 +108,7 @@
         <td><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
         <td>{{ product.title }}</td>
         <td>
-          {% if product.image.webPath %}
+          {% if product.image and product.image.webPath %}
             <img src="{{ asset(product.image.webPath) }}">
           {% endif %}
         </td>

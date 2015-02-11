@@ -6,7 +6,7 @@
 
   <div class="col-lg-4">
     <div class="thumbnail item">
-      {% if product.image.webPath %}
+      {% if product.image and product.image.webPath %}
         <img class="img-circle" src="{{ asset(product.image.webPath) }}" alt="{{ product.title }}">
       {% else %}
         <img class="img-circle"

@@ -12,13 +12,15 @@
     <i class="glyphicon glyphicon-folder-open"></i>
     {{ category.title }}
   </a>
-  <ul class="list-group">
-    {% for child in category.activeNotEmptyChildren %}
-      <li class="list-group-item">
-        {{ _self.category_list_item(child) }}
-      </li>
-    {% endfor %}
-  </ul>
+  {% if category.activeNotEmptyChildren %}
+    <ul class="list-group">
+      {% for child in category.activeNotEmptyChildren %}
+        <li class="list-group-item">
+          {{ _self.category_list_item(child) }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 {% endmacro %}
 
 {% block body %}

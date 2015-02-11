@@ -2,6 +2,14 @@
     border: 0;
 }
 
+.list-group .list-group {
+    margin: 0;
+}
+
+.list-group-item:not(:last-child) {
+    padding-bottom: 0;
+}
+
 .content {
     margin-top: 100px;
 }

@@ -42,13 +42,6 @@ Devy\UkrBookBundle\Entity\Product:
       type: text
       nullable: true
   oneToOne:
-    Brand:
-      targetEntity: Devy\UkrBookBundle\Entity\Brand
-      inversedBy: Product
-      joinColumns:
-        brand_id:
-          referencedColumnName: id
-          unique: true
     Image:
       targetEntity: Devy\UkrBookBundle\Entity\File
       cascade: [persist]
@@ -74,6 +67,13 @@ Devy\UkrBookBundle\Entity\Product:
         category_id:
           referencedColumnName: id
           onDelete: CASCADE
+    Brand:
+      targetEntity: Devy\UkrBookBundle\Entity\Brand
+      inversedBy: Product
+      cascade: [persist]
+      joinColumns:
+        brand_id:
+          referencedColumnName: id
   manyToMany:
     Orders:
       targetEntity: Devy\UkrBookBundle\Entity\Order

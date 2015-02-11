@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block marketing %}
-  {% if category.image.webPath %}
+  {% if category.image and category.image.webPath %}
     <img class="img-rounded category-logo" src="{{ asset(category.image.webPath) }}" alt="{{ category.title }}">
   {% endif %}
   <h1>{{ category.title }}</h1>
