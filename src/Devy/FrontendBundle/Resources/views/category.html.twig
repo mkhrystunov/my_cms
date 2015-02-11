@@ -2,7 +2,11 @@
 {% extends 'DevyFrontendBundle::products_page.html.twig' %}
 
 {% block title %}
-  {{ category.pageTitle }}
+  {% if category.pageTitle %}
+    {{ category.pageTitle }}
+  {% else %}
+    {{ category.title }}
+  {% endif %}
 {% endblock %}
 
 {% block marketing %}
