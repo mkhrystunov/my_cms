@@ -1,0 +1,3 @@
+add_to_cart:
+    path: /add/{productId}
+    defaults: { _controller: "DevyFrontendBundle:Cart:add" }

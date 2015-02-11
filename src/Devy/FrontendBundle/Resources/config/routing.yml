@@ -9,3 +9,7 @@ front_category:
 subscriber:
     prefix: /subscriber
     resource: "@DevyFrontendBundle/Resources/config/subscriber.yml"
+
+cart:
+    prefix: /cart
+    resource: "@DevyFrontendBundle/Resources/config/cart.yml"

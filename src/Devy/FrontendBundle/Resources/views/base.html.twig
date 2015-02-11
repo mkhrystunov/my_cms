@@ -17,6 +17,7 @@
   <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
 <body>
+{% set cart = app.session.get('cart') %}
 
 {% block menu %}
   <div class="navbar-wrapper">
@@ -74,7 +75,7 @@
               <li>
                 <a href="#">
                   <i class="glyphicon glyphicon-shopping-cart"></i>
-                  Cart
+                  Cart <span class="badge">{{ cart ? cart.count : 0 }}</span>
                 </a>
               </li>
             </ul>
