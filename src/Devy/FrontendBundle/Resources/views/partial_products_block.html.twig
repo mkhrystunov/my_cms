@@ -39,6 +39,7 @@
 {% if pagination is defined and pagination == true %}
   {% set max_pages = category.activeProducts|length / limit %}
   {% set max_pages = max_pages|round %}
+  {% set max_pages = max_pages > 1 ? max_pages : 1 %}
   <nav>
     <ul class="pagination">
       <li class="{{ page == 1 ? 'disabled' }}">
