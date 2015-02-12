@@ -1,5 +1,5 @@
 {% set max_pages = brand.activeProducts|length / limit %}
-  {% set max_pages = max_pages|round %}
+  {% set max_pages = max_pages|round(0, 'ceil') %}
   {% set max_pages = max_pages > 1 ? max_pages : 1 %}
 <nav class="text-center">
   <ul class="pagination">
