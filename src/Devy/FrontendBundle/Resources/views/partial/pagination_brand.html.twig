@@ -1,0 +1,33 @@
+{% set max_pages = brand.activeProducts|length / limit %}
+  {% set max_pages = max_pages|round %}
+  {% set max_pages = max_pages > 1 ? max_pages : 1 %}
+<nav class="text-center">
+  <ul class="pagination">
+    <li class="{{ page == 1 ? 'disabled' }}">
+      <a href="{{ path('front_brand', {
+        'brandId': brand.id,
+        'page': page - 1,
+        'limit': limit }) }}">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+      </a>
+    </li>
+    {% for i in 1..max_pages %}
+      <li class="{{ i == page ? 'active' }}">
+        <a href="{{ path('front_brand', {
+          'brandId': brand.id,
+          'page': i,
+          'limit': limit }) }}">
+          {{ i }}
+        </a>
+      </li>
+    {% endfor %}
+    <li class="{{ page == max_pages ? 'disabled' }}">
+      <a href="{{ path('front_brand', {
+        'brandId': brand.id,
+        'page': page + 1,
+        'limit': limit }) }}">
+        <i class="glyphicon glyphicon-chevron-right"></i>
+      </a>
+    </li>
+  </ul>
+</nav>

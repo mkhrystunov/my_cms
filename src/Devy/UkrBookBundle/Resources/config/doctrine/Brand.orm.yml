@@ -16,6 +16,6 @@ Devy\UkrBookBundle\Entity\Brand:
       type: boolean
       nullable: true
   oneToMany:
-    Product:
+    Products:
       targetEntity: Devy\UkrBookBundle\Entity\Product
       mappedBy: Brand

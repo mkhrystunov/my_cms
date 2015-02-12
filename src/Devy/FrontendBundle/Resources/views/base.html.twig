@@ -2,6 +2,10 @@
 <html>
 <head>
   <meta charset="UTF-8"/>
+  {% block meta %}
+    <meta name="description" content="{{ shopinfo.metaDescription }}">
+    <meta name="keywords" content="{{ shopinfo.metaKeywords }}">
+  {% endblock %}
   <title>
     {%- if block('title') -%}
       {{ block('title') }} | UkrBook
@@ -82,10 +86,9 @@
               </li>
             </ul>
 
-            {# TODO search #}
-            <form class="navbar-form navbar-right" role="search">
+            <form action="{{ path('front_search') }}" method="post" class="navbar-form navbar-right" role="search">
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Find product">
+                <input name="pattern" type="text" class="form-control" placeholder="Find product" required>
               </div>
               <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
             </form>
@@ -151,7 +154,7 @@
   <script src="{{ asset('bundles/devyukrbook/js/jquery.js') }}"></script>
   <script src="{{ asset('bundles/devyukrbook/js/bootstrap.js') }}"></script>
   <script>
-    var createAlert = function(alertType, msg) {
+    var createAlert = function (alertType, msg) {
       var $alert = $('<div>')
               .addClass('alert')
               .addClass(alertType)
@@ -204,14 +207,15 @@
         $.ajax({
           url: $(this).attr('href'),
           success: function (msg) {
-            if(msg.success) {
-              var $alert = createAlert('alert-success', msg.message).hide();
-              $('#cart-count').text(msg.count)
-              $('#alerts').prepend($alert);
-              $alert.show(500);
+            var $alert;
+            if (msg.success) {
+              $alert = createAlert('alert-success', msg.message).hide();
+              $('#cart-count').text(msg.count);
             } else {
-
+              $alert = createAlert('alert-info', msg.message).hide();
             }
+            $('#alerts').prepend($alert);
+            $alert.show(500);
           },
           error: function (msg) {
 

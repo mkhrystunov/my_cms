@@ -9,6 +9,11 @@
   {% endif %}
 {% endblock %}
 
+{% block meta %}
+  <meta name="keywords" content="{{ category.metaKeywords }}">
+  <meta name="description" content="{{ category.metaDescription }}">
+{% endblock %}
+
 {% block marketing %}
   {% if category.image and category.image.webPath %}
     <img class="img-rounded category-logo" src="{{ asset(category.image.webPath) }}" alt="{{ category.title }}">
@@ -41,7 +46,8 @@
     </ul>
   </div>
   <hr>
-  {% include 'DevyFrontendBundle::partial_products_block.html.twig' with { 'products': products, 'pagination': true } %}
+  {% include 'DevyFrontendBundle::partial_products_block.html.twig' with { 'products': products } %}
+  {% include 'DevyFrontendBundle:partial:pagination_category.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}

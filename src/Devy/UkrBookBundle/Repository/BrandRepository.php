@@ -19,11 +19,22 @@ class BrandRepository extends EntityRepository
      */
     public function getAllOrderedByIsActive()
     {
-        $qb = $this->createQueryBuilder('b')
+        $queryBuilder = $this->createQueryBuilder('b')
             ->orderBy('b.is_active', 'DESC');
-
         try {
-            $brands = $qb->getQuery()->getResult();
+            $brands = $queryBuilder->getQuery()->getResult();
+        } catch (NoResultException $e) {
+            $brands = [];
+        }
+        return $brands;
+    }
+
+    public function getAllActive()
+    {
+        $queryBuilder = $this->createQueryBuilder('b')
+            ->where('b.is_active = true');
+        try {
+            $brands = $queryBuilder->getQuery()->getResult();
         } catch (NoResultException $e) {
             $brands = [];
         }

@@ -9,26 +9,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Brand
 {
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $id;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     private $name;
-
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     private $is_active;
-
-    /**
-     * @var \Devy\UkrBookBundle\Entity\Product
-     */
+    /** @var \Devy\UkrBookBundle\Entity\Product */
     private $Product;
-
 
     /**
      * Get id
@@ -84,29 +72,6 @@ class Brand
     public function getIsActive()
     {
         return $this->is_active;
-    }
-
-    /**
-     * Set Product
-     *
-     * @param \Devy\UkrBookBundle\Entity\Product $product
-     * @return Brand
-     */
-    public function setProduct(\Devy\UkrBookBundle\Entity\Product $product = null)
-    {
-        $this->Product = $product;
-
-        return $this;
-    }
-
-    /**
-     * Get Product
-     *
-     * @return \Devy\UkrBookBundle\Entity\Product 
-     */
-    public function getProduct()
-    {
-        return $this->Product;
     }
 
     /**

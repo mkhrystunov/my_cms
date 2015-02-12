@@ -22,6 +22,8 @@ class ShopInfoType extends AbstractType
             ->add('address')
             ->add('email')
             ->add('phone')
+            ->add('metaDescription')
+            ->add('metaKeywords')
         ;
     }
 

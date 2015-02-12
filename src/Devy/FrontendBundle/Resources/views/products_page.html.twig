@@ -35,6 +35,17 @@
             </li>
           {% endfor %}
         </ul>
+        <ul class="list-group panel panel-primary">
+          <div class="panel-heading"><h4>Brands</h4></div>
+          {% for brand in brands %}
+            <li class="list-group-item">
+              <a href="{{ path('front_brand', { 'brandId': brand.id }) }}">
+                <i class="glyphicon glyphicon-folder-open"></i>
+                {{ brand.name }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
       </div>
       <div class="col-xs-12 col-sm-9 marketing">
         {% block marketing %}

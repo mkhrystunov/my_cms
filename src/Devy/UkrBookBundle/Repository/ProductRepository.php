@@ -2,6 +2,7 @@
 
 namespace Devy\UkrBookBundle\Repository;
 
+use Devy\UkrBookBundle\Entity\Brand;
 use Devy\UkrBookBundle\Entity\Category;
 use Devy\UkrBookBundle\Entity\Product;
 use Doctrine\ORM\EntityRepository;
@@ -64,7 +65,7 @@ class ProductRepository extends EntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('p')
             ->where('p.is_active = true')
-            ->where('p.Category = :category')
+            ->andWhere('p.Category = :category')
             ->setFirstResult(($page - 1) * $limit)
             ->setMaxResults($limit)
             ->setParameter(':category', $category);
@@ -84,6 +85,50 @@ class ProductRepository extends EntityRepository
                 $queryBuilder->orderBy('p.title', 'DESC');
                 break;
         }
+
+        try {
+            $products = $queryBuilder->getQuery()->getResult();
+        } catch (NoResultException $e) {
+            $products = [];
+        }
+        return $products;
+    }
+
+    /**
+     * @param int $limit
+     * @param string $pattern
+     * @return Product[]
+     */
+    public function getBySearch($limit, $pattern)
+    {
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.is_active = true')
+            ->setMaxResults($limit);
+        $queryBuilder
+            ->andWhere($queryBuilder->expr()->like('p.title', $queryBuilder->expr()->literal('%' . $pattern . '%')));
+
+        try {
+            $products = $queryBuilder->getQuery()->getResult();
+        } catch (NoResultException $e) {
+            $products = [];
+        }
+        return $products;
+    }
+
+    /**
+     * @param int $page
+     * @param int $limit
+     * @param Brand $brand
+     * @return Product[]
+     */
+    public function getByBrandPaginated($page, $limit, Brand $brand)
+    {
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.is_active = true')
+            ->andWhere('p.Brand = :brand')
+            ->setFirstResult(($page - 1) * $limit)
+            ->setMaxResults($limit)
+            ->setParameter(':brand', $brand);
 
         try {
             $products = $queryBuilder->getQuery()->getResult();

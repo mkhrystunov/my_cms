@@ -1,0 +1,14 @@
+{% set active = 'categories' %}
+{% extends 'DevyFrontendBundle::products_page.html.twig' %}
+
+{% block title %}
+  Search
+{% endblock %}
+
+{% block marketing %}
+  <div class="clearfix">
+    <h1>Results for: "{{ pattern }}"</h1>
+  </div>
+  <hr>
+  {% include 'DevyFrontendBundle::partial_products_block.html.twig' with { 'products': products } %}
+{% endblock %}

@@ -6,6 +6,14 @@ front_category:
     path: /category/{categoryId}
     defaults: { _controller: DevyFrontendBundle:Frontend:category }
 
+front_brand:
+    path: /brand/{brandId}
+    defaults: { _controller: DevyFrontendBundle:Frontend:brand }
+
+front_search:
+    path: /search
+    defaults: { _controller: DevyFrontendBundle:Frontend:search }
+
 subscriber:
     prefix: /subscriber
     resource: "@DevyFrontendBundle/Resources/config/subscriber.yml"

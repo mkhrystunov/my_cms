@@ -2,6 +2,8 @@
 
 namespace Devy\UkrBookBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,26 +11,22 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Brand
 {
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $id;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     private $name;
-
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     private $is_active;
+    /** @var Collection */
+    private $Products;
 
     /**
-     * @var \Devy\UkrBookBundle\Entity\Product
+     * Constructor
      */
-    private $Product;
-
+    public function __construct()
+    {
+        $this->Products = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -87,26 +85,51 @@ class Brand
     }
 
     /**
-     * Set Product
+     * Add Products
      *
-     * @param \Devy\UkrBookBundle\Entity\Product $product
+     * @param Product $products
      * @return Brand
      */
-    public function setProduct(\Devy\UkrBookBundle\Entity\Product $product = null)
+    public function addProduct(Product $products)
     {
-        $this->Product = $product;
+        $this->Products[] = $products;
 
         return $this;
     }
 
     /**
-     * Get Product
+     * Remove Products
      *
-     * @return \Devy\UkrBookBundle\Entity\Product 
+     * @param Product $products
      */
-    public function getProduct()
+    public function removeProduct(Product $products)
     {
-        return $this->Product;
+        $this->Products->removeElement($products);
+    }
+
+    /**
+     * Get Products
+     *
+     * @return Collection
+     */
+    public function getProducts()
+    {
+        return $this->Products;
+    }
+
+    /**
+     * @return Product[]
+     */
+    public function getActiveProducts()
+    {
+        $products = [];
+        /** @var Product $product */
+        foreach ($this->getProducts() as $product) {
+            if ($product->getIsActive()) {
+                $products[] = $product;
+            }
+        }
+        return $products;
     }
 
     /**

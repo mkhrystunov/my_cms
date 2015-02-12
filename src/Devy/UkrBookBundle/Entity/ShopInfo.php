@@ -20,6 +20,10 @@ class ShopInfo
     private $email;
     /** @var string */
     private $phone;
+    /** @var string */
+    private $metaDescription;
+    /** @var string */
+    private $metaKeywords;
 
     /**
      * @param string $title
@@ -94,6 +98,42 @@ class ShopInfo
     }
 
     /**
+     * @param string $metaDescription
+     * @return $this
+     */
+    public function setMetaDescription($metaDescription)
+    {
+        $this->metaDescription = $metaDescription;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaDescription()
+    {
+        return $this->metaDescription;
+    }
+
+    /**
+     * @param string $metaKeywords
+     * @return $this
+     */
+    public function setMetaKeywords($metaKeywords)
+    {
+        $this->metaKeywords = $metaKeywords;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaKeywords()
+    {
+        return $this->metaKeywords;
+    }
+
+    /**
      * @param string $path
      */
     public function load($path)
@@ -111,7 +151,9 @@ class ShopInfo
             ->setTitle($value['title'])
             ->setAddress($value['address'])
             ->setEmail($value['email'])
-            ->setPhone($value['phone']);
+            ->setPhone($value['phone'])
+            ->setMetaDescription($value['meta_description'])
+            ->setMetaKeywords($value['meta_keywords']);
     }
 
     /**
@@ -124,6 +166,8 @@ class ShopInfo
         $value['address'] = $this->getAddress();
         $value['email'] = $this->getEmail();
         $value['phone'] = $this->getPhone();
+        $value['meta_description'] = $this->getMetaDescription();
+        $value['meta_keywords'] = $this->getMetaKeywords();
         $dumper = new Dumper();
         $yaml = $dumper->dump($value, 2);
 
