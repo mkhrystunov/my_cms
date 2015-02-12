@@ -10,6 +10,7 @@ use Devy\UkrBookBundle\Repository\PostRepository;
 use Devy\UkrBookBundle\Repository\ProductRepository;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class FrontendController
@@ -17,21 +18,37 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class FrontendController extends Controller
 {
+    const DEFAULT_LIMIT = 6;
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
-        return $this->render('DevyFrontendBundle::index.html.twig', $this->prepareDefault());
+        /** @var EntityManager $em */
+        $manager = $this->getDoctrine()->getManager();
+        /** @var ProductRepository $products */
+        $products = $manager->getRepository('DevyUkrBookBundle:Product');
+        return $this->render('DevyFrontendBundle::index.html.twig', array_merge($this->prepareDefault(), [
+            'products' => $products->getLastAdded(),
+        ]));
     }
 
     /**
+     * @param Request $request
      * @param int $categoryId
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function categoryAction($categoryId)
+    public function categoryAction(Request $request, $categoryId)
     {
+        /** @var EntityManager $em */
+        $manager = $this->getDoctrine()->getManager();
+        /** @var ProductRepository $products */
+        $products = $manager->getRepository('DevyUkrBookBundle:Product');
         $category = $this->getDoctrine()->getRepository('DevyUkrBookBundle:Category')->find($categoryId);
+
+        $page = $request->query->get('page', 1) ;
+        $limit = $request->query->get('limit', self::DEFAULT_LIMIT);
+        $sorting = $request->query->get('sort', $products::SORT_NAME_ASC);
 
         if (!$category->getIsActive()) {
             throw $this->createNotFoundException('Such category does not exists');
@@ -39,6 +56,10 @@ class FrontendController extends Controller
 
         return $this->render('DevyFrontendBundle::category.html.twig', array_merge($this->prepareDefault(), [
             'category' => $category,
+            'products' => $products->getByCategoryPaginatedSorted($page, $limit, $category, $sorting),
+            'limit' => $limit,
+            'page' => $page,
+            'sort' => $sorting,
         ]));
     }
 
@@ -48,11 +69,11 @@ class FrontendController extends Controller
     private function prepareDefault()
     {
         /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        $manager = $this->getDoctrine()->getManager();
         /** @var PostRepository $posts */
-        $posts = $em->getRepository('DevyUkrBookBundle:Post');
-        $categories = $em->getRepository('DevyUkrBookBundle:Category');
-        $products = $em->getRepository('DevyUkrBookBundle:Product');
+        $posts = $manager->getRepository('DevyUkrBookBundle:Post');
+        /** @var CategoryRepository $categories */
+        $categories = $manager->getRepository('DevyUkrBookBundle:Category');
         $shopInfo = new ShopInfo();
         $shopInfo->load($this->container->getParameter('shopinfo'));
 
@@ -64,7 +85,6 @@ class FrontendController extends Controller
         return [
             'posts' => $posts->getActive(),
             'categories' => $categories->getTopLevel(true),
-            'products' => $products->getLastAdded(),
             'shopinfo' => $shopInfo,
             'subscribe_form' => $subscribeForm->createView(),
         ];

@@ -16,5 +16,59 @@
   <h1>{{ category.title }}</h1>
   <p class="lead">{{ category.description }}</p>
   <hr>
-  {% include 'DevyFrontendBundle::partial_products_block.html.twig' with { 'products': category.activeProducts } %}
+  <div class="clearfix">
+    <div class="pull-left">{{ category.activeProducts|length }} items</div>
+    <ul class="nav nav-pills pull-right">
+      <li class="form-inline">
+        Sort By
+        <select id="sort" class="form-control input-sm">
+          <option {{ sort == 'name_asc' ? 'selected' }} value="name_asc">Name ascending</option>
+          <option {{ sort == 'name_desc' ? 'selected' }} value="name_desc">Name descending</option>
+          <option {{ sort == 'price_asc' ? 'selected' }} value="price_asc">Price ascending</option>
+          <option {{ sort == 'price_desc' ? 'selected' }} value="price_desc">Price descending</option>
+        </select>
+      </li>
+      <li class="pull-right form-inline">
+        Show
+        <select id="limit" class="form-control input-sm">
+          <option {{ limit == 3 ? 'selected' }} value="3">3</option>
+          <option {{ limit == 6 ? 'selected' }} value="6">6</option>
+          <option {{ limit == 12 ? 'selected' }} value="12">12</option>
+          <option {{ limit == 24 ? 'selected' }} value="24">24</option>
+        </select>
+        per page
+      </li>
+    </ul>
+  </div>
+  <hr>
+  {% include 'DevyFrontendBundle::partial_products_block.html.twig' with { 'products': products, 'pagination': true } %}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script>
+    $('#limit').on('change', function () {
+      var limit = $('#limit :selected').val();
+      var url = '{{ path('front_category', {
+      'categoryId': category.id,
+      'page': 1,
+      'limit': '_limit_',
+      'sort': sort })
+      }}';
+      url = url.replace(/&amp;/g, '&');
+      window.location.href = url.replace('_limit_', limit);
+    });
+
+    $('#sort').on('change', function () {
+      var sort = $('#sort :selected').val();
+      var url = '{{ path('front_category', {
+      'categoryId': category.id,
+      'page': 1,
+      'limit': limit,
+      'sort': '_sort_' })
+      }}';
+      url = url.replace(/&amp;/g, '&');
+      window.location.href = url.replace('_sort_', sort);
+    });
+  </script>
 {% endblock %}

@@ -2,6 +2,7 @@
 
 namespace Devy\UkrBookBundle\Repository;
 
+use Devy\UkrBookBundle\Entity\Category;
 use Devy\UkrBookBundle\Entity\Product;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
@@ -14,15 +15,20 @@ use Doctrine\ORM\NoResultException;
  */
 class ProductRepository extends EntityRepository
 {
+    const SORT_NAME_ASC = 'name_asc';
+    const SORT_NAME_DESC = 'name_desc';
+    const SORT_PRICE_ASC = 'price_asc';
+    const SORT_PRICE_DESC = 'price_desc';
+
     /**
      * @return Product[]
      */
     public function getAllSortedByIsActive()
     {
-        $qb = $this->createQueryBuilder('p')
+        $queryBuilder = $this->createQueryBuilder('p')
             ->orderBy('p.is_active', 'DESC');
         try {
-            $products = $qb->getQuery()->getResult();
+            $products = $queryBuilder->getQuery()->getResult();
         } catch (NoResultException $e) {
             $products = [];
         }
@@ -35,12 +41,52 @@ class ProductRepository extends EntityRepository
      */
     public function getLastAdded($limit = 12)
     {
-        $qb = $this->createQueryBuilder('p')
+        $queryBuilder = $this->createQueryBuilder('p')
             ->where('p.is_active = true')
             ->orderBy('p.created_at', 'DESC')
             ->setMaxResults($limit);
         try {
-            $products = $qb->getQuery()->getResult();
+            $products = $queryBuilder->getQuery()->getResult();
+        } catch (NoResultException $e) {
+            $products = [];
+        }
+        return $products;
+    }
+
+    /**
+     * @param int $page
+     * @param int $limit
+     * @param Category $category
+     * @param int|null $sort
+     * @return Product[]
+     */
+    public function getByCategoryPaginatedSorted($page, $limit, Category $category, $sort = null)
+    {
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.is_active = true')
+            ->where('p.Category = :category')
+            ->setFirstResult(($page - 1) * $limit)
+            ->setMaxResults($limit)
+            ->setParameter(':category', $category);
+
+        switch ($sort) {
+            case self::SORT_PRICE_ASC:
+                $queryBuilder->orderBy('p.price', 'ASC');
+                break;
+            case self::SORT_PRICE_DESC:
+                $queryBuilder->orderBy('p.price', 'DESC');
+                break;
+            case self::SORT_NAME_ASC:
+                $queryBuilder->orderBy('p.title', 'ASC');
+                break;
+            case self::SORT_NAME_DESC:
+            default:
+                $queryBuilder->orderBy('p.title', 'DESC');
+                break;
+        }
+
+        try {
+            $products = $queryBuilder->getQuery()->getResult();
         } catch (NoResultException $e) {
             $products = [];
         }
