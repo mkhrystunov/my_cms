@@ -6,6 +6,6 @@
     margin: 0;
 }
 
-.list-group-item:not(:last-child) {
-    padding-bottom: 0;
+.list-group-item {
+    padding: 5px 15px;
 }
