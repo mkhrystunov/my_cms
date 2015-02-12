@@ -217,8 +217,10 @@
             $('#alerts').prepend($alert);
             $alert.show(500);
           },
-          error: function (msg) {
-
+          error: function () {
+            var $alert = createAlert('alert-danger', 'Something went wrong, please try again later.').hide();
+            $('#alerts').prepend($alert);
+            $alert.show(500);
           }
         });
         e.preventDefault();
