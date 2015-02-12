@@ -27,7 +27,8 @@
   <div class="container content">
     <div class="row row-offcanvas row-offcanvas-left">
       <div class="col-xs-6 col-sm-3 sidebar-offcanvas">
-        <ul class="list-group">
+        <ul class="list-group panel panel-primary">
+          <div class="panel-heading"><h4>Categories</h4></div>
           {% for child in categories %}
             <li class="list-group-item">
               {{ _self.category_list_item(child) }}

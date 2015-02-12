@@ -64,7 +64,9 @@
                     <i class="caret"></i>
                     <ul class="dropdown-menu" role="menu">
                       {% for category in categories %}
-                        <li><a href="{{ path('front_category', { 'categoryId': category.id }) }}">{{ category.title }}</a></li>
+                        <li>
+                          <a href="{{ path('front_category', { 'categoryId': category.id }) }}">{{ category.title }}</a>
+                        </li>
                       {% endfor %}
                     </ul>
                   </a>
@@ -75,7 +77,7 @@
               <li>
                 <a href="#">
                   <i class="glyphicon glyphicon-shopping-cart"></i>
-                  Cart <span class="badge">{{ cart ? cart.count : 0 }}</span>
+                  Cart <span class="badge" id="cart-count">{{ cart ? cart.count : 0 }}</span>
                 </a>
               </li>
             </ul>
@@ -95,6 +97,7 @@
 {% endblock %}
 
 {% block upper %}{% endblock %}
+<div id="alerts" class="container"></div>
 {% block body %}{% endblock %}
 <footer class="footer container">
   <hr>
@@ -128,7 +131,7 @@
       <div class="col-md-4">
         <h3>Newsletter</h3>
         {# TODO links, yeap again #}
-        {{ form_start(subscribe_form, {'attr': {'class': 'form-inline', 'id': 'subscribe_form'}}) }}
+        {{ form_start(subscribe_form, {'attr': {'class': 'form-inline', 'id': 'subscribe_form' }}) }}
         {{ form_widget(subscribe_form.email) }}
         <button type="submit" class="btn btn-primary">Subscribe</button>
         {{ form_end(subscribe_form) }}
@@ -148,11 +151,21 @@
   <script src="{{ asset('bundles/devyukrbook/js/jquery.js') }}"></script>
   <script src="{{ asset('bundles/devyukrbook/js/bootstrap.js') }}"></script>
   <script>
-    var addAlertToForm = function ($form, alertType, msg) {
+    var createAlert = function(alertType, msg) {
       var $alert = $('<div>')
               .addClass('alert')
               .addClass(alertType)
-              .text(msg)
+              .addClass('alert-dismissible')
+              .attr('role', 'alert')
+              .text(msg);
+
+      $alert.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+      '<span aria-hidden="true">&times;</span></button>');
+
+      return $alert;
+    };
+    var addAlertToForm = function ($form, alertType, msg) {
+      var $alert = createAlert(alertType, msg)
               .hide();
       $form.prepend($alert);
       $alert.show(1000);
@@ -183,7 +196,27 @@
         e.preventDefault();
       });
 
-      $('.disabled a').on('click', function(e) {
+      $('.disabled a').on('click', function (e) {
+        e.preventDefault();
+      });
+
+      $('.add-to-cart').on('click', function (e) {
+        $.ajax({
+          url: $(this).attr('href'),
+          success: function (msg) {
+            if(msg.success) {
+              var $alert = createAlert('alert-success', msg.message).hide();
+              $('#cart-count').text(msg.count)
+              $('#alerts').prepend($alert);
+              $alert.show(500);
+            } else {
+
+            }
+          },
+          error: function (msg) {
+
+          }
+        });
         e.preventDefault();
       });
     });
