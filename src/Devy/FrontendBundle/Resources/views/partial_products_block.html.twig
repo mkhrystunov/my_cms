@@ -4,7 +4,7 @@
     <div class="row">
   {% endif %}
 
-  <div class="col-lg-4">
+  <div class="col-md-4">
     <div class="thumbnail item">
       {% if product.image and product.image.webPath %}
         <img class="img-circle" src="{{ asset(product.image.webPath) }}" alt="{{ product.title }}">
@@ -13,6 +13,7 @@
              src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
              alt="Generic placeholder image">
       {% endif %}
+      <div class="caption">
       <h2>{{ product.title }}</h2>
 
       <p><b>{{ product.price|number_format(2, '.', ',') }} грн.</b></p>
@@ -28,6 +29,7 @@
           <i class="glyphicon glyphicon-shopping-cart"></i>
           Add to cart
         </a>
+      </div>
       </div>
     </div>
   </div>
