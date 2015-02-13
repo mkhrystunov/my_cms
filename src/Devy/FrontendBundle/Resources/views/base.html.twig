@@ -64,12 +64,27 @@
               {% if categories|length > 0 %}
                 <li class="dropdown {{ active == 'categories' ? 'active' }}">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    Catalog
+                    Categories
                     <i class="caret"></i>
                     <ul class="dropdown-menu" role="menu">
                       {% for category in categories %}
                         <li>
                           <a href="{{ path('front_category', { 'categoryId': category.id }) }}">{{ category.title }}</a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </a>
+                </li>
+              {% endif %}
+              {% if brands|length > 0 %}
+                <li class="dropdown {{ active == 'brands' ? 'active' }}">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    Brands
+                    <i class="caret"></i>
+                    <ul class="dropdown-menu" role="menu">
+                      {% for brand in brands %}
+                        <li>
+                          <a href="{{ path('front_brand', { 'brandId': brand.id }) }}">{{ brand.name }}</a>
                         </li>
                       {% endfor %}
                     </ul>
