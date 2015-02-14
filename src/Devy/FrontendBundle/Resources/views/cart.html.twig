@@ -1,0 +1,147 @@
+{% set active = 'cart' %}
+{% extends 'DevyFrontendBundle::base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('bundles/devyfrontend/css/carousel.css') }}">
+  <link rel="stylesheet" href="{{ asset('bundles/devyfrontend/css/item_cards.css') }}">
+  <link rel="stylesheet" href="{{ asset('bundles/devyfrontend/css/menu.css') }}">
+{% endblock %}
+
+{% block body %}
+  <div class="container content">
+    <h1>Your cart</h1>
+
+    <form method="post">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+          {% set quantity = cart.productCount(product.id) %}
+          <tr>
+            <td>
+              {% if product.image and product.image.webPath %}
+                <img class="img-rounded pull-left" src="{{ asset(product.image.webPath) }}" alt="{{ product.title }}">
+              {% else %}
+                <img class="img-rounded pull-left"
+                     src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+                     alt="Generic placeholder image">
+              {% endif %}
+              <div style="margin-left: 160px">
+                <h3>{{ product.title }}</h3>
+
+                <p>{{ product.description }}</p>
+
+                <p class="price"><b>{{ product.price|number_format(2, '.', ',') }} грн.</b></p>
+              </div>
+            </td>
+            <td>
+              <select name="quantity-{{ product.id }}" class="form-control quantity"
+                      data-price="{{ product.price }}"
+                      data-url="{{ path('cart_set_quantity', { 'productId': product.id, 'quantity': '_quantity_'}) }}">
+                {% for i in 1..10 %}
+                  <option {{ i == quantity ? 'selected' }}>{{ i }}</option>
+                {% endfor %}
+              </select>
+            </td>
+            <td class="total">
+              {{ (product.price * quantity)|number_format(2, '.', ',') }}
+            </td>
+            <td>
+              <button type="button" class="btn btn-danger remove"
+                      data-url="{{ path('remove_from_cart', {'productId': product.id }) }}">
+                Remove
+              </button>
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="4">
+              <div class="alert alert-warning text-center">
+                <h3><i class="glyphicon glyphicon-warning-sign"></i></h3>
+                <strong>Warning!</strong> You have no items in your shopping cart.
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+        <tr style="font-size: 18px">
+          <td colspan="3" class="text-right">Total:</td>
+          <td><b id="total">{{ total|number_format(2, '.', ',') }} грн.</b></td>
+        </tr>
+        </tbody>
+      </table>
+      <nav>
+        <a href="{{ path('home') }}" class="btn btn-info"><span aria-hidden="true">&larr;</span> Continue shopping</a>
+        {# TODO checkout link #}
+        <button type="submit" class="btn btn-success pull-right">Checkout <span aria-hidden="true">&rarr;</span>
+        </button>
+      </nav>
+    </form>
+    <div class="marketing">
+      <h2>Last products</h2>
+      {% include 'DevyFrontendBundle::partial_products_block.html.twig' with {
+      'products': last_products,
+      'col': 'col-md-3',
+      'row_count': 4
+      } %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script>
+    var updateValues = function () {
+      var count = 0, total = 0;
+      $('.quantity').each(function () {
+        count += parseInt($(this).val());
+      });
+      $('#cart-count').text(count);
+      total = 0.00;
+      $('.total').each(function () {
+        total += parseFloat($(this).text());
+      });
+      $('#total').text(total.toFixed(2) + ' грн.');
+    };
+    $('.quantity').on('change', function () {
+      var total = ($(this).val() * $(this).data('price')).toFixed(2);
+      $(this).parent().siblings('.total').text(total);
+      $.ajax({
+        url: $(this).data('url').replace('_quantity_', $(this).val())
+      });
+      updateValues();
+    });
+    $('.remove').on('click', function () {
+      var $this = $(this);
+      $.ajax({
+        url: $this.data('url'),
+        success: function (msg) {
+          if (msg.success) {
+            var $cart = $('#cart-count');
+            $cart.text($cart.text() - $this.parent().parent().find('.quantity').val());
+            $this.parent().parent().hide(500, function () {
+              $(this).remove();
+              updateValues();
+            });
+          } else {
+            var $alert = createAlert('alert-warning', msg.message).hide();
+            $('#alerts').prepend($alert);
+            $alert.show(500);
+          }
+        },
+        error: function () {
+          var $alert = createAlert('alert-danger', 'Something went wrong, please try again later.').hide();
+          $('#alerts').prepend($alert);
+          $alert.show(500);
+        }
+      });
+    });
+  </script>
+{% endblock %}

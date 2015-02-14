@@ -1,10 +1,11 @@
+{% set row_count = row_count is defined ? row_count : 3 %}
 {% for product in products %}
   {# TODO again links #}
-  {% if loop.first or loop.index0 % 3 == 0 %}
+  {% if loop.first or loop.index0 % row_count == 0 %}
     <div class="row">
   {% endif %}
 
-  <div class="col-md-4">
+  <div class="{{ col is defined ? col : 'col-md-4' }}">
     <div class="thumbnail item">
       {% if product.image and product.image.webPath %}
         <img class="img-circle" src="{{ asset(product.image.webPath) }}" alt="{{ product.title }}">
@@ -34,7 +35,7 @@
     </div>
   </div>
 
-  {% if loop.last or loop.index0 % 3 == 2 %}
+  {% if loop.last or loop.index0 % row_count == row_count - 1 %}
     </div>
   {% endif %}
 {% endfor %}

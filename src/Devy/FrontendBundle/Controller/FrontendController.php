@@ -10,7 +10,6 @@ use Devy\UkrBookBundle\Repository\CategoryRepository;
 use Devy\UkrBookBundle\Repository\PostRepository;
 use Devy\UkrBookBundle\Repository\ProductRepository;
 use Doctrine\ORM\EntityManager;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class FrontendController
  * @package Devy\FrontendBundle\Controller
  */
-class FrontendController extends Controller
+class FrontendController extends ShopController
 {
     const DEFAULT_LIMIT = 6;
     /**
@@ -111,35 +110,5 @@ class FrontendController extends Controller
             'page' => $page,
             'pattern' => $pattern,
         ]));
-    }
-
-    /**
-     * @return array
-     */
-    private function prepareDefault()
-    {
-        /** @var EntityManager $em */
-        $manager = $this->getDoctrine()->getManager();
-        /** @var PostRepository $posts */
-        $posts = $manager->getRepository('DevyUkrBookBundle:Post');
-        /** @var CategoryRepository $categories */
-        $categories = $manager->getRepository('DevyUkrBookBundle:Category');
-        /** @var BrandRepository $brands */
-        $brands = $manager->getRepository('DevyUkrBookBundle:Brand');
-        $shopInfo = new ShopInfo();
-        $shopInfo->load($this->container->getParameter('shopinfo'));
-
-        $subscribeForm = $this->createForm(new SubscriberType(), new Subscriber(), [
-            'action' => $this->generateUrl('subscriber_new'),
-            'method' => 'POST',
-        ]);
-
-        return [
-            'posts' => $posts->getActive(),
-            'categories' => $categories->getTopLevel(true),
-            'shopinfo' => $shopInfo,
-            'subscribe_form' => $subscribeForm->createView(),
-            'brands' => $brands->getAllActive(),
-        ];
     }
 }

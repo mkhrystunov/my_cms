@@ -22,6 +22,8 @@
 </head>
 <body>
 {% set cart = app.session.get('cart') %}
+{% set active = active is defined ? active : '' %}
+{% set current_path = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
 
 {% block menu %}
   <div class="navbar-wrapper">
@@ -93,8 +95,8 @@
               {% endif %}
               <li><a href="#">About</a></li>
               <li><a href="#">Contact</a></li>
-              <li>
-                <a href="#">
+              <li class="{{ active == 'cart' ? 'active' }}">
+                <a href="{{ path('show_cart') }}">
                   <i class="glyphicon glyphicon-shopping-cart"></i>
                   Cart <span class="badge" id="cart-count">{{ cart ? cart.count : 0 }}</span>
                 </a>
@@ -219,15 +221,19 @@
       });
 
       $('.add-to-cart').on('click', function (e) {
+        var curPath = '{{ current_path }}';
         $.ajax({
           url: $(this).attr('href'),
           success: function (msg) {
             var $alert;
             if (msg.success) {
+              if (curPath === window.location.pathname) {
+                window.location.replace('{{ url('show_cart') }}');
+              }
               $alert = createAlert('alert-success', msg.message).hide();
               $('#cart-count').text(msg.count);
             } else {
-              $alert = createAlert('alert-info', msg.message).hide();
+              $alert = createAlert('alert-warning', msg.message).hide();
             }
             $('#alerts').prepend($alert);
             $alert.show(500);

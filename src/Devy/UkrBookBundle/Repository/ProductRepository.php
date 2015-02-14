@@ -137,4 +137,21 @@ class ProductRepository extends EntityRepository
         }
         return $products;
     }
+
+    /**
+     * @param int[] $ids
+     * @return Product[]
+     */
+    public function findByIds(array $ids)
+    {
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.is_active = true');
+        $queryBuilder->andWhere($queryBuilder->expr()->in('p.id', $ids));
+        try {
+            $products = $queryBuilder->getQuery()->getResult();
+        } catch (\Exception $e) {
+            $products = [];
+        }
+        return $products;
+    }
 }

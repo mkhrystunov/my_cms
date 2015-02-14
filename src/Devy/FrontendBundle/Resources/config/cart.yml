@@ -1,3 +1,15 @@
+show_cart:
+    path: /
+    defaults: { _controller: DevyFrontendBundle:Cart:show }
+
 add_to_cart:
     path: /add/{productId}
-    defaults: { _controller: "DevyFrontendBundle:Cart:add" }
+    defaults: { _controller: DevyFrontendBundle:Cart:add }
+
+cart_set_quantity:
+    path: /quantity/{productId}/{quantity}
+    defaults: { _controller: DevyFrontendBundle:Cart:setQuantity }
+
+remove_from_cart:
+    path: /remove/{productId}
+    defaults: { _controller: DevyFrontendBundle:Cart:remove }

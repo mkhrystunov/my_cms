@@ -34,6 +34,14 @@ class Cart
     }
 
     /**
+     * @param $productId
+     */
+    public function removeProduct($productId)
+    {
+        unset($this->products[$productId]);
+    }
+
+    /**
      * @return int
      */
     public function getCount()
@@ -55,10 +63,30 @@ class Cart
     }
 
     /**
+     * @param int $productId
+     * @param int $count
+     */
+    public function setProductCount($productId, $count)
+    {
+        if (isset($this->products[$productId])) {
+            $this->products[$productId] = $count;
+        }
+    }
+
+    /**
      * @return int[]
      */
     public function getProductIds()
     {
         return array_keys($this->products);
+    }
+
+    /**
+     * @param int $productId
+     * @return bool
+     */
+    public function contains($productId)
+    {
+        return isset($this->products[$productId]);
     }
 }
