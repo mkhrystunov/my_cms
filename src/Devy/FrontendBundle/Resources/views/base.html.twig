@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8"/>
   {% block meta %}
-    <meta name="description" content="{{ shopinfo.metaDescription }}">
-    <meta name="keywords" content="{{ shopinfo.metaKeywords }}">
+    {% if shopinfo is defined %}
+      <meta name="description" content="{{ shopinfo.metaDescription }}">
+      <meta name="keywords" content="{{ shopinfo.metaKeywords }}">
+    {% endif %}
   {% endblock %}
   <title>
     {%- if block('title') -%}
@@ -144,8 +146,10 @@
         <h3>Useful links</h3>
         <ul>
           {# TODO add links, and more items #}
-          <li><a href="#">Cart</a></li>
+          <li><a href="{{ path('show_cart') }}">Cart</a></li>
           <li><a href="#">Checkout</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
         </ul>
       </div>
       <div class="col-md-4">

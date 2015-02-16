@@ -12,7 +12,6 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        {#TODO urls#}
         <li class="{{ active == 'catalog' ? 'active' }}">
           <a href="{{ url('category') }}">Catalog</a>
         </li>
@@ -31,13 +30,6 @@
         <li class="{{ active == 'shopinfo' ? 'active' }}">
           <a href="{{ url('shopinfo_edit') }}">Shop info</a>
         </li>
-        {% if nav_items is defined %}
-          {% for nav_item in nav_items %}
-            <li class="{{ nav_item.isActive ? 'active' : '' }}">
-              <a href="{{ nav_item.link }}">{{ nav_item.text }}</a>
-            </li>
-          {% endfor %}
-        {% endif %}
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}

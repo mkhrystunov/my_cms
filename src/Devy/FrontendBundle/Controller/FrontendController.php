@@ -111,4 +111,18 @@ class FrontendController extends ShopController
             'pattern' => $pattern,
         ]));
     }
+
+    public function productAction(Request $request, $productId)
+    {
+        /** @var EntityManager $manager */
+        $manager = $this->getDoctrine()->getManager();
+        /** @var ProductRepository $products */
+        $products = $manager->getRepository('DevyUkrBookBundle:Product');
+
+        $product = $products->find($productId);
+
+        if ($product) {
+
+        }
+    }
 }
