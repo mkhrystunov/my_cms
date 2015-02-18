@@ -3,8 +3,10 @@ show_cart:
     defaults: { _controller: DevyFrontendBundle:Cart:show }
 
 add_to_cart:
-    path: /add/{productId}
-    defaults: { _controller: DevyFrontendBundle:Cart:add }
+    path: /add/{productId}/{quantity}
+    defaults: { _controller: DevyFrontendBundle:Cart:add, quantity: 1 }
+    requirements:
+        quantity: \d+
 
 cart_set_quantity:
     path: /quantity/{productId}/{quantity}

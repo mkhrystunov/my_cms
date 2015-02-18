@@ -14,12 +14,14 @@ use Symfony\Component\HttpFoundation\Request;
 class CartController extends ShopController
 {
     const DEFAULT_LAST_PRODUCTS_COUNT = 4;
+
     /**
      * @param Request $request
      * @param int $productId
+     * @param int $quantity
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function addAction(Request $request, $productId)
+    public function addAction(Request $request, $productId, $quantity = 1)
     {
         /** @var EntityManager $manager */
         $manager = $this->getDoctrine()->getManager();
@@ -30,18 +32,25 @@ class CartController extends ShopController
             /** @var Cart $cart */
             $cart = $session->get('cart', new Cart());
             $cart->addProduct($product->getId());
+            $cart->setProductCount($product->getId(), $quantity);
             $session->set('cart', $cart);
 
-            return new JsonResponse([
-                'success' => true,
-                'message' => sprintf('%s was added', $product->getTitle()),
-                'count' => $cart->getCount(),
-            ]);
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse([
+                    'success' => true,
+                    'message' => sprintf('%s was added', $product->getTitle()),
+                    'count' => $cart->getCount(),
+                ]);
+            }
+            return $this->redirectToRoute('show_cart');
         } else {
-            return new JsonResponse([
-                'success' => false,
-                'message' => 'Some error with product. Please try again.',
-            ]);
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse([
+                    'success' => false,
+                    'message' => 'Some error with product. Please try again.',
+                ]);
+            }
+            throw $this->createNotFoundException('Product not found');
         }
     }
 

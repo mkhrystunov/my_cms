@@ -2,14 +2,13 @@
 
 namespace Devy\FrontendBundle\Controller;
 
-use Devy\UkrBookBundle\Entity\ShopInfo;
-use Devy\UkrBookBundle\Entity\Subscriber;
-use Devy\UkrBookBundle\Form\SubscriberType;
-use Devy\UkrBookBundle\Repository\BrandRepository;
-use Devy\UkrBookBundle\Repository\CategoryRepository;
-use Devy\UkrBookBundle\Repository\PostRepository;
+use Devy\UkrBookBundle\Entity\Product;
+use Devy\UkrBookBundle\Entity\Review;
+use Devy\UkrBookBundle\Form\ReviewType;
 use Devy\UkrBookBundle\Repository\ProductRepository;
+use Devy\UkrBookBundle\Repository\ReviewRepository;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -112,17 +111,74 @@ class FrontendController extends ShopController
         ]));
     }
 
-    public function productAction(Request $request, $productId)
+    /**
+     * @param Request $request
+     * @param int $productId
+     * @param Form $reviewForm
+     * @return Response
+     */
+    public function productAction(Request $request, $productId, Form $reviewForm = null)
+    {
+        /** @var EntityManager $manager */
+        $manager = $this->getDoctrine()->getManager();
+        /** @var ProductRepository $products */
+        $products = $manager->getRepository('DevyUkrBookBundle:Product');
+        /** @var ReviewRepository $reviews */
+        $reviews = $manager->getRepository('DevyUkrBookBundle:Review');
+
+        /** @var Product $product */
+        $product = $products->find($productId);
+
+        if (!$product) {
+            throw $this->createNotFoundException('Product not found');
+        }
+
+        $reviewForm = $reviewForm ?: $this->createForm(new ReviewType(), null, [
+            'action' => $this->generateUrl('add_review', ['productId' => $product->getId()]),
+            'method' => 'post',
+        ]);
+
+        return $this->render('DevyFrontendBundle::product.html.twig', array_merge($this->prepareDefault(), [
+            'product' => $product,
+            'reviews' => $reviews->getActiveByProduct($product, $request->query->get('reviews', self::DEFAULT_LIMIT)),
+            'breadcrumbs' => $product->getCategory()->createCategoryBreadcrumbs(),
+            'review_form' => $reviewForm->createView(),
+        ]));
+    }
+
+    /**
+     * @param Request $request
+     * @param int $productId
+     * @return Response
+     */
+    public function addReviewAction(Request $request, $productId)
     {
         /** @var EntityManager $manager */
         $manager = $this->getDoctrine()->getManager();
         /** @var ProductRepository $products */
         $products = $manager->getRepository('DevyUkrBookBundle:Product');
 
+        /** @var Product $product */
         $product = $products->find($productId);
 
-        if ($product) {
-
+        if (!$product) {
+            throw $this->createNotFoundException('Product not found');
         }
+
+        $review = new Review();
+        $reviewForm = $this->createForm(new ReviewType(), $review);
+        $reviewForm->handleRequest($request);
+
+        if ($reviewForm->isValid()) {
+            $review->setProduct($product);
+            $review->setIsActive(true);
+            $manager->persist($review);
+            $manager->flush();
+
+            $this->get('session')->getFlashBag()->add('success', 'Review added!');
+            return $this->redirectToRoute('front_product', ['productId' => $productId]);
+        }
+
+        return $this->productAction($request, $productId, $reviewForm);
     }
 }

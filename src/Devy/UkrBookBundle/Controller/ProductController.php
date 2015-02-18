@@ -168,6 +168,7 @@ class ProductController extends Controller
         }
 
         return $this->render('DevyUkrBookBundle:Product:review.html.twig', [
+            'product' => $product,
             'reviews' => $product->getReviews(),
             'breadcrumbs' => $product->getCategory()->createCategoryBreadcrumbs(),
             'last_active' => true,
@@ -175,29 +176,32 @@ class ProductController extends Controller
     }
 
     /**
+     * @param Request $request
      * @param int $id
      * @return RedirectResponse
      */
-    public function activateReviewAction($id)
+    public function activateReviewAction(Request $request, $id)
     {
-        return $this->toggleReview($id, true);
+        return $this->toggleReview($id, true, $request);
     }
 
     /**
+     * @param Request $request
      * @param int $id
      * @return RedirectResponse
      */
-    public function deactivateReviewAction($id)
+    public function deactivateReviewAction(Request $request, $id)
     {
-        return $this->toggleReview($id, false);
+        return $this->toggleReview($id, false, $request);
     }
 
     /**
      * @param int $id
      * @param boolean $status
+     * @param Request $request
      * @return RedirectResponse
      */
-    protected function toggleReview($id, $status)
+    protected function toggleReview($id, $status, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $review = $em->getRepository('DevyUkrBookBundle:Review')->find($id);
@@ -211,6 +215,10 @@ class ProductController extends Controller
         $em->flush();
 
         $this->get('session')->getFlashBag()->add('success', 'Review status updated!');
-        return $this->redirect($this->generateUrl('product_reviews', ['id' => $review->getProduct()->getId()]));
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse();
+        } else {
+            return $this->redirect($this->generateUrl('product_reviews', ['id' => $review->getProduct()->getId()]));
+        }
     }
 }

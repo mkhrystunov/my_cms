@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
  */
 class Product
 {
+    const DEFAULT_RATING = 3;
     /**
      * @var integer
      */
@@ -343,17 +344,36 @@ class Product
     }
 
     /**
+     * @return Review[]
+     */
+    public function getActiveReviews()
+    {
+        $reviews = [];
+        /** @var Review $review */
+        foreach ($this->getReviews() as $review) {
+            if ($review->getIsActive()) {
+                $reviews[] = $review;
+            }
+        }
+        return $reviews;
+    }
+
+    /**
      * @return float
      */
     public function getRating()
     {
         $rating = 0;
-        $reviews = $this->getReviews();
+        $reviews = $this->getActiveReviews();
+        if (empty($reviews)) {
+            return 0;
+        }
         /** @var Review $review */
-        foreach($reviews as $review) {
+        foreach ($reviews as $review) {
             $rating += $review->getScore();
         }
-        return $rating / $this->getReviews()->count();
+        $rating = ceil($rating / count($reviews));
+        return $rating === 0 ? self::DEFAULT_RATING : $rating;
     }
 
     /**
@@ -508,28 +528,6 @@ class Product
     }
 
     /**
-     * @param Product $object
-     * @param ExecutionContextInterface $context
-     */
-    public static function validate(Product $object, ExecutionContextInterface $context)
-    {
-        /** @var string[] $attributes */
-        $attributes = [];
-        foreach ($object->getProductAttributes() as $attribute) {
-            $attributes[] = $attribute->getAttribute()->getName();
-        }
-
-        foreach ($attributes as $attribute) {
-            if (in_array($attribute, array_diff_key($attributes, [$attribute]))) {
-                $context->buildViolation('This attribute "%string%" is already in use!')
-                    ->setParameter('%string%', $attribute)
-                    ->atPath('ProductAttributes')
-                    ->addViolation();
-                break;
-            }
-        }
-    }
-    /**
      * @var string
      */
     private $page_title;
@@ -561,7 +559,7 @@ class Product
     /**
      * Get page_title
      *
-     * @return string 
+     * @return string
      */
     public function getPageTitle()
     {
@@ -584,7 +582,7 @@ class Product
     /**
      * Get meta_description
      *
-     * @return string 
+     * @return string
      */
     public function getMetaDescription()
     {
@@ -607,10 +605,33 @@ class Product
     /**
      * Get meta_keywords
      *
-     * @return string 
+     * @return string
      */
     public function getMetaKeywords()
     {
         return $this->meta_keywords;
+    }
+
+    /**
+     * @param Product $object
+     * @param ExecutionContextInterface $context
+     */
+    public static function validate(Product $object, ExecutionContextInterface $context)
+    {
+        /** @var string[] $attributes */
+        $attributes = [];
+        foreach ($object->getProductAttributes() as $attribute) {
+            $attributes[] = $attribute->getAttribute()->getName();
+        }
+
+        foreach ($attributes as $key => $attribute) {
+            if (in_array($attribute, array_diff_key($attributes, [$key => $attribute]))) {
+                $context->buildViolation('This attribute "%string%" is already in use!')
+                    ->setParameter('%string%', $attribute)
+                    ->atPath('ProductAttributes')
+                    ->addViolation();
+                break;
+            }
+        }
     }
 }

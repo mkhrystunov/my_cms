@@ -151,7 +151,6 @@ class File
         }
 
         if (isset($this->temp)) {
-            var_dump($this->temp);
             // delete old
             unlink($this->temp);
             $this->temp = null;

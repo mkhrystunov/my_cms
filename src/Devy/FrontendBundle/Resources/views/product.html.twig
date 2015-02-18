@@ -1,0 +1,211 @@
+{% extends 'DevyFrontendBundle::base.html.twig' %}
+
+{% block title %}
+  {% if product.pageTitle %}
+    {{ product.pageTitle }}
+  {% else %}
+    {{ product.title }}
+  {% endif %}
+{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="{{ product.metaDescription }}">
+  <meta name="keywords" content="{{ product.metaKeywords }}">
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('bundles/devyfrontend/css/carousel.css') }}">
+  <link rel="stylesheet" href="{{ asset('bundles/devyfrontend/css/product.css') }}"/>
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="{{ path('home') }}">Home</a></li>
+      {% for title, id in breadcrumbs %}
+        <li><a href="{{ path('front_category', { 'categoryId': id}) }}">{{ title }}</a></li>
+      {% endfor %}
+      <li class="active">{{ product.title }}</li>
+    </ol>
+    <div class="row">
+      {% if product.image and product.image.webPath %}
+        <div class="col-md-4">
+          <img class="img-rounded" src="{{ asset(product.image.webPath) }}">
+        </div>
+      {% endif %}
+      <div class="col-md-8">
+        {% if is_granted('ROLE_ADMIN') %}
+          <a class="btn btn-sm btn-primary" href="{{ path('product_edit', {'id': product.id }) }}">
+            <i class="glyphicon glyphicon-pencil"></i>
+            Edit
+          </a>
+        {% endif %}
+        <div class="clearfix">
+          <h1 class="pull-left">{{ product.title }}
+            <a href="{{ path('front_category', { 'categoryId': product.category.id }) }}">
+              <small>{{ product.category.title }}</small>
+            </a>
+          </h1>
+          <h3 class="pull-right">
+            <a href="{{ path('front_brand', { 'brandId': product.brand.id }) }}" class="label label-default">
+              {{ product.brand.name }}
+            </a>
+          </h3>
+        </div>
+        <div class="text-primary star">
+          {% for i in 1..5 %}
+            <i class="glyphicon {{ i <= product.rating ? 'glyphicon-star' : 'glyphicon-star-empty' }}"></i>
+          {% endfor %}
+        </div>
+
+        <h3>{{ product.price|number_format(2, '.', ',') }} грн.</h3>
+
+        <p>{{ product.description }}</p>
+        {% if product.productAttributes is not empty %}
+          <table class="table table-hover table-striped">
+            <caption>
+              <h4>Attributes</h4>
+            </caption>
+            <tbody>
+            {% for attribute in product.productAttributes %}
+              <tr>
+                <th>{{ attribute.attribute.name }}</th>
+                <td>{{ attribute.value }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
+
+        {% if product.descriptionFull %}
+          <h4 class="text-muted">Description</h4>
+          <p>{{ product.descriptionFull }}</p>
+        {% endif %}
+
+        <h4 class="text-muted">Buy</h4>
+
+        <form class="form-inline well" method="post"
+              action="{{ path('add_to_cart', {'productId': product.id, 'quantity': 333}) }}"
+                >
+          <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input min="1" value="1" type="number" id="quantity" class="form-control" name="quantity">
+            <button class="btn btn-success" id="add-to-cart">
+              <i class="glyphicon glyphicon-shopping-cart"></i>
+              Add to cart
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {% if reviews %}
+          <h3>Last reviews</h3>
+          {% set row_count = 3 %}
+          {% for review in reviews %}
+            {% if loop.first or loop.index0 % row_count == 0 %}
+              <div class="row">
+            {% endif %}
+            <div class="col-md-4">
+              <div class="item thumbnail">
+                <h4>{{ review.name }}:</h4>
+                {% if is_granted('ROLE_ADMIN') %}
+                  <div class="btn-group btn-group-sm pull-right">
+                    <a class="btn btn-warning review-deactivate"
+                       href="{{ url('product_review_deactivate', { 'id': review.id }) }}">
+                      <i class="glyphicon glyphicon-ban-circle"></i>
+                      disable
+                    </a>
+                  </div>
+                {% endif %}
+
+                <p class="text-primary">
+                  {% for i in 1..5 %}
+                    <i class="glyphicon {{ i <= review.score ? 'glyphicon-star' : 'glyphicon-star-empty' }}"></i>
+                  {% endfor %}
+                </p>
+                <blockquote>
+                  {{ review.review }}
+                  <footer>
+                    {{ review.postedAt|date('H:i d/m/Y') }}
+                  </footer>
+                </blockquote>
+              </div>
+            </div>
+            {% if loop.last or loop.index0 % row_count == row_count - 1 %}
+              </div>
+            {% endif %}
+          {% endfor %}
+
+          {% if product.activeReviews|length > reviews|length %}
+            <form method="get">
+              <input type="hidden" name="reviews" value="{{ product.activeReviews|length }}">
+              <button type="submit" class="btn btn-lg btn-primary">Show all</button>
+            </form>
+          {% endif %}
+
+        {% endif %}
+
+        <h4>Leave your review</h4>
+
+        {% set score = review_form.score.vars.value %}
+        {% set score = score < 1 ? review_form.score.vars.attr.value : score %}
+        {% set score = score > 5 ? review_form.score.vars.attr.value : score %}
+        {{ form_start(review_form) }}
+        <p class="text-success star">
+          {% for i in 1..5 %}
+            <i class="glyphicon star-editable {{ i <= score ? 'glyphicon-star' : 'glyphicon-star-empty' }}"></i>
+          {% endfor %}
+        </p>
+
+        <div class="form-group-lg row">
+          <div class="col-md-3">
+            {{ form_widget(review_form.name) }}
+            {{ form_errors(review_form.name) }}
+          </div>
+          <div class="col-md-3">
+            {{ form_widget(review_form.review) }}
+            {{ form_errors(review_form.review) }}
+          </div>
+          <div class="col-md-6">
+            <button type="submit" class="btn btn-lg btn-success">Submit</button>
+          </div>
+        </div>
+        {{ form_end(review_form) }}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script>
+    $('.star-editable').on('click', function () {
+      var score = $(this).prevAll().add($(this)).each(function () {
+        $(this).removeClass('glyphicon-star-empty').addClass('glyphicon-star');
+      }).length;
+      $(this).nextAll().each(function () {
+        $(this).removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+      });
+      $('#devy_ukrbookbundle_review_score').val(score)
+    });
+    $('.review-deactivate').on('click', function (e) {
+      var $this = $(this);
+      e.preventDefault();
+      $.ajax({
+        url: $(this).attr('href'),
+        success: function () {
+          $this.closest('.col-md-4').remove();
+        }
+      });
+    });
+    $('#add-to-cart').on('click', function (e) {
+      e.preventDefault();
+      var $form = $(this).closest('form');
+      var $quantity = $('#quantity');
+      window.location.href = $form.attr('action').replace(333, $quantity.val());
+    });
+  </script>
+{% endblock %}

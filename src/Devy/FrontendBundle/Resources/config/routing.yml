@@ -10,6 +10,14 @@ front_brand:
     path: /brand/{brandId}
     defaults: { _controller: DevyFrontendBundle:Frontend:brand }
 
+front_product:
+    path: /product/{productId}
+    defaults: { _controller: DevyFrontendBundle:Frontend:product }
+
+add_review:
+    path: /review/add/{productId}
+    defaults: { _controller: DevyFrontendBundle:Frontend:addReview }
+
 front_search:
     path: /search
     defaults: { _controller: DevyFrontendBundle:Frontend:search }

@@ -2,6 +2,8 @@
 
 namespace Devy\UkrBookBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,8 +17,16 @@ class Brand
     private $name;
     /** @var boolean */
     private $is_active;
-    /** @var \Devy\UkrBookBundle\Entity\Product */
-    private $Product;
+    /** @var Collection */
+    private $Products;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->Products = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -72,6 +82,54 @@ class Brand
     public function getIsActive()
     {
         return $this->is_active;
+    }
+
+    /**
+     * Add Products
+     *
+     * @param Product $products
+     * @return Brand
+     */
+    public function addProduct(Product $products)
+    {
+        $this->Products[] = $products;
+
+        return $this;
+    }
+
+    /**
+     * Remove Products
+     *
+     * @param Product $products
+     */
+    public function removeProduct(Product $products)
+    {
+        $this->Products->removeElement($products);
+    }
+
+    /**
+     * Get Products
+     *
+     * @return Collection
+     */
+    public function getProducts()
+    {
+        return $this->Products;
+    }
+
+    /**
+     * @return Product[]
+     */
+    public function getActiveProducts()
+    {
+        $products = [];
+        /** @var Product $product */
+        foreach ($this->getProducts() as $product) {
+            if ($product->getIsActive()) {
+                $products[] = $product;
+            }
+        }
+        return $products;
     }
 
     /**

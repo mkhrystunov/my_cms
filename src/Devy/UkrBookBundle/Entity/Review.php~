@@ -136,4 +136,39 @@ class Review
     {
         return $this->score;
     }
+    /**
+     * @var \DateTime
+     */
+    private $posted_at;
+
+
+    /**
+     * Set posted_at
+     *
+     * @param \DateTime $postedAt
+     * @return Review
+     */
+    public function setPostedAt($postedAt)
+    {
+        $this->posted_at = $postedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get posted_at
+     *
+     * @return \DateTime 
+     */
+    public function getPostedAt()
+    {
+        return $this->posted_at;
+    }
+    /**
+     * @ORM\PrePersist
+     */
+    public function setPostedAtValue()
+    {
+        $this->posted_at = new \DateTime();
+    }
 }

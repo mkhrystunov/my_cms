@@ -103,6 +103,14 @@
                   Cart <span class="badge" id="cart-count">{{ cart ? cart.count : 0 }}</span>
                 </a>
               </li>
+              {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <li>
+                  <a href="{{ path('logout') }}">
+                    <i class="glyphicon glyphicon-log-out"></i>
+                    Logout
+                  </a>
+                </li>
+              {% endif %}
             </ul>
 
             <form action="{{ path('front_search') }}" method="post" class="navbar-form navbar-right" role="search">
@@ -119,7 +127,19 @@
 {% endblock %}
 
 {% block upper %}{% endblock %}
-<div id="alerts" class="container"></div>
+<div id="alerts" class="container">
+  {% set message_levels =  ['success', 'info', 'warning', 'danger'] %}
+  {% for level in message_levels %}
+    {% for flash in app.session.flashBag.get(level) %}
+      <div class="alert alert-{{ level }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        {{ flash }}
+      </div>
+    {% endfor %}
+  {% endfor %}
+</div>
 {% block body %}{% endblock %}
 <footer class="footer container">
   <hr>
@@ -233,7 +253,7 @@
           success: function (msg) {
             var $alert;
             if (msg.success) {
-              if (curPath === window.location.pathname) {
+              if (curPath === '{{ path('show_cart') }}') {
                 window.location.replace('{{ url('show_cart') }}');
               }
               $alert = createAlert('alert-success', msg.message).hide();

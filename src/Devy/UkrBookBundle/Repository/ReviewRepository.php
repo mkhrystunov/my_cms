@@ -2,7 +2,10 @@
 
 namespace Devy\UkrBookBundle\Repository;
 
+use Devy\UkrBookBundle\Entity\Product;
+use Devy\UkrBookBundle\Entity\Review;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 
 /**
  * ReviewRepository
@@ -12,4 +15,26 @@ use Doctrine\ORM\EntityRepository;
  */
 class ReviewRepository extends EntityRepository
 {
+    /**
+     * @param Product $product
+     * @param int|null $limit
+     * @return Review
+     */
+    public function getActiveByProduct(Product $product, $limit = null)
+    {
+        $queryBuilder = $this->createQueryBuilder('r')
+            ->where('r.is_active = true')
+            ->andWhere('r.Product = :product')
+            ->setParameter(':product', $product)
+            ->orderBy('r.posted_at', 'DESC');
+        if ($limit) {
+            $queryBuilder->setMaxResults($limit);
+        }
+        try {
+            $reviews = $queryBuilder->getQuery()->getResult();
+        } catch (NoResultException $e) {
+            $reviews = [];
+        }
+        return $reviews;
+    }
 }

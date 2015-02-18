@@ -15,22 +15,28 @@
              alt="Generic placeholder image">
       {% endif %}
       <div class="caption">
-      <h2>{{ product.title }}</h2>
+        <h2>{{ product.title }}</h2>
 
-      <p><b>{{ product.price|number_format(2, '.', ',') }} грн.</b></p>
+        <div class="text-primary">
+          {% for i in 1..5 %}
+            <i class="glyphicon {{ i <= product.rating ? 'glyphicon-star' : 'glyphicon-star-empty' }}"></i>
+          {% endfor %}
+        </div>
 
-      <p>{{ product.description }}</p>
+        <p><b>{{ product.price|number_format(2, '.', ',') }} грн.</b></p>
 
-      <div class="btn-group-sm">
-        <a href="#" class="btn btn-info">
-          <i class="glyphicon glyphicon-eye-open"></i>
-          Show
-        </a>
-        <a href="{{ path('add_to_cart', { 'productId': product.id }) }}" class="btn btn-success add-to-cart">
-          <i class="glyphicon glyphicon-shopping-cart"></i>
-          Add to cart
-        </a>
-      </div>
+        <p>{{ product.description }}</p>
+
+        <div class="btn-group-sm">
+          <a href="{{ path('front_product', { 'productId': product.id }) }}" class="btn btn-info">
+            <i class="glyphicon glyphicon-eye-open"></i>
+            Show
+          </a>
+          <a href="{{ path('add_to_cart', { 'productId': product.id }) }}" class="btn btn-success add-to-cart">
+            <i class="glyphicon glyphicon-shopping-cart"></i>
+            Add to cart
+          </a>
+        </div>
       </div>
     </div>
   </div>

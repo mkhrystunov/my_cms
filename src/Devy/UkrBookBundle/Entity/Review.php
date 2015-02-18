@@ -3,6 +3,11 @@
 namespace Devy\UkrBookBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * Review
@@ -135,5 +140,88 @@ class Review
     public function getScore()
     {
         return $this->score;
+    }
+    /**
+     * @var \DateTime
+     */
+    private $posted_at;
+
+
+    /**
+     * Set posted_at
+     *
+     * @param \DateTime $postedAt
+     * @return Review
+     */
+    public function setPostedAt($postedAt)
+    {
+        $this->posted_at = $postedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get posted_at
+     *
+     * @return \DateTime 
+     */
+    public function getPostedAt()
+    {
+        return $this->posted_at;
+    }
+    /**
+     * @ORM\PrePersist
+     */
+    public function setPostedAtValue()
+    {
+        $this->posted_at = new \DateTime();
+    }
+    /**
+     * @var string
+     */
+    private $name;
+
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Review
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return empty($this->name) ? 'Anonymous' : $this->name;
+    }
+
+    /**
+     * Entity validation function
+     *
+     * @param ClassMetadata $metadata
+     */
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraints('review', [
+            new NotBlank(),
+            new Length([
+                'min' => 15,
+                'minMessage' => 'Min character length is 15',
+            ]),
+        ]);
+        $metadata->addPropertyConstraint('score', new Range([
+            'min' => 1,
+            'max' => 5,
+        ]));
     }
 }

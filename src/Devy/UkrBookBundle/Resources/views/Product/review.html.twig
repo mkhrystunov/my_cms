@@ -15,7 +15,9 @@
       <th>Id</th>
       <th>Review</th>
       <th>Score</th>
-      <th>Is_active</th>
+      <th>Name</th>
+      <th>Posted at</th>
+      <th>Is active</th>
       <th>Actions</th>
     </tr>
     </thead>
@@ -25,6 +27,9 @@
         <td>{{ review.id }}</td>
         <td>{{ review.review }}</td>
         <td>{{ review.score }}</td>
+        <td>{{ review.name }}</td>
+        <td>{{ review.postedAt|date('Y-m-d H:i:s') }}</td>
+
         <td><i class="glyphicon {{ review.isActive ? 'glyphicon-check' : 'glyphicon-unchecked' }}"></i></td>
         <td>
           <div class="btn-group">
@@ -55,5 +60,15 @@
     {% endfor %}
     </tbody>
   </table>
+  <div class="btn-group btn-group-lg pull-right">
+    <a href="{{ path('product_show', { 'id': product.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-eye-open"></i>
+      Show
+    </a>
+    <a href="{{ path('product_edit', { 'id': product.id}) }}" class="btn btn-primary">
+      <i class="glyphicon glyphicon-pencil"></i>
+      Edit
+    </a>
+  </div>
 
 {% endblock %}
