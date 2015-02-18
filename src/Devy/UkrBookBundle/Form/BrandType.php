@@ -17,6 +17,18 @@ class BrandType extends AbstractType
         $builder
             ->add('name')
             ->add('is_active')
+            ->add('meta_description', 'textarea', [
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Make sure it uses keywords found within the page itself.',
+                ]
+            ])
+            ->add('meta_keywords', 'textarea', [
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Don\'t repeat keywords over and over in a row. Rather, put in keyword phrases.',
+                ]
+            ])
         ;
     }
     

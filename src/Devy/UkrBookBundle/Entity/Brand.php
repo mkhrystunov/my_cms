@@ -139,4 +139,60 @@ class Brand
     {
         return $this->getName();
     }
+    /**
+     * @var string
+     */
+    private $meta_description;
+
+    /**
+     * @var string
+     */
+    private $meta_keywords;
+
+
+    /**
+     * Set meta_description
+     *
+     * @param string $metaDescription
+     * @return Brand
+     */
+    public function setMetaDescription($metaDescription)
+    {
+        $this->meta_description = $metaDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get meta_description
+     *
+     * @return string 
+     */
+    public function getMetaDescription()
+    {
+        return $this->meta_description;
+    }
+
+    /**
+     * Set meta_keywords
+     *
+     * @param string $metaKeywords
+     * @return Brand
+     */
+    public function setMetaKeywords($metaKeywords)
+    {
+        $this->meta_keywords = $metaKeywords;
+
+        return $this;
+    }
+
+    /**
+     * Get meta_keywords
+     *
+     * @return string 
+     */
+    public function getMetaKeywords()
+    {
+        return $this->meta_keywords;
+    }
 }

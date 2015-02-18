@@ -15,6 +15,12 @@
 {% endblock %}
 
 {% block marketing %}
+  {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('category_edit', {'id': category.id }) }}" class="btn btn-sm btn-primary" target="_blank">
+      <i class="glyphicon glyphicon-pencil"></i>
+      Edit
+    </a>
+  {% endif %}
   {% if category.image and category.image.webPath %}
     <img class="img-rounded category-logo" src="{{ asset(category.image.webPath) }}" alt="{{ category.title }}">
   {% endif %}

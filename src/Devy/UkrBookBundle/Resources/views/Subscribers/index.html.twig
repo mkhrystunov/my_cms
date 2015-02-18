@@ -44,21 +44,11 @@
         <tr>
           <td colspan="4">
             <div class=" alert alert-info ">
-              There are no csubscribers.
-              <a class="alert-link" href="{{ path('category_new') }}">
-                Create a new one
-              </a>.
+              There are no subscribers.
             </div>
           </td>
         </tr>
     {% endfor %}
     </tbody>
   </table>
-
-  <div class="btn-group pull-right">
-    <a class="btn btn-success btn-lg" href="{{ path('product_new') }}">
-      <i class="glyphicon glyphicon-plus"></i>
-      Create new subscriber
-    </a>
-  </div>
 {% endblock %}

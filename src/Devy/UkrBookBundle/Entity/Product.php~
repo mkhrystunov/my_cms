@@ -344,17 +344,35 @@ class Product
     }
 
     /**
+     * @return Review[]
+     */
+    public function getActiveReviews()
+    {
+        $reviews = [];
+        /** @var Review $review */
+        foreach ($this->getReviews() as $review) {
+            if ($review->getIsActive()) {
+                $reviews[] = $review;
+            }
+        }
+        return $reviews;
+    }
+
+    /**
      * @return float
      */
     public function getRating()
     {
         $rating = 0;
-        $reviews = $this->getReviews();
+        $reviews = $this->getActiveReviews();
+        if (empty($reviews)) {
+            return 0;
+        }
         /** @var Review $review */
-        foreach($reviews as $review) {
+        foreach ($reviews as $review) {
             $rating += $review->getScore();
         }
-        $rating = $rating / $this->getReviews()->count();
+        $rating = ceil($rating / count($reviews));
         return $rating === 0 ? self::DEFAULT_RATING : $rating;
     }
 
@@ -541,7 +559,7 @@ class Product
     /**
      * Get page_title
      *
-     * @return string 
+     * @return string
      */
     public function getPageTitle()
     {
@@ -564,7 +582,7 @@ class Product
     /**
      * Get meta_description
      *
-     * @return string 
+     * @return string
      */
     public function getMetaDescription()
     {
@@ -587,7 +605,7 @@ class Product
     /**
      * Get meta_keywords
      *
-     * @return string 
+     * @return string
      */
     public function getMetaKeywords()
     {

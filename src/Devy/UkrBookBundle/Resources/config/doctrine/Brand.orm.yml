@@ -15,6 +15,12 @@ Devy\UkrBookBundle\Entity\Brand:
     is_active:
       type: boolean
       nullable: true
+    meta_description:
+      type: text
+      nullable: true
+    meta_keywords:
+      type: text
+      nullable: true
   oneToMany:
     Products:
       targetEntity: Devy\UkrBookBundle\Entity\Product

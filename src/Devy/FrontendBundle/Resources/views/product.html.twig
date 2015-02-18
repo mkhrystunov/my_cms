@@ -36,7 +36,7 @@
       {% endif %}
       <div class="col-md-8">
         {% if is_granted('ROLE_ADMIN') %}
-          <a class="btn btn-sm btn-primary" href="{{ path('product_edit', {'id': product.id }) }}">
+          <a class="btn btn-sm btn-primary" href="{{ path('product_edit', {'id': product.id }) }}" target="_blank">
             <i class="glyphicon glyphicon-pencil"></i>
             Edit
           </a>

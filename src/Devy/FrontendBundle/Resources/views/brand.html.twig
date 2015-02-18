@@ -5,7 +5,18 @@
   {{ brand.name }}
 {% endblock %}
 
+{% block meta %}
+  <meta name="keywords" content="{{ brand.metaKeywords }}">
+  <meta name="description" content="{{ brand.metaDescription }}">
+{% endblock %}
+
 {% block marketing %}
+  {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('brand_edit', { 'id': brand.id }) }}" class="btn btn-sm btn-primary" target="_blank">
+      <i class="glyphicon glyphicon-pencil"></i>
+      Edit
+    </a>
+  {% endif %}
   <h1>{{ brand.name }}</h1>
   <hr>
   <div class="clearfix">
