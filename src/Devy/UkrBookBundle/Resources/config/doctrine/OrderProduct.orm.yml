@@ -1,0 +1,27 @@
+Devy\UkrBookBundle\Entity\OrderProduct:
+  type: entity
+  id:
+    id:
+      id: true
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    amount:
+      type: integer
+      nullable: false
+  manyToOne:
+    Product:
+      targetEntity: Devy\UkrBookBundle\Entity\Product
+      inversedBy: OrderProduct
+      cascade: [persist]
+      joinColumns:
+        product_id:
+          referencedColumnName: id
+    Order:
+      targetEntity: Devy\UkrBookBundle\Entity\Order
+      inversedBy: OrderProduct
+      cascade: [persist]
+      joinColumns:
+        order_id:
+          referencedColumnName: id

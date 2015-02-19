@@ -22,6 +22,14 @@ front_search:
     path: /search
     defaults: { _controller: DevyFrontendBundle:Frontend:search }
 
+checkout:
+    path: /checkout
+    defaults: { _controller: DevyFrontendBundle:Frontend:checkout }
+
+thank_you:
+    path: /thank_you
+    defaults: { _controller: DevyFrontendBundle:Frontend:thankYou }
+
 subscriber:
     prefix: /subscriber
     resource: "@DevyFrontendBundle/Resources/config/subscriber.yml"

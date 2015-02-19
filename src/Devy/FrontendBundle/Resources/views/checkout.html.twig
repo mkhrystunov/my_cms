@@ -1,0 +1,15 @@
+{% extends 'DevyFrontendBundle::base.html.twig' %}
+
+{% block body %}
+  <div class="container content">
+    <h1>Checkout</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-success btn-lg">
+      <i class="glyphicon glyphicon-ok"></i>
+      Submit
+    </button>
+    {{ form_end(form) }}
+  </div>
+{% endblock %}

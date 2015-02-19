@@ -58,6 +58,10 @@ Devy\UkrBookBundle\Entity\Product:
       targetEntity: Devy\UkrBookBundle\Entity\ProductAttribute
       mappedBy: Product
       cascade: [persist, remove]
+    OrderProduct:
+      targetEntity: Devy\UkrBookBundle\Entity\OrderProduct
+      mappedBy: Product
+      cascade: [persist, remove]
   manyToOne:
     Category:
       targetEntity: Devy\UkrBookBundle\Entity\Category
@@ -74,10 +78,6 @@ Devy\UkrBookBundle\Entity\Product:
       joinColumns:
         brand_id:
           referencedColumnName: id
-  manyToMany:
-    Orders:
-      targetEntity: Devy\UkrBookBundle\Entity\Order
-      mappedBy: Products
   lifecycleCallbacks:
     prePersist: [setCreatedAtValue]
     preUpdate: [setUpdatedAtValue]

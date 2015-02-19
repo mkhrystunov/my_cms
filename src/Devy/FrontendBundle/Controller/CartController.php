@@ -122,7 +122,7 @@ class CartController extends ShopController
         $session = $request->getSession();
         /** @var Cart $cart */
         $cart = $session->get('cart', new Cart());
-        $cart->setProductCount($productId, $quantity);
+        $cart->setProductCount($productId, intval($quantity));
         return new JsonResponse();
     }
 }

@@ -7,18 +7,34 @@ Devy\UkrBookBundle\Entity\Order:
       type: integer
       generator:
         strategy: AUTO
-    shipping_address:
+    name:
       type: string
-      length: 250
-      nullable: true
+      length: 255
+      nullable: false
+    email:
+      type: string
+      length: 255
+      nullable: false
+    phone:
+      type: string
+      length: 255
+      nullable: false
+    shipping_address_city:
+      type: string
+      length: 255
+      nullable: false
+    shipping_address_details:
+      type: string
+      length: 255
+      nullable: false
     status:
       type: integer
       nullable: true
     created_at:
       type: datetime
       nullable: true
-    amount:
-      type: integer
+    updated_at:
+      type: datetime
       nullable: true
   manyToOne:
     User:
@@ -27,17 +43,11 @@ Devy\UkrBookBundle\Entity\Order:
       joinColumns:
         user_id:
           referencedColumnName: id
-  manyToMany:
-    Products:
-      targetEntity: Devy\UkrBookBundle\Entity\Product
-      inversedBy: Orders
-      joinTable:
-        name: OrderProduct
-        joinColumns:
-          order_id:
-            referencedColumnName: id
-            nullable: false
-        inverseJoinColumns:
-          product_id:
-            referencedColumnName: id
-            nullable: false
+  oneToMany:
+    OrderProduct:
+      targetEntity: Devy\UkrBookBundle\Entity\OrderProduct
+      mappedBy: Order
+      cascade: [persist, remove]
+  lifecycleCallbacks:
+    prePersist: [prePersist]
+    preUpdate: [preUpdate]

@@ -72,11 +72,6 @@ class Product
     private $Reviews;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $Orders;
-
-    /**
      * @var \Devy\UkrBookBundle\Entity\Category
      */
     private $Category;
@@ -88,9 +83,9 @@ class Product
     {
         $this->Reviews = new ArrayCollection();
         $this->Categories = new ArrayCollection();
-        $this->Orders = new ArrayCollection();
         $this->Attributes = new ArrayCollection();
         $this->ProductAttributes = new ArrayCollection();
+        $this->OrderProduct = new ArrayCollection();
     }
 
     /**
@@ -377,39 +372,6 @@ class Product
     }
 
     /**
-     * Add Orders
-     *
-     * @param \Devy\UkrBookBundle\Entity\Order $orders
-     * @return Product
-     */
-    public function addOrder(\Devy\UkrBookBundle\Entity\Order $orders)
-    {
-        $this->Orders[] = $orders;
-
-        return $this;
-    }
-
-    /**
-     * Remove Orders
-     *
-     * @param \Devy\UkrBookBundle\Entity\Order $orders
-     */
-    public function removeOrder(\Devy\UkrBookBundle\Entity\Order $orders)
-    {
-        $this->Orders->removeElement($orders);
-    }
-
-    /**
-     * Get Orders
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getOrders()
-    {
-        return $this->Orders;
-    }
-
-    /**
      * Set Category
      *
      * @param \Devy\UkrBookBundle\Entity\Category $category
@@ -430,19 +392,6 @@ class Product
     public function getCategory()
     {
         return $this->Category;
-    }
-
-    /**
-     * Set Orders
-     *
-     * @param \Devy\UkrBookBundle\Entity\Order $orders
-     * @return Product
-     */
-    public function setOrders(\Devy\UkrBookBundle\Entity\Order $orders = null)
-    {
-        $this->Orders = $orders;
-
-        return $this;
     }
 
     /**
@@ -610,6 +559,45 @@ class Product
     public function getMetaKeywords()
     {
         return $this->meta_keywords;
+    }
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $OrderProduct;
+
+
+    /**
+     * Add OrderProduct
+     *
+     * @param \Devy\UkrBookBundle\Entity\OrderProduct $orderProduct
+     * @return Product
+     */
+    public function addOrderProduct(\Devy\UkrBookBundle\Entity\OrderProduct $orderProduct)
+    {
+        $this->OrderProduct[] = $orderProduct;
+
+        return $this;
+    }
+
+    /**
+     * Remove OrderProduct
+     *
+     * @param \Devy\UkrBookBundle\Entity\OrderProduct $orderProduct
+     */
+    public function removeOrderProduct(\Devy\UkrBookBundle\Entity\OrderProduct $orderProduct)
+    {
+        $this->OrderProduct->removeElement($orderProduct);
+    }
+
+    /**
+     * Get OrderProduct
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrderProduct()
+    {
+        return $this->OrderProduct;
     }
 
     /**

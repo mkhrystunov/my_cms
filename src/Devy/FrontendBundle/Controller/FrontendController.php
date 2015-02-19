@@ -2,8 +2,12 @@
 
 namespace Devy\FrontendBundle\Controller;
 
+use Devy\FrontendBundle\DependencyInjection\Cart;
+use Devy\UkrBookBundle\Entity\Order;
+use Devy\UkrBookBundle\Entity\OrderProduct;
 use Devy\UkrBookBundle\Entity\Product;
 use Devy\UkrBookBundle\Entity\Review;
+use Devy\UkrBookBundle\Form\OrderType;
 use Devy\UkrBookBundle\Form\ReviewType;
 use Devy\UkrBookBundle\Repository\ProductRepository;
 use Devy\UkrBookBundle\Repository\ReviewRepository;
@@ -19,6 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 class FrontendController extends ShopController
 {
     const DEFAULT_LIMIT = 6;
+
     /**
      * @return Response
      */
@@ -180,5 +185,65 @@ class FrontendController extends ShopController
         }
 
         return $this->productAction($request, $productId, $reviewForm);
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function checkoutAction(Request $request)
+    {
+        /** @var EntityManager $manager */
+        $manager = $this->getDoctrine()->getManager();
+        /** @var ProductRepository $products */
+        $productRepository = $manager->getRepository('DevyUkrBookBundle:Product');
+        $session = $request->getSession();
+        /** @var Cart $cart */
+        $cart = $session->get('cart', new Cart());
+
+        if ($cart->getCount() === 0) {
+            $this->get('session')->getFlashBag()->add('warning', 'There is no products in your cart');
+            return $this->redirectToRoute('show_cart');
+        }
+
+        /** @var Product[] $products */
+        $products = $productRepository->findByIds($cart->getProductIds());
+        $order = new Order();
+        $order->setStatus(Order::STATUS_NEW);
+        foreach ($products as $product) {
+            $orderProduct = new OrderProduct();
+            $orderProduct
+                ->setProduct($product)
+                ->setAmount($cart->getProductCount($product->getId()));
+            $order->addOrderProduct($orderProduct);
+        }
+
+        $form = $this->createForm(new OrderType(), $order, [
+            'method' => 'post',
+        ]);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $manager->beginTransaction();
+            foreach ($order->getOrderProduct() as $orderProduct) {
+                $manager->persist($orderProduct);
+            }
+            $manager->persist($order);
+            $manager->commit();
+            $manager->flush();
+
+            return $this->redirectToRoute('thank_you');
+        }
+
+        return $this->render('DevyFrontendBundle::checkout.html.twig', array_merge($this->prepareDefault(), [
+            'form' => $form->createView(),
+        ]));
+    }
+
+    /**
+     * @return Response
+     */
+    public function thankYouAction()
+    {
+        return $this->render('DevyFrontendBundle::thank_you.html.twig', $this->prepareDefault());
     }
 }

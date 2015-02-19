@@ -2,6 +2,8 @@
 
 namespace Devy\UkrBookBundle\Entity;
 
+use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,6 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Order
 {
+    const STATUS_NEW = 1;
+    const STATUS_PENDING = 2;
+    const STATUS_COMPLETED = 3;
+
     /**
      * @var integer
      */
@@ -17,7 +23,27 @@ class Order
     /**
      * @var string
      */
-    private $shipping_address;
+    private $name;
+
+    /**
+     * @var string
+     */
+    private $email;
+
+    /**
+     * @var string
+     */
+    private $shipping_address_city;
+
+    /**
+     * @var string
+     */
+    private $shipping_address_details;
+
+    /**
+     * @var string
+     */
+    private $phone;
 
     /**
      * @var integer
@@ -25,14 +51,19 @@ class Order
     private $status;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $OrderProduct;
+
+    /**
      * @var \DateTime
      */
     private $created_at;
 
     /**
-     * @var integer
+     * @var \DateTime
      */
-    private $amount;
+    private $updated_at;
 
     /**
      * @var \Devy\UkrBookBundle\Entity\User
@@ -40,16 +71,11 @@ class Order
     private $User;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $Products;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->Products = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->OrderProduct = new ArrayCollection();
     }
 
     /**
@@ -63,26 +89,95 @@ class Order
     }
 
     /**
-     * Set shipping_address
+     * Set name
      *
-     * @param string $shippingAddress
+     * @param string $name
      * @return Order
      */
-    public function setShippingAddress($shippingAddress)
+    public function setName($name)
     {
-        $this->shipping_address = $shippingAddress;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get shipping_address
+     * Get name
      *
      * @return string 
      */
-    public function getShippingAddress()
+    public function getName()
     {
-        return $this->shipping_address;
+        return $this->name;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Order
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set shipping_address_city
+     *
+     * @param string $shippingAddressCity
+     * @return Order
+     */
+    public function setShippingAddressCity($shippingAddressCity)
+    {
+        $this->shipping_address_city = $shippingAddressCity;
+
+        return $this;
+    }
+
+    /**
+     * Get shipping_address_city
+     *
+     * @return string 
+     */
+    public function getShippingAddressCity()
+    {
+        return $this->shipping_address_city;
+    }
+
+    /**
+     * Set shipping_address_details
+     *
+     * @param string $shippingAddressDetails
+     * @return Order
+     */
+    public function setShippingAddressDetails($shippingAddressDetails)
+    {
+        $this->shipping_address_details = $shippingAddressDetails;
+
+        return $this;
+    }
+
+    /**
+     * Get shipping_address_details
+     *
+     * @return string 
+     */
+    public function getShippingAddressDetails()
+    {
+        return $this->shipping_address_details;
     }
 
     /**
@@ -90,12 +185,30 @@ class Order
      *
      * @param integer $status
      * @return Order
+     * @throws \Exception
      */
     public function setStatus($status)
     {
+        if (!$this->isAllowedStatus($status)) {
+            throw new \Exception('Not allowed status for order');
+        }
         $this->status = $status;
 
         return $this;
+    }
+
+    /**
+     * @param integer $status
+     * @return bool
+     */
+    private function isAllowedStatus($status)
+    {
+        $allowedStatuses = [
+            self::STATUS_NEW,
+            self::STATUS_PENDING,
+            self::STATUS_COMPLETED,
+        ];
+        return in_array($status, $allowedStatuses);
     }
 
     /**
@@ -132,26 +245,26 @@ class Order
     }
 
     /**
-     * Set amount
+     * Set updated_at
      *
-     * @param integer $amount
+     * @param \DateTime $updatedAt
      * @return Order
      */
-    public function setAmount($amount)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->amount = $amount;
+        $this->updated_at = $updatedAt;
 
         return $this;
     }
 
     /**
-     * Get amount
+     * Get updated_at
      *
-     * @return integer 
+     * @return \DateTime 
      */
-    public function getAmount()
+    public function getUpdatedAt()
     {
-        return $this->amount;
+        return $this->updated_at;
     }
 
     /**
@@ -178,35 +291,78 @@ class Order
     }
 
     /**
-     * Add Products
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        $datetime = new DateTime();
+        $this->setCreatedAt($datetime);
+        $this->setUpdatedAt($datetime);
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->setUpdatedAt(new DateTime());
+    }
+
+    /**
+     * Add OrderProduct
      *
-     * @param \Devy\UkrBookBundle\Entity\Product $products
+     * @param \Devy\UkrBookBundle\Entity\OrderProduct $orderProduct
      * @return Order
      */
-    public function addProduct(\Devy\UkrBookBundle\Entity\Product $products)
+    public function addOrderProduct(\Devy\UkrBookBundle\Entity\OrderProduct $orderProduct)
     {
-        $this->Products[] = $products;
+        $this->OrderProduct[] = $orderProduct;
+        $orderProduct->setOrder($this);
 
         return $this;
     }
 
     /**
-     * Remove Products
+     * Remove OrderProduct
      *
-     * @param \Devy\UkrBookBundle\Entity\Product $products
+     * @param \Devy\UkrBookBundle\Entity\OrderProduct $orderProduct
      */
-    public function removeProduct(\Devy\UkrBookBundle\Entity\Product $products)
+    public function removeOrderProduct(\Devy\UkrBookBundle\Entity\OrderProduct $orderProduct)
     {
-        $this->Products->removeElement($products);
+        $this->OrderProduct->removeElement($orderProduct);
     }
 
     /**
-     * Get Products
+     * Get OrderProduct
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getProducts()
+    public function getOrderProduct()
     {
-        return $this->Products;
+        return $this->OrderProduct;
+    }
+
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     * @return Order
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string 
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 }

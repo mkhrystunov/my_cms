@@ -80,9 +80,9 @@
       </table>
       <nav>
         <a href="{{ path('home') }}" class="btn btn-info"><span aria-hidden="true">&larr;</span> Continue shopping</a>
-        {# TODO checkout link #}
-        <button type="submit" class="btn btn-success pull-right">Checkout <span aria-hidden="true">&rarr;</span>
-        </button>
+        <a href="{{ path('checkout') }}" class="btn btn-success pull-right">
+          Checkout <span aria-hidden="true">&rarr;</span>
+        </a>
       </nav>
     </form>
     <div class="marketing">
