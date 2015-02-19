@@ -231,6 +231,9 @@ class FrontendController extends ShopController
             $manager->commit();
             $manager->flush();
 
+            $cart->reset();
+            $session->set('cart', $cart);
+
             return $this->redirectToRoute('thank_you');
         }
 

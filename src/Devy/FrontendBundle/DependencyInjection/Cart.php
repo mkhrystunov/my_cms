@@ -89,4 +89,9 @@ class Cart
     {
         return isset($this->products[$productId]);
     }
+
+    public function reset()
+    {
+        $this->products = [];
+    }
 }
