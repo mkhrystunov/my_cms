@@ -28,7 +28,7 @@ class Post
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -51,7 +51,7 @@ class Post
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -74,12 +74,24 @@ class Post
     /**
      * Get text
      *
-     * @return string 
+     * @return string
      */
     public function getText()
     {
         return $this->text;
     }
+
+    /**
+     * @return mixed|string
+     */
+    public function getFormattedText()
+    {
+        $text = preg_replace('@(https?://([-\w\.]+[-\w])+(:\d+)?(/([\w/_\.#-]*(\?\S+)?[^\.\s])?)?)@',
+            '<a href="$1" target="_blank">$1</a>', $this->text);
+        $text = nl2br($text);
+        return $text;
+    }
+
     /**
      * @var \DateTime
      */
@@ -107,7 +119,7 @@ class Post
     /**
      * Get created_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -130,12 +142,13 @@ class Post
     /**
      * Get updated_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
         return $this->updated_at;
     }
+
     /**
      * @ORM\PrePersist
      */
@@ -154,6 +167,7 @@ class Post
         $this->setUpdatedAt(new \DateTime());
         return $this;
     }
+
     /**
      * @var boolean
      */
@@ -176,7 +190,7 @@ class Post
     /**
      * Get is_active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsActive()
     {

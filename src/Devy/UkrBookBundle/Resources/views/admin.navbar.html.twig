@@ -35,6 +35,9 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="{{ path('home') }}">Go to shop</a>
+        </li>
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
           <li>
             <a class="link" href="{{ path('logout') }}">Logout</a>

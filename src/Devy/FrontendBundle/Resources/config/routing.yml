@@ -22,6 +22,12 @@ front_search:
     path: /search
     defaults: { _controller: DevyFrontendBundle:Frontend:search }
 
+front_post:
+    path: /post/{postId}
+    defaults: { _controller: DevyFrontendBundle:Frontend:post }
+    requirements:
+        postId: \d+
+
 checkout:
     path: /checkout
     defaults: { _controller: DevyFrontendBundle:Frontend:checkout }

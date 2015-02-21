@@ -32,11 +32,10 @@
                 <h1>{{ post.title }}</h1>
 
                 <p>
-                  {{ post.text[:320] }}
+                  {{ post.formattedText[:320]|raw }}
                   {% if post.text|length > 320 %}
                     ...
-                    {# TODO links for posts #}
-                    <a class="btn btn-primary btn-xs" href="#">Read more</a>
+                    <a class="btn btn-primary btn-xs" href="{{ path('front_post', {'postId': post.id}) }}">Read more</a>
                   {% endif %}
                 </p>
               </div>

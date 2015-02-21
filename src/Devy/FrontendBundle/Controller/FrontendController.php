@@ -117,6 +117,22 @@ class FrontendController extends ShopController
     }
 
     /**
+     * @param int $postId
+     * @return Response
+     */
+    public function postAction($postId)
+    {
+        $post = $this->getDoctrine()->getRepository('DevyUkrBookBundle:Post')->find($postId);
+        if (!$post) {
+            throw $this->createNotFoundException('Post entity wasn\'t found.');
+        }
+
+        return $this->render('DevyFrontendBundle::post.html.twig', array_merge($this->prepareDefault(), [
+            'post' => $post,
+        ]));
+    }
+
+    /**
      * @param Request $request
      * @param int $productId
      * @param Form $reviewForm
