@@ -30,6 +30,9 @@
         <li class="{{ active == 'shopinfo' ? 'active' }}">
           <a href="{{ url('shopinfo_edit') }}">Shop info</a>
         </li>
+        <li class="{{ active == 'orders' ? 'active' }}">
+          <a href="{{ url('orders') }}">Orders</a>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}

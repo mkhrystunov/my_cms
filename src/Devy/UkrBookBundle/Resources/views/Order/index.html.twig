@@ -1,0 +1,53 @@
+{% set active = 'orders' %}
+{% extends 'DevyUkrBookBundle::administrator.layout.html.twig' %}
+
+{% block title %}
+  Orders
+{% endblock %}
+
+{% block body -%}
+  <table class="records_list table table-hover table-striped">
+    <caption>
+      <h3 class="pull-left">Orders</h3>
+      <a class="btn btn-primary pull-right" href="{{ path('order_new') }}">
+        <i class="glyphicon glyphicon-plus"></i>
+      </a>
+    </caption>
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Name</th>
+      <th>Created At</th>
+      <th>Updated At</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+      <tr class="clickable-row" data-href="{{ path('order_show', {'orderId': entity.id}) }}">
+        <td>{{ entity.id }}</td>
+        <td>{{ entity.email }}</td>
+        <td>{{ entity.phone }}</td>
+        <td>{{ entity.name }}</td>
+        <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
+        <td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
+        <td><span class="badge {{ entity.statusString|lower }}">{{ entity.statusString }}</span></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script>
+    jQuery(document).ready(function ($) {
+      $(".clickable-row").click(function () {
+        window.document.location = $(this).data("href");
+      });
+    });
+  </script>
+{% endblock %}

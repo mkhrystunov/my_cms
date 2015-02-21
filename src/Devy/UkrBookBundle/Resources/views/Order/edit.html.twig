@@ -1,0 +1,76 @@
+{% set active = 'orders' %}
+{% extends 'DevyUkrBookBundle::administrator.layout.html.twig' %}
+
+{% block title %}
+  Order # {{ entity.id }}
+{% endblock %}
+
+{% form_theme form _self %}
+
+{% block _devy_ukrbookbundle_order_OrderProduct_label %}
+  Products
+  <a class="btn btn-info btn-sm" href="#" id="add-product">
+    <i class="glyphicon glyphicon-plus-sign"></i>
+    add
+  </a>
+{% endblock %}
+
+{% block _devy_ukrbookbundle_order_OrderProduct_entry_row %}
+  <div class="row">
+    <div class="col-md-4">
+      {{ form_row(form.Product) }}
+    </div>
+    <div class="col-md-4">
+      {{ form_row(form.amount) }}
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label class="control-label required">Actions</label>
+        <button class="btn btn-danger remove-order form-control">Remove</button>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block body -%}
+  <h1>Order #{{ entity.id }}</h1>
+  <h3>Total: {{ entity.total|number_format(2, '.', ',') }} грн.</h3>
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  <div class="btn-group btn-group-lg pull-right">
+    <a class="btn btn-primary" href="{{ path('orders') }}">Back</a>
+    <button type="submit" class="btn btn-success">Update</button>
+  </div>
+  {{ form_end(form) }}
+
+  <script>
+
+    jQuery(document).ready(function () {
+      var $addLink = $('#add-product');
+      var $collectionHolder = $addLink.siblings('div');
+
+      $collectionHolder.data('index', $collectionHolder.children('.row').length);
+
+      function addForm($collectionHolder) {
+        var prototype = $collectionHolder.data('prototype');
+        var index = $collectionHolder.data('index');
+        var newForm = prototype.replace(/__name__/g, index);
+
+        $collectionHolder.data('index', index + 1);
+
+        $collectionHolder.append(newForm);
+      }
+
+      $addLink.on('click', function (e) {
+        e.preventDefault();
+
+        addForm($collectionHolder);
+      });
+
+      $(document.body).on('click', '.remove-order', function (e) {
+        e.preventDefault();
+        $(this).closest('.row').remove();
+      });
+    });
+  </script>
+{% endblock %}

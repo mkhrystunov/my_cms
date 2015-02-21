@@ -1,0 +1,19 @@
+.clickable-row:hover {
+    cursor: pointer;
+}
+
+.new {
+    background-color: #f0ad4e !important;
+}
+
+.pending {
+    background-color: #5bc0de !important;
+}
+
+.completed {
+    background-color: #5CB85C !important;
+}
+
+.abandoned {
+    background-color: #d9534f !important;
+}

@@ -1,0 +1,19 @@
+orders:
+  path: /
+  defaults: { _controller: DevyUkrBookBundle:Order:index }
+
+order_show:
+  path: /{orderId}/show
+  defaults: { _controller: DevyUkrBookBundle:Order:show }
+  requirements:
+    orderId: \d+
+
+order_edit:
+  path: /{orderId}/edit
+  defaults: { _controller: DevyUkrBookBundle:Order:edit }
+  requirements:
+    orderId: \d+
+
+order_new:
+  path: /new
+  defaults: { _controller: DevyUkrBookBundle:Order:new }

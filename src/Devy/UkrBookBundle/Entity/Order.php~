@@ -3,6 +3,7 @@
 namespace Devy\UkrBookBundle\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,6 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Order
 {
+    const STATUS_NEW = 1;
+    const STATUS_PENDING = 2;
+    const STATUS_COMPLETED = 3;
+
     /**
      * @var integer
      */
@@ -36,9 +41,19 @@ class Order
     private $shipping_address_details;
 
     /**
+     * @var string
+     */
+    private $phone;
+
+    /**
      * @var integer
      */
     private $status;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $OrderProduct;
 
     /**
      * @var \DateTime
@@ -56,16 +71,11 @@ class Order
     private $User;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $Products;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->Products = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->OrderProduct = new ArrayCollection();
     }
 
     /**
@@ -175,12 +185,30 @@ class Order
      *
      * @param integer $status
      * @return Order
+     * @throws \Exception
      */
     public function setStatus($status)
     {
+        if (!$this->isAllowedStatus($status)) {
+            throw new \Exception('Not allowed status for order');
+        }
         $this->status = $status;
 
         return $this;
+    }
+
+    /**
+     * @param integer $status
+     * @return bool
+     */
+    private function isAllowedStatus($status)
+    {
+        $allowedStatuses = [
+            self::STATUS_NEW,
+            self::STATUS_PENDING,
+            self::STATUS_COMPLETED,
+        ];
+        return in_array($status, $allowedStatuses);
     }
 
     /**
@@ -263,39 +291,6 @@ class Order
     }
 
     /**
-     * Add Products
-     *
-     * @param \Devy\UkrBookBundle\Entity\Product $products
-     * @return Order
-     */
-    public function addProduct(\Devy\UkrBookBundle\Entity\Product $products)
-    {
-        $this->Products[] = $products;
-
-        return $this;
-    }
-
-    /**
-     * Remove Products
-     *
-     * @param \Devy\UkrBookBundle\Entity\Product $products
-     */
-    public function removeProduct(\Devy\UkrBookBundle\Entity\Product $products)
-    {
-        $this->Products->removeElement($products);
-    }
-
-    /**
-     * Get Products
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getProducts()
-    {
-        return $this->Products;
-    }
-
-    /**
      * @ORM\PrePersist
      */
     public function prePersist()
@@ -312,11 +307,6 @@ class Order
     {
         $this->setUpdatedAt(new DateTime());
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $OrderProduct;
-
 
     /**
      * Add OrderProduct
@@ -350,5 +340,29 @@ class Order
     public function getOrderProduct()
     {
         return $this->OrderProduct;
+    }
+
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     * @return Order
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string 
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 }

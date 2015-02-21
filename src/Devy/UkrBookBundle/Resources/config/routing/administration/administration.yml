@@ -29,3 +29,7 @@ devy_ukr_book_subscribers:
 devy_ukr_book_shopinfo:
     resource: "@DevyUkrBookBundle/Resources/config/routing/administration/shopinfo.yml"
     prefix:   /shop-info
+
+devy_ukr_book_orders:
+    resource: "@DevyUkrBookBundle/Resources/config/routing/administration/orders.yml"
+    prefix:   /orders

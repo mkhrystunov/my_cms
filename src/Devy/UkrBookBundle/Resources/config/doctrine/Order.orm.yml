@@ -1,5 +1,6 @@
 Devy\UkrBookBundle\Entity\Order:
   type: entity
+  repositoryClass: Devy\UkrBookBundle\Repository\OrderRepository
   table: Orders
   fields:
     id:
