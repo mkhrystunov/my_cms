@@ -43,3 +43,8 @@ subscriber:
 cart:
     prefix: /cart
     resource: "@DevyFrontendBundle/Resources/config/cart.yml"
+
+contact:
+    path: /contact
+    defaults: { _controller: DevyFrontendBundle:Frontend:contact }
+

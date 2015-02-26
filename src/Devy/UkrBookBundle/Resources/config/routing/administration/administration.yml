@@ -33,3 +33,7 @@ devy_ukr_book_shopinfo:
 devy_ukr_book_orders:
     resource: "@DevyUkrBookBundle/Resources/config/routing/administration/orders.yml"
     prefix:   /orders
+
+devy_ukr_book_messages:
+    resource: "@DevyUkrBookBundle/Resources/config/routing/administration/messages.yml"
+    prefix:   /messages

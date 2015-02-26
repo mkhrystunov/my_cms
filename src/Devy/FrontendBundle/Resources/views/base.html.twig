@@ -76,7 +76,9 @@
                 </li>
               {% endif %}
               <li><a href="#">About</a></li>
-              <li><a href="#">Contact</a></li>
+              <li class="{{ active == 'contact' ? 'active' }}">
+                <a href="{{ path('contact') }}">Contact</a>
+              </li>
               <li class="{{ active == 'cart' ? 'active' }}">
                 <a href="{{ path('show_cart') }}">
                   <i class="glyphicon glyphicon-shopping-cart"></i>

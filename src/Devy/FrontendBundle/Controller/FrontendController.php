@@ -3,10 +3,12 @@
 namespace Devy\FrontendBundle\Controller;
 
 use Devy\FrontendBundle\DependencyInjection\Cart;
+use Devy\UkrBookBundle\Entity\Message;
 use Devy\UkrBookBundle\Entity\Order;
 use Devy\UkrBookBundle\Entity\OrderProduct;
 use Devy\UkrBookBundle\Entity\Product;
 use Devy\UkrBookBundle\Entity\Review;
+use Devy\UkrBookBundle\Form\MessageType;
 use Devy\UkrBookBundle\Form\OrderType;
 use Devy\UkrBookBundle\Form\ReviewType;
 use Devy\UkrBookBundle\Repository\ProductRepository;
@@ -264,5 +266,36 @@ class FrontendController extends ShopController
     public function thankYouAction()
     {
         return $this->render('DevyFrontendBundle::thank_you.html.twig', $this->prepareDefault());
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function contactAction(Request $request)
+    {
+        /** @var EntityManager $manager */
+        $manager = $this->getDoctrine()->getManager();
+        $message = new Message();
+        $form = $this->createForm(new MessageType(), $message, [
+            'method' => 'POST',
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $manager->persist($message);
+            $manager->flush();
+
+            $this->get('session')->getFlashBag()->add('success', 'Your message was sent!');
+            $message = new Message();
+            $form = $this->createForm(new MessageType(), $message, [
+                'method' => 'POST',
+            ]);
+        }
+
+        return $this->render('DevyFrontendBundle::contact.html.twig', array_merge($this->prepareDefault(), [
+            'form' => $form->createView(),
+        ]));
     }
 }

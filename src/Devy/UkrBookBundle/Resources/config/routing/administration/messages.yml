@@ -1,0 +1,13 @@
+messages:
+    path:     /
+    defaults: { _controller: DevyUkrBookBundle:Message:index }
+
+messages_all:
+    path:     /all
+    defaults: { _controller: DevyUkrBookBundle:Message:all }
+
+mark_as_done:
+    path:     /mark-as-done/{id}
+    defaults: { _controller: DevyUkrBookBundle:Message:markAsDone }
+    requirements:
+      id: \d+
