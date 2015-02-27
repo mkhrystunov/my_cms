@@ -17,6 +17,8 @@ class ShopInfo
     /** @var string */
     private $address;
     /** @var string */
+    private $geo;
+    /** @var string */
     private $email;
     /** @var string */
     private $phone;
@@ -24,6 +26,8 @@ class ShopInfo
     private $metaDescription;
     /** @var string */
     private $metaKeywords;
+    /** @var string */
+    private $description;
 
     /**
      * @param string $title
@@ -134,6 +138,56 @@ class ShopInfo
     }
 
     /**
+     * @return string
+     */
+    public function getGeo()
+    {
+        return $this->geo;
+    }
+
+    /**
+     * @param string $geo
+     * @return $this
+     */
+    public function setGeo($geo)
+    {
+        $this->geo = $geo;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function getFormattedDescription()
+    {
+        $description = preg_replace(
+            '@(https?://([-\w\.]+[-\w])+(:\d+)?(/([\w/_\.#-]*(\?\S+)?[^\.\s])?)?)@',
+            '<a href="$1" target="_blank">$1</a>',
+            $this->description
+        );
+        $description = nl2br($description);
+        return $description;
+    }
+
+    /**
+     * @param string $description
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
      * @param string $path
      */
     public function load($path)
@@ -153,7 +207,9 @@ class ShopInfo
             ->setEmail($value['email'])
             ->setPhone($value['phone'])
             ->setMetaDescription($value['meta_description'])
-            ->setMetaKeywords($value['meta_keywords']);
+            ->setMetaKeywords($value['meta_keywords'])
+            ->setGeo($value['geo'])
+            ->setDescription($value['description']);
     }
 
     /**
@@ -168,6 +224,8 @@ class ShopInfo
         $value['phone'] = $this->getPhone();
         $value['meta_description'] = $this->getMetaDescription();
         $value['meta_keywords'] = $this->getMetaKeywords();
+        $value['geo'] = $this->getGeo();
+        $value['description'] = $this->getDescription();
         $dumper = new Dumper();
         $yaml = $dumper->dump($value, 2);
 

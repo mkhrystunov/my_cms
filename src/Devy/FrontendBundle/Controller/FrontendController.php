@@ -298,4 +298,14 @@ class FrontendController extends ShopController
             'form' => $form->createView(),
         ]));
     }
+
+    /**
+     * @return Response
+     */
+    public function aboutAction()
+    {
+        return $this->render('DevyFrontendBundle::about.html.twig', array_merge($this->prepareDefault(), [
+
+        ]));
+    }
 }

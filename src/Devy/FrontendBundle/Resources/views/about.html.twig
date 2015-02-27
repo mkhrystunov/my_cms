@@ -1,0 +1,55 @@
+{% set active = 'about' %}
+{% extends 'DevyFrontendBundle::base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('bundles/devyfrontend/css/carousel.css') }}">
+  <style>
+    .center {
+      text-align: center;
+    }
+
+    #map-canvas {
+      margin: 0 auto;
+      width: 50%;
+      height: 0;
+      padding-top: 50%;
+      border: 1px solid black;
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+  <div class="container content">
+    <h1>About</h1>
+
+    <p>{{ shopinfo.formattedDescription|raw }}</p>
+
+    <div id="map-canvas"></div>
+    <p class="center">{{ shopinfo.address }}</p>
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
+  <script>
+    $(document).ready(function () {
+      var address = '{{ shopinfo.address }}';
+      var pos = new google.maps.LatLng({{ shopinfo.geo }});
+      var mapCanvas = document.getElementById('map-canvas');
+      var mapOptions = {
+        center: pos,
+        zoom: 17,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      var map = new google.maps.Map(mapCanvas, mapOptions);
+      map.setCenter(pos);
+      var marker = new google.maps.Marker({
+        position: new google.maps.LatLng({{ shopinfo.geo }}),
+        map: map,
+        title: 'UkrBook'
+      });
+    });
+  </script>
+{% endblock %}

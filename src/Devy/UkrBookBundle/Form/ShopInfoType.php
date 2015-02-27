@@ -4,6 +4,8 @@ namespace Devy\UkrBookBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 /**
  * Class AboutPageType
@@ -20,11 +22,21 @@ class ShopInfoType extends AbstractType
         $builder
             ->add('title')
             ->add('address')
+            ->add('geo')
             ->add('email')
             ->add('phone')
             ->add('metaDescription')
             ->add('metaKeywords')
         ;
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $form = $event->getForm();
+            $form->add('description', 'textarea', [
+                'attr' => [
+                    'rows' => strlen($event->getData()->getDescription()) / 150 > 10 ?: 10,
+                    'placeholder' => 'You can use HTML tags to format text',
+                ]
+            ]);
+        });
     }
 
     /**

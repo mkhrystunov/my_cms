@@ -48,3 +48,6 @@ contact:
     path: /contact
     defaults: { _controller: DevyFrontendBundle:Frontend:contact }
 
+about:
+    path: /about
+    defaults: { _controller: DevyFrontendBundle:Frontend:about }
