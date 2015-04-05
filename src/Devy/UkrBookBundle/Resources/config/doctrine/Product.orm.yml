@@ -73,7 +73,7 @@ Devy\UkrBookBundle\Entity\Product:
           onDelete: CASCADE
     Brand:
       targetEntity: Devy\UkrBookBundle\Entity\Brand
-      inversedBy: Product
+      inversedBy: Products
       cascade: [persist]
       joinColumns:
         brand_id:
