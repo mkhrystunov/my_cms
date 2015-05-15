@@ -1,0 +1,5 @@
+{
+  "project.name": "first-cms",
+  "repository.callsign": "CMS",
+  "conduit_uri": "http://phabricator.diploma.com/"
+}
