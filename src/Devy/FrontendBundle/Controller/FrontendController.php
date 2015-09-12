@@ -109,7 +109,7 @@ class FrontendController extends ShopController
         $products = $manager->getRepository('DevyUkrBookBundle:Product');
 
         $page = $request->query->get('page', 1);
-        $pattern = $request->request->get('pattern', '');
+        $pattern = $request->query->get('pattern', '');
 
         return $this->render('DevyFrontendBundle::search.html.twig', array_merge($this->prepareDefault(), [
             'products' => $products->getBySearch(12, $pattern),
